@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>What2Watch</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styling.css">
+</head>
+<body>
+    <header>
+        <div class="logo">WHAT2WATCH</div>
+        <nav>
+            button class="nav-btn active" data-section="popular">Popular</button>
+            button class="nav-btn" data-section="watchlist">Watchlist</button>
+            button class="nav-btn" data-section="watched">Watched</button>
+        </nav>
+        <div class="search-bar">
+            <input type="text" id="search-input" placeholder="Search films...">
+        </div>
+    </header>
+    
+    <main>
+
+        <div class="recommend-bar">
+            <p class="recommend-text">Based on your preferences, we can 
+                recommend films that you might like.
+            </p>
+            <button id="recommend-btn">Get Recommendations</button>
+        </div>
+
+        <section id="recommendations-section" class="hidden">
+            <h2 class="section-title">Recommended for You</h2>
+            <div id="recommendations-grid" class="grid"></div>
+        </section>
+
+        <section id="popular-section">
+            <h2 class="section-title">Popular Now</h2>
+            <div id="popular-grid" class="grid"></div>
+        </section>
+
+
+    </main>
+    <script src="app.js"></script>
+</body>
+</html>
