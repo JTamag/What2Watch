@@ -73,6 +73,11 @@ nav {
   color: var(--text);
   background: var(--bg3);
 }
+.nav-btn:active {
+  color: var(--text);
+  background: var(--bg3);
+  transform: scale(0.98);
+}
 
 /* Search Bar */
 .search-bar{
