@@ -22,3 +22,31 @@ body {
   font-weight: 300;
   min-height: 100vh;
 }
+
+/* Header */
+header {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: rgba(10, 10, 10, 0.92);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  gap: 32px;
+  padding: 0 40px;
+  height: 64px;
+}
+
+header.logo {
+  font-family: 'Bebas Neue',sans-serif;
+  font-size: 26px;
+  letter-spacing: 3px;
+  color: var(--accent);
+  white-space: nowrap;
+}
+
+nav {
+  display: flex;
+  gap: 4px;
+}
