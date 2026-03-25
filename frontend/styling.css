@@ -170,5 +170,79 @@ section { margin-bottom: 52px; }
 
 /* Grid */
 .grid {
-  
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(var(--card-w), 1fr));
+  gap: 20px;
+}
+
+/* Card (Items for the display of movies)*/
+.card {
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  overflow: hidden;
+  cursor : pointer;
+  position : relative;
+  transition: transform 0.2s, border-color 0.2s;
+}
+.card:hover{
+  transform: translateY(-4px);
+  border-color: #444;
+}
+.card img {
+  width: 100%;
+  aspect-ratio: 2 / 3;
+  object-fit: cover;
+  display: block;
+}
+.card-info{
+  padding: 10px 12px;
+}
+.card-title {
+  font-size: 14px;
+  font-weight: 500;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  margin-bottom: 4px;
+}
+.card-meta {
+  font-size: 12px;
+  color: var(--muted);
+  display: flex;
+  justify-content: center;
+}
+.card-rating{
+  color: var(--accent);
+  font-weight: 500;
+}
+
+/* Card buttons for watchlist/watched and maybe favourites*/
+.card-actions{
+  display: flex;
+  gap: 8px;
+  padding: 0 12px 10px;
+}
+.card-actions button{
+  flex: 1;
+  background: var(--bg3);
+  border: 1px solid var(--border);
+  color: var(--muted);
+  font-size: 12px;
+  border-radius: var(--radius);
+  cursor: pointer;
+  font-family: 'Dm Sans',sans-serif;
+  font-weight: 400;
+  padding : 6px 0;
+  transition: background 0.2s, color 0.2s, border-color 0.2s;
+  letter-spacing: 0.5px;
+}
+.card-actions button:hover{
+  color: var(--text);
+  border-color: #555;
+}
+.card-actions button.active{
+  background: var(--accent);
+  border-color: var(--accent);
+  color: var(--text);
 }
