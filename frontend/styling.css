@@ -327,3 +327,61 @@ section { margin-bottom: 52px; }
   border-radius: var(--radius);
   letter-spacing: 0.6px;
 }
+.modal-overview {
+  font-size: 14px;
+  line-height: 1.5;
+  color: #ccc;
+  margin-bottom: 20px;
+}
+.modal-actions {
+  display: flex;
+  gap: 12px;
+}
+.modal-actions button{
+  background: var(--bg3);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  color: var(--text);
+  padding: 10px 22px;
+  font-family: 'DM Sans',sans-serif;
+  font-size: 14px;
+  flex: 1;
+  font-weight: 500;
+  cursor: pointer;
+  letter-spacing: 0.6px;
+  transition: all 0.2s;
+}
+.modal-actions button:hover {
+  background: var(--accent2);
+}
+.modal-actions button:active {
+  transform: scale(0.98);
+  background: var(--accent);
+  border-color: var(--accent);
+  color: var(--text);
+}
+
+/* Search results overlay */
+#search-results {
+  margin-bottom: 40px;
+}
+#search-results .section-title span{
+  font-size: 14px;
+  color: var(--muted);
+  font-family: 'DM Sans',sans-serif;
+  font-weight: 300;
+  letter-spacing: 0;
+  margin-left: 8px;
+}
+
+/* Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: var(--bg);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--border);
+  border-radius: 4px;
+}
