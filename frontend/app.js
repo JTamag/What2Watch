@@ -129,6 +129,33 @@ function refreshCurrentSection() {
 }
 
 // Recommendation algo might be the last thing done
+function getRecommendations() {
+}
+// Search
+
+// Modal 
+function openModal(movie) {}
+function closeModal() {}
+// Events
+document.querySelectorAll("nav button").forEach(btn => {
+    btn.addEventListener("click", () => {
+        document.querySelectorAll("nav button").forEach(b => b.classList.remove("active"));
+        btn.classList.add("active");
+        document.getElementById("search-input").value = "";
+        renderSection(btn.dataset.section);
+    });
+});
+document.getElementById("recommend-btn").addEventListener("click", getRecommendations);
+
+// specific events to close modal
+
+document.getElementById("modal-close").addEventListener("click", closeModal);
+document.getElementById("modal-overlay").addEventListener("click", e => {
+    if (e.target === document.getElementById("modal-overlay")) closeModal();
+});
+document.addEventListener("keydown", e => {
+    if (e.key === "Escape") closeModal();
+});
 
 // Init
 loadMovies();
