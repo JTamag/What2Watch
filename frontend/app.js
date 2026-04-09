@@ -9,7 +9,7 @@ let searchTimeout = null;
 // Load movies
 async function loadMovies() {
     try {
-        const response = await fetch(".../data/movies.json");
+        const response = await fetch("../data/movies.json");
         allMovies = await response.json();
         renderSection("popular");
     } catch (error) {
@@ -53,13 +53,33 @@ function toggleWatched(movie) {
 }
 
 // Build poster card
-function buildPoster(movie) {
+function buildCard(movie) {
     const card = document.createElement("div");
     card.className = "card";
 
     const isWL = isInWatchlist(movie.id);
     const isWT = isInWatched(movie.id);
-    card.innerHTML = `TO DO` 
+    //////////////////////////////////////////////////// TODO 
+    card.innerHTML = `
+        <img src="${movie.poster}" alt="${movie.title} poster" loading="lazy"
+            onerror="this.style.display='none'">
+        <div class="card-content">
+            <div class="card-title">${movie.title}</div>
+            <div class="card-meta">
+                <span>${movie.release_year|| '-'}</span>
+                <span class="card-rating">★ ${movie.rating.toFixed(1) || '-'}</span>
+            </div>
+        </div>
+        <div class="card-actions">
+            <button class="watchlist-btn ${isWL ? 'active' : ''}" title="${isWL ? 'Remove from Watchlist' : 'Add to Watchlist'}">
+                ${isWL ? 'Remove from Watchlist' : 'Add to Watchlist'}
+            </button>
+            <button class="watched-btn ${isWT ? 'active' : ''}" title="${isWT ? 'Mark as Unwatched' : 'Mark as Watched'}">
+                ${isWT ? 'Mark as Unwatched' : 'Mark as Watched'}
+            </button>
+        </div>
+    `;
+    /////////////////////////////////////////////////////////
     card.querySelector(".watchlist-btn").addEventListener("click", e => {
         e.stopPropagation();
         toggleWatchlist(movie);
@@ -72,12 +92,43 @@ function buildPoster(movie) {
 
     return card
 }
+// Grid rendering
+function renderGrid(gridEl, movies) {
+    gridEl.innerHTML = "";
+    movies.forEach(movie => {
+        gridEl.appendChild(buildCard(movie));
+    });
+}
 
 function renderSection(section) {
     currentSection = section;
-    // TO DO
+    
+    // hide sections
+    document.querySelectorAll("main > section").forEach(s => s.classList.add("hidden"));
+
+    // make sure there are no present search results
+    const searchResults = document.getElementById("search-results");
+    if (searchResults) searchResults.remove();
+    if (section === "popular") {
+        document.getElementById("popular-section").classList.remove("hidden");
+        renderGrid(document.getElementById("popular-grid"), allMovies);
+    } else if (section === "watchlist") {
+        document.getElementById("watchlist-section").classList.remove("hidden");
+        document.getElementById("watchlist-empty").style.display = watchlist.length  ? "none" : "block";
+        renderGrid(document.getElementById("watchlist-grid"), watchlist);
+    } else if (section === "watched") {
+        document.getElementById("watched-section").classList.remove("hidden");
+        document.getElementById("watched-empty").style.display = watched.length  ? "none" : "block";
+        renderGrid(document.getElementById("watched-grid"), watched);
+    }
+    // TO fix: display still wont switch to watchlist or watched
 }
 
 function refreshCurrentSection() {
     renderSection(currentSection);
 }
+
+// Recommendation algo might be the last thing done
+
+// Init
+loadMovies();
