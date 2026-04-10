@@ -174,7 +174,12 @@ function openModal(movie) {
     document.body.style.overflow = "hidden";
 }
 function closeModal() {
-    document.getElementById("modal-overlay").classList.add("hidden");
+    const modalOverlay = document.getElementById("modal-overlay")
+    const modalContent = document.getElementById("modal");
+    if(modalContent) {
+        modalContent.scrollTo({ top: 0, behavior: "instant" });
+    }
+    modalOverlay.classList.add("hidden");
     document.body.style.overflow = "";
 }
 // Events
