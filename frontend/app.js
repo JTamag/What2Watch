@@ -121,7 +121,6 @@ function renderSection(section) {
         document.getElementById("watched-empty").style.display = watched.length  ? "none" : "block";
         renderGrid(document.getElementById("watched-grid"), watched);
     }
-    // TO fix: display still wont switch to watchlist or watched
 }
 
 function refreshCurrentSection() {
@@ -134,8 +133,32 @@ function getRecommendations() {
 // Search
 
 // Modal 
-function openModal(movie) {}
-function closeModal() {}
+function openModal(movie) {
+    const modal = document.getElementById("modal-overlay");
+    const content = modal.querySelector("modal-content");
+    
+    const WT = isInWatched(movie.id);
+    const WL = isInWatchlist(movie.id);
+
+    content.innerHTML = ` 
+       !!!!!!!!!!!!!!! TODO
+    `;
+
+    document.getElementById("modal-wt").addEventListener("click", e => {
+        toggleWatched(movie);
+        openModal(movie);
+    });
+    document.getElementById("modal-wl").addEventListener("click", e => {
+        toggleWatchlist(movie);
+        openModal(movie);
+    });
+    overlay.classList.remove("hidden");
+    document.body.style.overflow = "hidden";
+}
+function closeModal() {
+    document.getElementById("modal-overlay").classList.add("hidden");
+    document.body.style.overflow = "";
+}
 // Events
 document.querySelectorAll("nav button").forEach(btn => {
     btn.addEventListener("click", () => {
@@ -156,6 +179,10 @@ document.getElementById("modal-overlay").addEventListener("click", e => {
 document.addEventListener("keydown", e => {
     if (e.key === "Escape") closeModal();
 });
+
+// Import files
+
+// Export files
 
 // Init
 loadMovies();
