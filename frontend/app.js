@@ -134,21 +134,39 @@ function getRecommendations() {
 
 // Modal 
 function openModal(movie) {
-    const modal = document.getElementById("modal-overlay");
-    const content = modal.querySelector("modal-content");
+    const overlay = document.getElementById("modal-overlay");
+    const content = overlay.querySelector("#modal-body");
     
     const WT = isInWatched(movie.id);
     const WL = isInWatchlist(movie.id);
 
     content.innerHTML = ` 
-       !!!!!!!!!!!!!!! TODO
+        ${movie.poster ? `<img class="modal-poster" src="${movie.poster}" alt="${movie.title} poster" onerror="this.style.display='none'">` : ''}
+        <div class = "modal-title">${movie.title}</div>
+        <div class="modal-meta">
+            <span>${movie.release_year || '-'}</span>
+            <span class="modal-rating">★ ${movie.rating.toFixed(1) || '-'} / 10</span>
+        </div>
+        <div class= "modal-genres">
+            ${movie.genres ? movie.genres.map(genre => `<span class="modal-genre">${genre}</span>`).join('') : ''}
+        </div>
+        <p class="modal-overview">${movie.overview || 'No overview available.'}</p>
+        <div class="modal-actions">
+            <button id="modal-wl" class="${WL ? 'active' : ''}">
+                ${WL ? 'In Watchlist' : 'Add to Watchlist'}
+            </button>
+            <button id="modal-wt" class="${WT ? 'active' : ''}">
+                ${WT ? 'Watched' : 'Mark as Watched'}
+            </button>
+        </div>
+
     `;
 
-    document.getElementById("modal-wt").addEventListener("click", e => {
+    document.getElementById("modal-wt").addEventListener("click", () => {
         toggleWatched(movie);
         openModal(movie);
     });
-    document.getElementById("modal-wl").addEventListener("click", e => {
+    document.getElementById("modal-wl").addEventListener("click", () => {
         toggleWatchlist(movie);
         openModal(movie);
     });
