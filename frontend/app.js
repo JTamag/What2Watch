@@ -129,9 +129,42 @@ function refreshCurrentSection() {
 
 //////////// Recommendation algo might be the last thing done
 function getRecommendations() {
+
 }
 // Search
-// TO DO
+function handleSearch(query) {
+    const existingResults = document.getElementById("search-results");
+    if (existingResults) existingResults.remove();
+
+    if (!query.trim()){
+        renderSection(currentSection);
+        return;
+    }
+
+    const q = query.toLowerCase();
+    const results = allMovies.filter(movie => movie.title.toLowerCase().includes(q) || (movie.genres && movie.genres.some(g => g.toLowerCase().includes(q))));
+
+    // hide other sections
+    document.querySelectorAll("main > section").forEach(s => s.classList.add("hidden"));
+    document.getElementById("recommendations-section").classList.add("hidden");
+
+    const container = document.createElement("section");
+    container.id = "search-results";
+
+    const title = document.createElement("h2");
+    title.className = "section-title";
+    title.innerHTML = `Search results for "<span>${query} - ${results.length} films</span>"`;
+
+    const grid = document.createElement("div");
+    grid.className = "grid";
+
+    container.appendChild(title);
+    container.appendChild(grid);
+    document.querySelector("main").insertBefore(container, document.querySelector(".recommend-bar").nextSibling);
+
+    renderGrid(grid, results);
+}
+
 // Modal 
 function openModal(movie) {
     const overlay = document.getElementById("modal-overlay");
@@ -196,6 +229,11 @@ document.querySelectorAll("nav button").forEach(btn => {
 });
 document.getElementById("recommend-btn").addEventListener("click", getRecommendations);
 
+document.getElementById("search-input").addEventListener("input", e => {
+    clearTimeout(searchTimeout);
+    searchTimeout = setTimeout(() => handleSearch(e.target.value), 300);
+});
+
 // specific events to close modal
 
 document.getElementById("modal-close").addEventListener("click", closeModal);
@@ -207,8 +245,123 @@ document.addEventListener("keydown", e => {
 });
 
 // Import files
+function importData(file) {
+    const reader = new FileReader();
+    reader.onload  = function(event) {
+        try {
+            const data = JSON.parse(event.target.result);
 
-// Export files
+            let currentWL=JSON.parse(localStorage.getItem("watchlist") || "[]");
+            let currentWT=JSON.parse(localStorage.getItem("watched")   || "[]");
 
+            if (data.watchlist ) {
+                data.watchlist.forEach(movie => {
+                    if (!currentWL.some(m => m.id === movie.id)) {
+                        currentWL.push(movie);
+                    }
+                });
+            }
+            if(data.watched) {
+                data.watched.forEach(movie => {
+                    if (!currentWT.some(m => m.id === movie.id)) {
+                        currentWT.push(movie);
+                    }
+                });
+            }
+
+
+            if (data.watchlist ) localStorage.setItem("watchlist",JSON.stringify(currentWL));
+            if (data.watched   ) localStorage.setItem("watched",  JSON.stringify(currentWT));
+            
+            watchlist = currentWL;
+            watched   = currentWT;
+            
+            alert("Data imported successfully!");
+            refreshCurrentSection();
+        } catch (error) {
+            alert("Invalid file format. Please select a valid JSON file.");
+             console.error("Error parsing JSON:", error);
+        }
+    }
+    reader.readAsText(file);
+}
+
+
+/// STILL NEED TO DO TMDB REQUEST OR OTHER OPTIONS TO GET MOVIE IDS 
+/// thinking how to do this rn
+async function importLetterboxd(file) {
+    const reader = new FileReader();
+    reader.onload = async function(event) {
+        const text = event.target.result;
+        const lines = text.split("\n");
+
+        let imported = 0;
+        let localMatches = 0;
+        let apiMatches = 0;
+        let failed = 0;
+        
+        for(let i = 1; i < lines.length; i++) {
+            const cols = lines[i].split(",");
+
+            const title = cols[0].trim();
+            const year = cols[1].trim();
+
+            if(!title) continue;
+
+            imported++;
+
+            let match = findLocalMatch(title, year);
+            if(!match){
+                try{ 
+                    ///
+                } catch(e) {
+                    console.error(`Error searching TMDB for "${title} (${year})":`, e);
+                }
+            } else {
+                localMatches++;
+            }
+
+            // not actually working ofc
+        }
+        save();
+        refreshCurrentSection();
+
+        alert(`Import complete! ${imported} entries processed.\n${localMatches} matched locally, ${apiMatches} matched via API, ${failed} failed.`);
+    }
+}
+
+// Auxiliary functions to match existing movies in the database and look for new ones
+function normalizeTitle(title) {
+    return title.toLowerCase().replace(/[^a-z0-9]+/g, "");
+}
+function findLocalMatch(title, year) {
+    return allMovies.find(movie => {
+        normalizeTitle(movie.title) === normalizeTitle(title) &&
+        String(movie.release_year) === String(year)
+    });
+}
+async function searchTMDB(title, year) {
+    // TODO
+}
+// // Export files
+function exportData() {
+    const data = {
+        watchlist : JSON.parse(localStorage.getItem("watchlist") || "[]"),
+        watched   : JSON.parse(localStorage.getItem("watched")   || "[]")
+    };
+
+    const jsonStr = JSON.stringify(data, null, 2);
+
+    const blob = new Blob([jsonStr], { type: "application/json" });
+    const url = URL.createObjectURL(blob);
+
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = "what2watch_personal_data.json";
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+}
 // Init
 loadMovies();
