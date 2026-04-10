@@ -9,7 +9,7 @@ let searchTimeout = null;
 // Load movies
 async function loadMovies() {
     try {
-        const response = await fetch("data/movies.json");
+        const response = await fetch("./data/movies.json");
         allMovies = await response.json();
         renderSection("popular");
     } catch (error) {
