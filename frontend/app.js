@@ -71,11 +71,11 @@ function buildCard(movie) {
             </div>
         </div>
         <div class="card-actions">
-            <button class="watchlist-btn ${isWL ? 'active' : ''}" title="${isWL ? 'Remove from Watchlist' : 'Add to Watchlist'}">
-                ${isWL ? 'Remove from Watchlist' : 'Add to Watchlist'}
+            <button class="watchlist-btn ${isWL ? 'active' : ''}" title="${isWL ? 'In Watchlist' : 'Add to Watchlist'}">
+                ${isWL ? 'In Watchlist' : 'Add to Watchlist'}
             </button>
-            <button class="watched-btn ${isWT ? 'active' : ''}" title="${isWT ? 'Mark as Unwatched' : 'Mark as Watched'}">
-                ${isWT ? 'Mark as Unwatched' : 'Mark as Watched'}
+            <button class="watched-btn ${isWT ? 'active' : ''}" title="${isWT ? 'Watched' : 'Mark as Watched'}">
+                ${isWT ? 'Watched' : 'Mark as Watched'}
             </button>
         </div>
     `;
@@ -127,11 +127,11 @@ function refreshCurrentSection() {
     renderSection(currentSection);
 }
 
-// Recommendation algo might be the last thing done
+//////////// Recommendation algo might be the last thing done
 function getRecommendations() {
 }
 // Search
-
+// TO DO
 // Modal 
 function openModal(movie) {
     const overlay = document.getElementById("modal-overlay");
@@ -141,25 +141,28 @@ function openModal(movie) {
     const WL = isInWatchlist(movie.id);
 
     content.innerHTML = ` 
-        ${movie.poster ? `<img class="modal-poster" src="${movie.poster}" alt="${movie.title} poster" onerror="this.style.display='none'">` : ''}
-        <div class = "modal-title">${movie.title}</div>
-        <div class="modal-meta">
-            <span>${movie.release_year || '-'}</span>
-            <span class="modal-rating">★ ${movie.rating.toFixed(1) || '-'} / 10</span>
+        <div class="modal-layout">
+            ${movie.poster ? `<img class="modal-poster" src="${movie.poster}" alt="${movie.title} poster" onerror="this.style.display='none'">` : ''}
+            <div class="modal-info">
+                <div class = "modal-title">${movie.title}</div>
+                <div class="modal-meta">
+                    <span>${movie.release_year || '-'}</span>
+                    <span class="modal-rating">★ ${movie.rating.toFixed(1) || '-'} / 10</span>
+                </div>
+                <div class= "modal-genres">
+                    ${movie.genres ? movie.genres.map(genre => `<span class="modal-genre">${genre}</span>`).join('') : ''}
+                </div>
+                <p class="modal-overview">${movie.overview || 'No overview available.'}</p>
+                <div class="modal-actions">
+                    <button id="modal-wl" class="${WL ? 'active' : ''}">
+                        ${WL ? 'In Watchlist' : 'Add to Watchlist'}
+                    </button>
+                    <button id="modal-wt" class="${WT ? 'active' : ''}">
+                        ${WT ? 'Watched' : 'Mark as Watched'}
+                    </button>
+                </div> 
+            </div>
         </div>
-        <div class= "modal-genres">
-            ${movie.genres ? movie.genres.map(genre => `<span class="modal-genre">${genre}</span>`).join('') : ''}
-        </div>
-        <p class="modal-overview">${movie.overview || 'No overview available.'}</p>
-        <div class="modal-actions">
-            <button id="modal-wl" class="${WL ? 'active' : ''}">
-                ${WL ? 'In Watchlist' : 'Add to Watchlist'}
-            </button>
-            <button id="modal-wt" class="${WT ? 'active' : ''}">
-                ${WT ? 'Watched' : 'Mark as Watched'}
-            </button>
-        </div>
-
     `;
 
     document.getElementById("modal-wt").addEventListener("click", () => {
