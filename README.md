@@ -1,6 +1,9 @@
 # What2Watch
 A client-side movie discovery and tracking application built with JavaScript and powered by a daily-updated dataset from tmdb API
 
+### Live Demo
+- Check out the live app here: [What2Watch](https://jtamag.github.io/What2Watch/) 
+
 ---
 
 ## Features
