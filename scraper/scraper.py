@@ -33,7 +33,8 @@ def get_movies(endpoint, pages, genres_map, source, min_votes=0):
                 "rating": movie["vote_average"],
                 "release_year": movie["release_date"][:4] if movie["release_date"] else None,
                 "genres": [genres_map[g] for g in movie["genre_ids"] if g in genres_map],
-                "source": source
+                "is_popular": False,
+                "is_top_rated": False,
             })
     return movies
 
@@ -51,9 +52,12 @@ if __name__ == "__main__":
 
     seen = set()
     all_movies = []
-    for movie in top_rated + popular:
+    for movie in popular + top_rated:
         if movie["id"] not in seen:
-            seen.add(movie["id"])
+            seen[movie["id"]] = movie
             all_movies.append(movie)
+        else:
+            seen[movie["id"]]["is_popular"]   = seen[movie["id"]]["is_popular"]   or movie["is_popular"]
+            seen[movie["id"]]["is_top_rated"]  = seen[movie["id"]]["is_top_rated"] or movie["is_top_rated"]
 
     save_movies(all_movies)

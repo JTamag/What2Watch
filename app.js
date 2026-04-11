@@ -159,10 +159,10 @@ function renderSection(section) {
     if (searchResults) searchResults.remove();
     if (section === "popular") {
         document.getElementById("popular-section").classList.remove("hidden");
-        renderGrid(document.getElementById("popular-grid"), allMovies);
+        renderGrid(document.getElementById("popular-grid"), allMovies.filter(m=> m.is_popular));
     }   else if (section === "top-rated") {
         document.getElementById("top-rated-section").classList.remove("hidden");
-        renderGridTop(document.getElementById("top-rated-grid"), allMovies.filter(m => m.source === "top_rated").sort((a, b) => b.rating - a.rating));
+        renderGridTop(document.getElementById("top-rated-grid"), allMovies.filter(m => m.is_top_rated).sort((a, b) => b.rating - a.rating));
     }   else if (section === "watchlist") {
         document.getElementById("watchlist-section").classList.remove("hidden");
         document.getElementById("watchlist-empty").style.display = watchlist.length  ? "none" : "block";
