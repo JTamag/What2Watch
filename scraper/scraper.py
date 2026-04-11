@@ -13,7 +13,7 @@ def get_genres():
     genres = response.json()["genres"]
     return {genre["id"]: genre["name"] for genre in genres}
 
-def get_movies(endpoint, pages, genres_map, source):
+def get_movies(endpoint, pages, genres_map, source, min_votes=0):
     movies = []
     for page in range(1, pages + 1):
         url = f"{BASE_URL}/movie/{endpoint}?api_key={API_KEY}&language=en-US&page={page}"
@@ -22,6 +22,8 @@ def get_movies(endpoint, pages, genres_map, source):
 
         for movie in results:
             if not movie.get("poster_path"):
+                continue
+            if movie["vote_count"] < min_votes:
                 continue
             movies.append({
                 "id": movie["id"],
@@ -44,17 +46,14 @@ def save_movies(movies):
 if __name__ == "__main__":
     genres_map = get_genres()
 
-    popular    = get_movies("popular", pages=10, genres_map=genres_map,source="popular")
-    top_rated  = get_movies("top_rated", pages=10, genres_map=genres_map, source="top_rated")
-    now_playing = get_movies("now_playing", pages=5, genres_map=genres_map , source="now_playing")
+    popular    = get_movies("popular", pages=15, genres_map=genres_map,source="popular")
+    top_rated  = get_movies("top_rated", pages=15, genres_map=genres_map, source="top_rated", min_votes=1000)
 
     seen = set()
     all_movies = []
-    for movie in popular + top_rated + now_playing:
+    for movie in popular + top_rated :
         if movie["id"] not in seen:
             seen.add(movie["id"])
             all_movies.append(movie)
 
-    print(f"Popular: {len(popular)} | Top rated: {len(top_rated)} | Now playing: {len(now_playing)}")
-    print(f"Total sem duplicados: {len(all_movies)}")
     save_movies(all_movies)
