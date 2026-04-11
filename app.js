@@ -100,6 +100,54 @@ function renderGrid(gridEl, movies) {
     });
 }
 
+// Grid rendering for top-rated
+function renderGridTop(gridEl, movies) {
+    gridEl.innerHTML = "";
+    movies.forEach((movie, index) => {
+        gridEl.appendChild(buildCardTop(movie, index + 1));
+    });
+}
+// Build card for top-rated
+function buildCardTop(movie,rank = null) {
+    const card = document.createElement("div");
+    card.className = "card";
+
+    const isWL = isInWatchlist(movie.id);
+    const isWT = isInWatched(movie.id);
+    //////////////////////////////////////////////////// TODO 
+    card.innerHTML = `
+        <img src="${movie.poster}" alt="${movie.title} poster" loading="lazy"
+            onerror="this.style.display='none'">
+        <div class="card-content">
+            ${rank ? `<div class="card-rank">#${rank}</div>` : ''}
+            <div class="card-title">${movie.title}</div>
+            <div class="card-meta">
+                <span>${movie.release_year|| '-'}</span>
+                <span class="card-rating">★ ${movie.rating.toFixed(1) || '-'}</span>
+            </div>
+        </div>
+        <div class="card-actions">
+            <button class="watchlist-btn ${isWL ? 'active' : ''}" title="${isWL ? 'In Watchlist' : 'Add to Watchlist'}">
+                ${isWL ? 'In Watchlist' : 'Add to Watchlist'}
+            </button>
+            <button class="watched-btn ${isWT ? 'active' : ''}" title="${isWT ? 'Watched' : 'Mark as Watched'}">
+                ${isWT ? 'Watched' : 'Mark as Watched'}
+            </button>
+        </div>
+    `;
+    /////////////////////////////////////////////////////////
+    card.querySelector(".watchlist-btn").addEventListener("click", e => {
+        e.stopPropagation();
+        toggleWatchlist(movie);
+    });
+    card.querySelector(".watched-btn").addEventListener("click", e => {
+        e.stopPropagation();
+        toggleWatched(movie);
+    });
+    card.addEventListener("click", () => openModal(movie));
+
+    return card
+}
 function renderSection(section) {
     currentSection = section;
     
@@ -112,7 +160,15 @@ function renderSection(section) {
     if (section === "popular") {
         document.getElementById("popular-section").classList.remove("hidden");
         renderGrid(document.getElementById("popular-grid"), allMovies);
-    } else if (section === "watchlist") {
+    }   else if (section === "top-rated") {
+        document.getElementById("top-rated-section").classList.remove("hidden");
+        renderGridTop(document.getElementById("top-rated-grid"), allMovies.sort((a, b) => b.rating - a.rating));
+    }   else if (section === "watchlist") {
+        document.getElementById("watchlist-section").classList.remove("hidden");
+        document.getElementById("watchlist-empty").style.display = watchlist.length  ? "none" : "block";
+        renderGrid(document.getElementById("watchlist-grid"), watchlist);
+    }
+     else if (section === "watchlist") {
         document.getElementById("watchlist-section").classList.remove("hidden");
         document.getElementById("watchlist-empty").style.display = watchlist.length  ? "none" : "block";
         renderGrid(document.getElementById("watchlist-grid"), watchlist);
@@ -218,6 +274,19 @@ function closeModal() {
     modalOverlay.classList.add("hidden");
     document.body.style.overflow = "";
 }
+
+// settings menu
+function openSettings(){
+    document.getElementById("watched-count").textContent = `Watched: ${watched.length} films`;
+    document.getElementById("watchlist-count").textContent = `Watchlist: ${watchlist.length} films`;
+    document.getElementById("settings-overlay").classList.remove("hidden");
+    document.body.style.overflow = "hidden";
+}
+function closeSettings(){
+    document.getElementById("settings-overlay").classList.add("hidden");
+    document.body.style.overflow = "";
+}
+
 // Events
 document.querySelectorAll("nav button").forEach(btn => {
     btn.addEventListener("click", () => {
@@ -241,7 +310,29 @@ document.getElementById("modal-overlay").addEventListener("click", e => {
     if (e.target === document.getElementById("modal-overlay")) closeModal();
 });
 document.addEventListener("keydown", e => {
-    if (e.key === "Escape") closeModal();
+    if (e.key === "Escape") {
+        if (!document.getElementById("settings-overlay").classList.contains("hidden")) {
+            closeSettings();
+        } else {
+            closeModal();
+        }
+    }
+});
+
+// settings events
+document.getElementById("settings-btn").addEventListener("click", openSettings);
+document.getElementById("settings-close").addEventListener("click", closeSettings);
+document.getElementById("settings-overlay").addEventListener("click", e => {
+    if (e.target === document.getElementById("settings-overlay")) closeSettings();
+});
+
+document.getElementById("export-btn").addEventListener("click", exportData);
+document.getElementById("import-btn").addEventListener("click", () => document.getElementById("import-input").click());
+document.getElementById("import-input").addEventListener("change", e => {
+    if(e.target.files[0]) {
+        importData(e.target.files[0]);
+        e.target.value = "";
+    }
 });
 
 // Import files
@@ -335,10 +426,10 @@ function normalizeTitle(title) {
     return title.toLowerCase().replace(/[^a-z0-9]+/g, "");
 }
 function findLocalMatch(title, year) {
-    return allMovies.find(movie => {
+    return allMovies.find(movie => 
         normalizeTitle(movie.title) === normalizeTitle(title) &&
         String(movie.release_year) === String(year)
-    });
+    );
 }
 async function searchTMDB(title, year) {
     // TODO

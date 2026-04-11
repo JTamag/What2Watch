@@ -13,12 +13,15 @@
         <div class="logo">WHAT2WATCH</div>
         <nav>
             <button class="nav-btn active" data-section="popular">Popular</button>
+            <button class="nav-btn" data-section="top-rated">Top Rated</button>
             <button class="nav-btn" data-section="watchlist">Watchlist</button>
             <button class="nav-btn" data-section="watched">Watched</button>
         </nav>
         <div class="search-bar">
             <input type="text" id="search-input" placeholder="Search films...">
         </div>
+        <button id ="settings-btn">☰</button>
+        <input type="file" id="import-input" accept=".json" style="display:none;">
     </header>
     
     <main>
@@ -39,8 +42,11 @@
             <h2 class="section-title">Popular Now</h2>
             <div id="popular-grid" class="grid"></div>
         </section>
-
-         <section id="watchlist-section" class="hidden">
+        <section id="top-rated-section" class="hidden">
+            <h2 class="section-title">Top Rated</h2>
+            <div id="top-rated-grid" class="grid"></div>
+        </section>
+        <section id="watchlist-section" class="hidden">
             <h2 class="section-title">Watchlist</h2>
             <p class="empty-msg" id="watchlist-empty">Your watchlist is empty. Add films to your watchlist
                  and they'll appear here.</p>
@@ -55,6 +61,27 @@
         </section>
     </main>
 
+    <div id="settings-overlay" class="hidden">
+        <div id="settings-modal">
+            <button id="settings-close">&times;</button>
+            <h2 class="settings-title">Settings</h2>
+            
+            <div class="setting-stats">
+                <span id="watchlist-count">Watchlist: 0</span>
+                <span id="watched-count">Watched: 0</span>
+            </div>
+            <div class="setting-actions">
+                <button id="export-btn">Export Data</button>
+                <button id="import-btn">Import Data</button>
+            </div>
+            <div class="setting-footer">
+                <p>Thanks for using What2Watch!</p>
+                <a href="https://github.com/JTamag" target="_blank" class="github-link">
+                    Visit my GitHub
+                </a>
+            </div>
+        </div>
+    </div>
     <div id="modal-overlay" class="hidden">
         <div id="modal">
             <button id="modal-close">&times;</button>
