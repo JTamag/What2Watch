@@ -50,7 +50,7 @@ if __name__ == "__main__":
     popular    = get_movies("popular", pages=15, genres_map=genres_map,source="popular")
     top_rated  = get_movies("top_rated", pages=15, genres_map=genres_map, source="top_rated", min_votes=1000)
 
-    seen = set()
+    seen = {}
     all_movies = []
     for movie in popular + top_rated:
         if movie["id"] not in seen:
