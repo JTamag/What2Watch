@@ -51,7 +51,7 @@ if __name__ == "__main__":
 
     seen = set()
     all_movies = []
-    for movie in popular + top_rated :
+    for movie in top_rated + popular:
         if movie["id"] not in seen:
             seen.add(movie["id"])
             all_movies.append(movie)
