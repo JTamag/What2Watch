@@ -50,6 +50,10 @@ if __name__ == "__main__":
     popular    = get_movies("popular", pages=15, genres_map=genres_map)
     top_rated  = get_movies("top_rated", pages=15, genres_map=genres_map, min_votes=1000)
 
+    for movie in popular:
+        movie["is_popular"] = True
+    for movie in top_rated:
+        movie["is_top_rated"] = True
     seen = {}
     all_movies = []
     for movie in popular + top_rated:
