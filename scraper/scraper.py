@@ -13,7 +13,7 @@ def get_genres():
     genres = response.json()["genres"]
     return {genre["id"]: genre["name"] for genre in genres}
 
-def get_movies(endpoint, pages, genres_map, source, min_votes=0):
+def get_movies(endpoint, pages, genres_map, min_votes=0):
     movies = []
     for page in range(1, pages + 1):
         url = f"{BASE_URL}/movie/{endpoint}?api_key={API_KEY}&language=en-US&page={page}"
@@ -47,8 +47,8 @@ def save_movies(movies):
 if __name__ == "__main__":
     genres_map = get_genres()
 
-    popular    = get_movies("popular", pages=15, genres_map=genres_map,source="popular")
-    top_rated  = get_movies("top_rated", pages=15, genres_map=genres_map, source="top_rated", min_votes=1000)
+    popular    = get_movies("popular", pages=15, genres_map=genres_map)
+    top_rated  = get_movies("top_rated", pages=15, genres_map=genres_map, min_votes=1000)
 
     seen = {}
     all_movies = []
