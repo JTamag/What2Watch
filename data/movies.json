@@ -10,7 +10,8 @@
       "Romance",
       "Drama"
     ],
-    "source": "popular"
+    "is_popular": false,
+    "is_top_rated": false
   },
   {
     "id": 83533,
@@ -24,7 +25,8 @@
       "Adventure",
       "Fantasy"
     ],
-    "source": "popular"
+    "is_popular": false,
+    "is_top_rated": false
   },
   {
     "id": 1327819,
@@ -40,7 +42,8 @@
       "Comedy",
       "Adventure"
     ],
-    "source": "popular"
+    "is_popular": false,
+    "is_top_rated": false
   },
   {
     "id": 502356,
@@ -56,7 +59,8 @@
       "Fantasy",
       "Animation"
     ],
-    "source": "popular"
+    "is_popular": false,
+    "is_top_rated": false
   },
   {
     "id": 1290821,
@@ -70,7 +74,8 @@
       "Crime",
       "Thriller"
     ],
-    "source": "popular"
+    "is_popular": false,
+    "is_top_rated": false
   },
   {
     "id": 1171145,
@@ -83,7 +88,8 @@
       "Crime",
       "Thriller"
     ],
-    "source": "popular"
+    "is_popular": false,
+    "is_top_rated": false
   },
   {
     "id": 840464,
@@ -97,7 +103,8 @@
       "Thriller",
       "Science Fiction"
     ],
-    "source": "popular"
+    "is_popular": false,
+    "is_top_rated": false
   },
   {
     "id": 687163,
@@ -110,7 +117,8 @@
       "Science Fiction",
       "Adventure"
     ],
-    "source": "popular"
+    "is_popular": false,
+    "is_top_rated": false
   },
   {
     "id": 1297842,
@@ -124,7 +132,8 @@
       "Comedy",
       "Family"
     ],
-    "source": "popular"
+    "is_popular": false,
+    "is_top_rated": false
   },
   {
     "id": 1226863,
@@ -140,7 +149,8 @@
       "Fantasy",
       "Animation"
     ],
-    "source": "popular"
+    "is_popular": false,
+    "is_top_rated": false
   },
   {
     "id": 1115544,
@@ -154,7 +164,8 @@
       "Science Fiction",
       "Crime"
     ],
-    "source": "popular"
+    "is_popular": false,
+    "is_top_rated": false
   },
   {
     "id": 1641319,
@@ -167,7 +178,8 @@
       "Action",
       "Thriller"
     ],
-    "source": "popular"
+    "is_popular": false,
+    "is_top_rated": false
   },
   {
     "id": 1159831,
@@ -181,7 +193,8 @@
       "Horror",
       "Fantasy"
     ],
-    "source": "popular"
+    "is_popular": false,
+    "is_top_rated": false
   },
   {
     "id": 1265609,
@@ -195,7 +208,8 @@
       "Science Fiction",
       "Thriller"
     ],
-    "source": "popular"
+    "is_popular": false,
+    "is_top_rated": false
   },
   {
     "id": 1268127,
@@ -209,7 +223,8 @@
       "Action",
       "Drama"
     ],
-    "source": "popular"
+    "is_popular": false,
+    "is_top_rated": false
   },
   {
     "id": 1470130,
@@ -222,7 +237,8 @@
       "Horror",
       "Mystery"
     ],
-    "source": "popular"
+    "is_popular": false,
+    "is_top_rated": false
   },
   {
     "id": 1084187,
@@ -237,7 +253,8 @@
       "Action",
       "Horror"
     ],
-    "source": "popular"
+    "is_popular": false,
+    "is_top_rated": false
   },
   {
     "id": 1159559,
@@ -251,7 +268,8 @@
       "Mystery",
       "Crime"
     ],
-    "source": "popular"
+    "is_popular": false,
+    "is_top_rated": false
   },
   {
     "id": 615,
@@ -263,7 +281,8 @@
     "genres": [
       "Drama"
     ],
-    "source": "popular"
+    "is_popular": false,
+    "is_top_rated": false
   },
   {
     "id": 662707,
@@ -276,7 +295,8 @@
       "Adventure",
       "Action"
     ],
-    "source": "popular"
+    "is_popular": false,
+    "is_top_rated": false
   },
   {
     "id": 1049471,
@@ -289,7 +309,8 @@
       "Comedy",
       "Drama"
     ],
-    "source": "popular"
+    "is_popular": false,
+    "is_top_rated": false
   },
   {
     "id": 1311031,
@@ -303,7 +324,8 @@
       "Action",
       "Fantasy"
     ],
-    "source": "popular"
+    "is_popular": false,
+    "is_top_rated": false
   },
   {
     "id": 1084242,
@@ -319,7 +341,8 @@
       "Adventure",
       "Comedy"
     ],
-    "source": "popular"
+    "is_popular": false,
+    "is_top_rated": false
   },
   {
     "id": 1419406,
@@ -334,7 +357,8 @@
       "Drama",
       "Thriller"
     ],
-    "source": "popular"
+    "is_popular": false,
+    "is_top_rated": false
   },
   {
     "id": 1290417,
@@ -347,7 +371,8 @@
       "Horror",
       "Thriller"
     ],
-    "source": "popular"
+    "is_popular": false,
+    "is_top_rated": false
   },
   {
     "id": 848116,
@@ -362,7 +387,8 @@
       "Family",
       "Romance"
     ],
-    "source": "popular"
+    "is_popular": false,
+    "is_top_rated": false
   },
   {
     "id": 1193501,
@@ -375,7 +401,8 @@
       "Horror",
       "Mystery"
     ],
-    "source": "popular"
+    "is_popular": false,
+    "is_top_rated": false
   },
   {
     "id": 1368166,
@@ -388,7 +415,8 @@
       "Mystery",
       "Thriller"
     ],
-    "source": "popular"
+    "is_popular": false,
+    "is_top_rated": false
   },
   {
     "id": 680493,
@@ -402,7 +430,8 @@
       "Drama",
       "Horror"
     ],
-    "source": "popular"
+    "is_popular": false,
+    "is_top_rated": false
   },
   {
     "id": 1316092,
@@ -415,7 +444,8 @@
       "Romance",
       "Drama"
     ],
-    "source": "popular"
+    "is_popular": false,
+    "is_top_rated": false
   },
   {
     "id": 1339876,
@@ -429,7 +459,8 @@
       "Crime",
       "Thriller"
     ],
-    "source": "popular"
+    "is_popular": false,
+    "is_top_rated": false
   },
   {
     "id": 1526650,
@@ -442,7 +473,8 @@
       "Horror",
       "Thriller"
     ],
-    "source": "popular"
+    "is_popular": false,
+    "is_top_rated": false
   },
   {
     "id": 1198994,
@@ -456,7 +488,8 @@
       "Thriller",
       "Comedy"
     ],
-    "source": "popular"
+    "is_popular": false,
+    "is_top_rated": false
   },
   {
     "id": 329505,
@@ -470,7 +503,8 @@
       "Comedy",
       "Horror"
     ],
-    "source": "popular"
+    "is_popular": false,
+    "is_top_rated": false
   },
   {
     "id": 350,
@@ -483,7 +517,8 @@
       "Drama",
       "Comedy"
     ],
-    "source": "popular"
+    "is_popular": false,
+    "is_top_rated": false
   },
   {
     "id": 755898,
@@ -496,7 +531,8 @@
       "Science Fiction",
       "Thriller"
     ],
-    "source": "popular"
+    "is_popular": false,
+    "is_top_rated": false
   },
   {
     "id": 1168190,
@@ -511,7 +547,8 @@
       "Crime",
       "Mystery"
     ],
-    "source": "popular"
+    "is_popular": false,
+    "is_top_rated": false
   },
   {
     "id": 1088434,
@@ -524,7 +561,8 @@
       "Action",
       "Thriller"
     ],
-    "source": "popular"
+    "is_popular": false,
+    "is_top_rated": false
   },
   {
     "id": 1236153,
@@ -539,7 +577,8 @@
       "Thriller",
       "Crime"
     ],
-    "source": "popular"
+    "is_popular": false,
+    "is_top_rated": false
   },
   {
     "id": 1234731,
@@ -553,7 +592,8 @@
       "Comedy",
       "Horror"
     ],
-    "source": "popular"
+    "is_popular": false,
+    "is_top_rated": false
   },
   {
     "id": 875828,
@@ -566,7 +606,8 @@
       "Crime",
       "Drama"
     ],
-    "source": "popular"
+    "is_popular": false,
+    "is_top_rated": false
   },
   {
     "id": 634649,
@@ -580,7 +621,8 @@
       "Adventure",
       "Science Fiction"
     ],
-    "source": "popular"
+    "is_popular": false,
+    "is_top_rated": false
   },
   {
     "id": 879945,
@@ -592,7 +634,8 @@
     "genres": [
       "Drama"
     ],
-    "source": "popular"
+    "is_popular": false,
+    "is_top_rated": false
   },
   {
     "id": 1325734,
@@ -606,7 +649,8 @@
       "Comedy",
       "Drama"
     ],
-    "source": "popular"
+    "is_popular": false,
+    "is_top_rated": false
   },
   {
     "id": 1653994,
@@ -619,7 +663,8 @@
       "Animation",
       "Action"
     ],
-    "source": "popular"
+    "is_popular": false,
+    "is_top_rated": false
   },
   {
     "id": 1297454,
@@ -632,7 +677,8 @@
       "Horror",
       "Thriller"
     ],
-    "source": "popular"
+    "is_popular": false,
+    "is_top_rated": false
   },
   {
     "id": 157336,
@@ -646,7 +692,8 @@
       "Drama",
       "Science Fiction"
     ],
-    "source": "popular"
+    "is_popular": false,
+    "is_top_rated": false
   },
   {
     "id": 1493859,
@@ -660,7 +707,8 @@
       "Comedy",
       "Fantasy"
     ],
-    "source": "popular"
+    "is_popular": false,
+    "is_top_rated": false
   },
   {
     "id": 1610418,
@@ -672,7 +720,8 @@
     "genres": [
       "Horror"
     ],
-    "source": "popular"
+    "is_popular": false,
+    "is_top_rated": false
   },
   {
     "id": 1276038,
@@ -685,7 +734,8 @@
       "Horror",
       "Thriller"
     ],
-    "source": "popular"
+    "is_popular": false,
+    "is_top_rated": false
   },
   {
     "id": 999136,
@@ -697,7 +747,8 @@
     "genres": [
       "Horror"
     ],
-    "source": "popular"
+    "is_popular": false,
+    "is_top_rated": false
   },
   {
     "id": 52741,
@@ -711,7 +762,8 @@
       "Drama",
       "Romance"
     ],
-    "source": "popular"
+    "is_popular": false,
+    "is_top_rated": false
   },
   {
     "id": 1242898,
@@ -725,7 +777,8 @@
       "Science Fiction",
       "Adventure"
     ],
-    "source": "popular"
+    "is_popular": false,
+    "is_top_rated": false
   },
   {
     "id": 1646787,
@@ -737,7 +790,8 @@
     "genres": [
       "Drama"
     ],
-    "source": "popular"
+    "is_popular": false,
+    "is_top_rated": false
   },
   {
     "id": 1572073,
@@ -749,7 +803,8 @@
     "genres": [
       "Horror"
     ],
-    "source": "popular"
+    "is_popular": false,
+    "is_top_rated": false
   },
   {
     "id": 181808,
@@ -763,7 +818,8 @@
       "Action",
       "Science Fiction"
     ],
-    "source": "popular"
+    "is_popular": false,
+    "is_top_rated": false
   },
   {
     "id": 1272837,
@@ -777,7 +833,8 @@
       "Thriller",
       "Science Fiction"
     ],
-    "source": "popular"
+    "is_popular": false,
+    "is_top_rated": false
   },
   {
     "id": 1582770,
@@ -791,7 +848,8 @@
       "Crime",
       "Thriller"
     ],
-    "source": "popular"
+    "is_popular": false,
+    "is_top_rated": false
   },
   {
     "id": 1539104,
@@ -805,7 +863,8 @@
       "Action",
       "Fantasy"
     ],
-    "source": "popular"
+    "is_popular": false,
+    "is_top_rated": false
   },
   {
     "id": 7451,
@@ -821,7 +880,8 @@
       "Crime",
       "Drama"
     ],
-    "source": "popular"
+    "is_popular": false,
+    "is_top_rated": false
   },
   {
     "id": 24428,
@@ -835,7 +895,8 @@
       "Action",
       "Adventure"
     ],
-    "source": "popular"
+    "is_popular": false,
+    "is_top_rated": false
   },
   {
     "id": 1381216,
@@ -849,7 +910,8 @@
       "Comedy",
       "Adventure"
     ],
-    "source": "popular"
+    "is_popular": false,
+    "is_top_rated": false
   },
   {
     "id": 1235877,
@@ -863,7 +925,8 @@
       "Drama",
       "Science Fiction"
     ],
-    "source": "popular"
+    "is_popular": false,
+    "is_top_rated": false
   },
   {
     "id": 936075,
@@ -877,7 +940,8 @@
       "Drama",
       "History"
     ],
-    "source": "popular"
+    "is_popular": false,
+    "is_top_rated": false
   },
   {
     "id": 98477,
@@ -891,7 +955,8 @@
       "Romance",
       "Comedy"
     ],
-    "source": "popular"
+    "is_popular": false,
+    "is_top_rated": false
   },
   {
     "id": 278,
@@ -904,7 +969,8 @@
       "Drama",
       "Crime"
     ],
-    "source": "popular"
+    "is_popular": false,
+    "is_top_rated": false
   },
   {
     "id": 1387382,
@@ -918,7 +984,8 @@
       "Drama",
       "Thriller"
     ],
-    "source": "popular"
+    "is_popular": false,
+    "is_top_rated": false
   },
   {
     "id": 803796,
@@ -933,7 +1000,8 @@
       "Comedy",
       "Animation"
     ],
-    "source": "popular"
+    "is_popular": false,
+    "is_top_rated": false
   },
   {
     "id": 1634301,
@@ -946,7 +1014,8 @@
       "Action",
       "Drama"
     ],
-    "source": "popular"
+    "is_popular": false,
+    "is_top_rated": false
   },
   {
     "id": 330457,
@@ -962,7 +1031,8 @@
       "Comedy",
       "Fantasy"
     ],
-    "source": "popular"
+    "is_popular": false,
+    "is_top_rated": false
   },
   {
     "id": 1306368,
@@ -976,7 +1046,8 @@
       "Thriller",
       "Crime"
     ],
-    "source": "popular"
+    "is_popular": false,
+    "is_top_rated": false
   },
   {
     "id": 425274,
@@ -989,7 +1060,8 @@
       "Crime",
       "Thriller"
     ],
-    "source": "popular"
+    "is_popular": false,
+    "is_top_rated": false
   },
   {
     "id": 1167307,
@@ -1004,7 +1076,8 @@
       "Drama",
       "Music"
     ],
-    "source": "popular"
+    "is_popular": false,
+    "is_top_rated": false
   },
   {
     "id": 299536,
@@ -1018,7 +1091,8 @@
       "Action",
       "Science Fiction"
     ],
-    "source": "popular"
+    "is_popular": false,
+    "is_top_rated": false
   },
   {
     "id": 58008,
@@ -1030,7 +1104,8 @@
     "genres": [
       "Comedy"
     ],
-    "source": "popular"
+    "is_popular": false,
+    "is_top_rated": false
   },
   {
     "id": 28975,
@@ -1043,7 +1118,8 @@
       "Action",
       "Thriller"
     ],
-    "source": "popular"
+    "is_popular": false,
+    "is_top_rated": false
   },
   {
     "id": 405746,
@@ -1057,7 +1133,8 @@
       "Mystery",
       "Thriller"
     ],
-    "source": "popular"
+    "is_popular": false,
+    "is_top_rated": false
   },
   {
     "id": 1266127,
@@ -1070,7 +1147,8 @@
       "Horror",
       "Comedy"
     ],
-    "source": "popular"
+    "is_popular": false,
+    "is_top_rated": false
   },
   {
     "id": 238,
@@ -1083,7 +1161,8 @@
       "Drama",
       "Crime"
     ],
-    "source": "popular"
+    "is_popular": false,
+    "is_top_rated": false
   },
   {
     "id": 12509,
@@ -1096,7 +1175,8 @@
       "Drama",
       "History"
     ],
-    "source": "popular"
+    "is_popular": false,
+    "is_top_rated": false
   },
   {
     "id": 467905,
@@ -1109,7 +1189,8 @@
       "Comedy",
       "Thriller"
     ],
-    "source": "popular"
+    "is_popular": false,
+    "is_top_rated": false
   },
   {
     "id": 1117857,
@@ -1125,7 +1206,8 @@
       "Adventure",
       "Fantasy"
     ],
-    "source": "popular"
+    "is_popular": false,
+    "is_top_rated": false
   },
   {
     "id": 991494,
@@ -1141,7 +1223,8 @@
       "Adventure",
       "Fantasy"
     ],
-    "source": "popular"
+    "is_popular": false,
+    "is_top_rated": false
   },
   {
     "id": 1654429,
@@ -1154,7 +1237,8 @@
       "Action",
       "Crime"
     ],
-    "source": "popular"
+    "is_popular": false,
+    "is_top_rated": false
   },
   {
     "id": 1620551,
@@ -1168,7 +1252,8 @@
       "Drama",
       "Comedy"
     ],
-    "source": "popular"
+    "is_popular": false,
+    "is_top_rated": false
   },
   {
     "id": 19995,
@@ -1182,7 +1267,8 @@
       "Action",
       "Adventure"
     ],
-    "source": "popular"
+    "is_popular": false,
+    "is_top_rated": false
   },
   {
     "id": 1234821,
@@ -1196,7 +1282,8 @@
       "Adventure",
       "Action"
     ],
-    "source": "popular"
+    "is_popular": false,
+    "is_top_rated": false
   },
   {
     "id": 1246049,
@@ -1210,7 +1297,8 @@
       "Fantasy",
       "Romance"
     ],
-    "source": "popular"
+    "is_popular": false,
+    "is_top_rated": false
   },
   {
     "id": 1192548,
@@ -1222,7 +1310,8 @@
     "genres": [
       "Music"
     ],
-    "source": "popular"
+    "is_popular": false,
+    "is_top_rated": false
   },
   {
     "id": 677638,
@@ -1238,7 +1327,8 @@
       "Comedy",
       "TV Movie"
     ],
-    "source": "popular"
+    "is_popular": false,
+    "is_top_rated": false
   },
   {
     "id": 315635,
@@ -1252,7 +1342,8 @@
       "Adventure",
       "Science Fiction"
     ],
-    "source": "popular"
+    "is_popular": false,
+    "is_top_rated": false
   },
   {
     "id": 155,
@@ -1266,7 +1357,8 @@
       "Crime",
       "Thriller"
     ],
-    "source": "popular"
+    "is_popular": false,
+    "is_top_rated": false
   },
   {
     "id": 19592,
@@ -1280,7 +1372,8 @@
       "Thriller",
       "Western"
     ],
-    "source": "popular"
+    "is_popular": false,
+    "is_top_rated": false
   },
   {
     "id": 1054867,
@@ -1294,7 +1387,8 @@
       "Crime",
       "Comedy"
     ],
-    "source": "popular"
+    "is_popular": false,
+    "is_top_rated": false
   },
   {
     "id": 1011985,
@@ -1311,7 +1405,8 @@
       "Adventure",
       "Fantasy"
     ],
-    "source": "popular"
+    "is_popular": false,
+    "is_top_rated": false
   },
   {
     "id": 1658216,
@@ -1323,7 +1418,8 @@
     "genres": [
       "Drama"
     ],
-    "source": "popular"
+    "is_popular": false,
+    "is_top_rated": false
   },
   {
     "id": 76600,
@@ -1337,7 +1433,8 @@
       "Adventure",
       "Science Fiction"
     ],
-    "source": "popular"
+    "is_popular": false,
+    "is_top_rated": false
   },
   {
     "id": 402431,
@@ -1351,7 +1448,8 @@
       "Romance",
       "Fantasy"
     ],
-    "source": "popular"
+    "is_popular": false,
+    "is_top_rated": false
   },
   {
     "id": 1314786,
@@ -1364,7 +1462,8 @@
       "Drama",
       "Thriller"
     ],
-    "source": "popular"
+    "is_popular": false,
+    "is_top_rated": false
   },
   {
     "id": 744275,
@@ -1377,7 +1476,8 @@
       "Drama",
       "Romance"
     ],
-    "source": "popular"
+    "is_popular": false,
+    "is_top_rated": false
   },
   {
     "id": 1010581,
@@ -1391,7 +1491,8 @@
       "Romance",
       "Thriller"
     ],
-    "source": "popular"
+    "is_popular": false,
+    "is_top_rated": false
   },
   {
     "id": 1426964,
@@ -1406,7 +1507,8 @@
       "Crime",
       "Drama"
     ],
-    "source": "popular"
+    "is_popular": false,
+    "is_top_rated": false
   },
   {
     "id": 1218925,
@@ -1421,7 +1523,8 @@
       "Romance",
       "Fantasy"
     ],
-    "source": "popular"
+    "is_popular": false,
+    "is_top_rated": false
   },
   {
     "id": 671,
@@ -1434,7 +1537,8 @@
       "Adventure",
       "Fantasy"
     ],
-    "source": "popular"
+    "is_popular": false,
+    "is_top_rated": false
   },
   {
     "id": 496243,
@@ -1448,7 +1552,8 @@
       "Thriller",
       "Drama"
     ],
-    "source": "popular"
+    "is_popular": false,
+    "is_top_rated": false
   },
   {
     "id": 533535,
@@ -1462,7 +1567,8 @@
       "Comedy",
       "Science Fiction"
     ],
-    "source": "popular"
+    "is_popular": false,
+    "is_top_rated": false
   },
   {
     "id": 680,
@@ -1476,7 +1582,8 @@
       "Crime",
       "Comedy"
     ],
-    "source": "popular"
+    "is_popular": false,
+    "is_top_rated": false
   },
   {
     "id": 1019420,
@@ -1490,7 +1597,8 @@
       "Comedy",
       "Fantasy"
     ],
-    "source": "popular"
+    "is_popular": false,
+    "is_top_rated": false
   },
   {
     "id": 1601243,
@@ -1505,7 +1613,8 @@
       "Thriller",
       "Western"
     ],
-    "source": "popular"
+    "is_popular": false,
+    "is_top_rated": false
   },
   {
     "id": 1066313,
@@ -1518,7 +1627,8 @@
       "Science Fiction",
       "Horror"
     ],
-    "source": "popular"
+    "is_popular": false,
+    "is_top_rated": false
   },
   {
     "id": 1241470,
@@ -1532,7 +1642,8 @@
       "Action",
       "Horror"
     ],
-    "source": "popular"
+    "is_popular": false,
+    "is_top_rated": false
   },
   {
     "id": 911430,
@@ -1545,7 +1656,8 @@
       "Action",
       "Drama"
     ],
-    "source": "popular"
+    "is_popular": false,
+    "is_top_rated": false
   },
   {
     "id": 120,
@@ -1559,7 +1671,8 @@
       "Fantasy",
       "Action"
     ],
-    "source": "popular"
+    "is_popular": false,
+    "is_top_rated": false
   },
   {
     "id": 50619,
@@ -1573,7 +1686,8 @@
       "Fantasy",
       "Romance"
     ],
-    "source": "popular"
+    "is_popular": false,
+    "is_top_rated": false
   },
   {
     "id": 335984,
@@ -1586,7 +1700,8 @@
       "Science Fiction",
       "Drama"
     ],
-    "source": "popular"
+    "is_popular": false,
+    "is_top_rated": false
   },
   {
     "id": 62029,
@@ -1598,7 +1713,8 @@
     "genres": [
       "Comedy"
     ],
-    "source": "popular"
+    "is_popular": false,
+    "is_top_rated": false
   },
   {
     "id": 517302,
@@ -1612,7 +1728,8 @@
       "Fantasy",
       "Drama"
     ],
-    "source": "popular"
+    "is_popular": false,
+    "is_top_rated": false
   },
   {
     "id": 299534,
@@ -1626,7 +1743,8 @@
       "Science Fiction",
       "Action"
     ],
-    "source": "popular"
+    "is_popular": false,
+    "is_top_rated": false
   },
   {
     "id": 1511417,
@@ -1639,7 +1757,8 @@
       "Action",
       "Drama"
     ],
-    "source": "popular"
+    "is_popular": false,
+    "is_top_rated": false
   },
   {
     "id": 129,
@@ -1653,7 +1772,8 @@
       "Family",
       "Fantasy"
     ],
-    "source": "popular"
+    "is_popular": false,
+    "is_top_rated": false
   },
   {
     "id": 1584215,
@@ -1665,7 +1785,8 @@
     "genres": [
       "Action"
     ],
-    "source": "popular"
+    "is_popular": false,
+    "is_top_rated": false
   },
   {
     "id": 27205,
@@ -1679,7 +1800,8 @@
       "Science Fiction",
       "Adventure"
     ],
-    "source": "popular"
+    "is_popular": false,
+    "is_top_rated": false
   },
   {
     "id": 1630433,
@@ -1693,7 +1815,8 @@
       "Crime",
       "Drama"
     ],
-    "source": "popular"
+    "is_popular": false,
+    "is_top_rated": false
   },
   {
     "id": 1291608,
@@ -1707,7 +1830,8 @@
       "Crime",
       "Thriller"
     ],
-    "source": "popular"
+    "is_popular": false,
+    "is_top_rated": false
   },
   {
     "id": 1292695,
@@ -1721,7 +1845,8 @@
       "Horror",
       "Comedy"
     ],
-    "source": "popular"
+    "is_popular": false,
+    "is_top_rated": false
   },
   {
     "id": 798645,
@@ -1735,7 +1860,8 @@
       "Thriller",
       "Science Fiction"
     ],
-    "source": "popular"
+    "is_popular": false,
+    "is_top_rated": false
   },
   {
     "id": 1228246,
@@ -1748,7 +1874,8 @@
       "Horror",
       "Thriller"
     ],
-    "source": "popular"
+    "is_popular": false,
+    "is_top_rated": false
   },
   {
     "id": 646315,
@@ -1760,7 +1887,8 @@
     "genres": [
       "Action"
     ],
-    "source": "popular"
+    "is_popular": false,
+    "is_top_rated": false
   },
   {
     "id": 1631917,
@@ -1773,7 +1901,8 @@
       "Drama",
       "Romance"
     ],
-    "source": "popular"
+    "is_popular": false,
+    "is_top_rated": false
   },
   {
     "id": 1061474,
@@ -1787,7 +1916,8 @@
       "Adventure",
       "Action"
     ],
-    "source": "popular"
+    "is_popular": false,
+    "is_top_rated": false
   },
   {
     "id": 1022789,
@@ -1802,7 +1932,8 @@
       "Comedy",
       "Family"
     ],
-    "source": "popular"
+    "is_popular": false,
+    "is_top_rated": false
   },
   {
     "id": 1635276,
@@ -1814,7 +1945,8 @@
     "genres": [
       "Comedy"
     ],
-    "source": "popular"
+    "is_popular": false,
+    "is_top_rated": false
   },
   {
     "id": 38,
@@ -1828,7 +1960,8 @@
       "Drama",
       "Romance"
     ],
-    "source": "popular"
+    "is_popular": false,
+    "is_top_rated": false
   },
   {
     "id": 1650558,
@@ -1840,7 +1973,8 @@
     "genres": [
       "Romance"
     ],
-    "source": "popular"
+    "is_popular": false,
+    "is_top_rated": false
   },
   {
     "id": 28322,
@@ -1854,7 +1988,8 @@
       "Action",
       "Crime"
     ],
-    "source": "popular"
+    "is_popular": false,
+    "is_top_rated": false
   },
   {
     "id": 1110034,
@@ -1868,7 +2003,8 @@
       "Action",
       "Thriller"
     ],
-    "source": "popular"
+    "is_popular": false,
+    "is_top_rated": false
   },
   {
     "id": 1087192,
@@ -1883,7 +2019,8 @@
       "Action",
       "Adventure"
     ],
-    "source": "popular"
+    "is_popular": false,
+    "is_top_rated": false
   },
   {
     "id": 122,
@@ -1897,7 +2034,8 @@
       "Fantasy",
       "Action"
     ],
-    "source": "popular"
+    "is_popular": false,
+    "is_top_rated": false
   },
   {
     "id": 1426297,
@@ -1909,7 +2047,8 @@
     "genres": [
       "Horror"
     ],
-    "source": "popular"
+    "is_popular": false,
+    "is_top_rated": false
   },
   {
     "id": 876566,
@@ -1923,7 +2062,8 @@
       "Drama",
       "Science Fiction"
     ],
-    "source": "popular"
+    "is_popular": false,
+    "is_top_rated": false
   },
   {
     "id": 1448560,
@@ -1936,7 +2076,8 @@
       "Action",
       "Thriller"
     ],
-    "source": "popular"
+    "is_popular": false,
+    "is_top_rated": false
   },
   {
     "id": 597,
@@ -1949,7 +2090,8 @@
       "Drama",
       "Romance"
     ],
-    "source": "popular"
+    "is_popular": false,
+    "is_top_rated": false
   },
   {
     "id": 1062722,
@@ -1963,7 +2105,8 @@
       "Fantasy",
       "Horror"
     ],
-    "source": "popular"
+    "is_popular": false,
+    "is_top_rated": false
   },
   {
     "id": 808,
@@ -1979,7 +2122,8 @@
       "Adventure",
       "Family"
     ],
-    "source": "popular"
+    "is_popular": false,
+    "is_top_rated": false
   },
   {
     "id": 872585,
@@ -1992,7 +2136,8 @@
       "Drama",
       "History"
     ],
-    "source": "popular"
+    "is_popular": false,
+    "is_top_rated": false
   },
   {
     "id": 560016,
@@ -2005,7 +2150,8 @@
       "Action",
       "Thriller"
     ],
-    "source": "popular"
+    "is_popular": false,
+    "is_top_rated": false
   },
   {
     "id": 1119449,
@@ -2019,7 +2165,8 @@
       "Action",
       "Comedy"
     ],
-    "source": "popular"
+    "is_popular": false,
+    "is_top_rated": false
   },
   {
     "id": 519182,
@@ -2035,7 +2182,8 @@
       "Science Fiction",
       "Adventure"
     ],
-    "source": "popular"
+    "is_popular": false,
+    "is_top_rated": false
   },
   {
     "id": 552524,
@@ -2049,7 +2197,8 @@
       "Science Fiction",
       "Comedy"
     ],
-    "source": "popular"
+    "is_popular": false,
+    "is_top_rated": false
   },
   {
     "id": 1145758,
@@ -2062,7 +2211,8 @@
       "Thriller",
       "Drama"
     ],
-    "source": "popular"
+    "is_popular": false,
+    "is_top_rated": false
   },
   {
     "id": 226674,
@@ -2074,7 +2224,8 @@
     "genres": [
       "Drama"
     ],
-    "source": "popular"
+    "is_popular": false,
+    "is_top_rated": false
   },
   {
     "id": 603,
@@ -2087,7 +2238,8 @@
       "Action",
       "Science Fiction"
     ],
-    "source": "popular"
+    "is_popular": false,
+    "is_top_rated": false
   },
   {
     "id": 1507199,
@@ -2099,7 +2251,8 @@
     "genres": [
       "Documentary"
     ],
-    "source": "popular"
+    "is_popular": false,
+    "is_top_rated": false
   },
   {
     "id": 950387,
@@ -2114,7 +2267,8 @@
       "Comedy",
       "Adventure"
     ],
-    "source": "popular"
+    "is_popular": false,
+    "is_top_rated": false
   },
   {
     "id": 372058,
@@ -2128,7 +2282,8 @@
       "Romance",
       "Drama"
     ],
-    "source": "popular"
+    "is_popular": false,
+    "is_top_rated": false
   },
   {
     "id": 617126,
@@ -2142,7 +2297,8 @@
       "Adventure",
       "Action"
     ],
-    "source": "popular"
+    "is_popular": false,
+    "is_top_rated": false
   },
   {
     "id": 569094,
@@ -2157,7 +2313,8 @@
       "Adventure",
       "Science Fiction"
     ],
-    "source": "popular"
+    "is_popular": false,
+    "is_top_rated": false
   },
   {
     "id": 1317288,
@@ -2170,7 +2327,8 @@
       "Drama",
       "Thriller"
     ],
-    "source": "popular"
+    "is_popular": false,
+    "is_top_rated": false
   },
   {
     "id": 665,
@@ -2184,7 +2342,8 @@
       "Drama",
       "Adventure"
     ],
-    "source": "popular"
+    "is_popular": false,
+    "is_top_rated": false
   },
   {
     "id": 575265,
@@ -2198,7 +2357,8 @@
       "Thriller",
       "Adventure"
     ],
-    "source": "popular"
+    "is_popular": false,
+    "is_top_rated": false
   },
   {
     "id": 1241982,
@@ -2214,7 +2374,8 @@
       "Comedy",
       "Fantasy"
     ],
-    "source": "popular"
+    "is_popular": false,
+    "is_top_rated": false
   },
   {
     "id": 1233413,
@@ -2228,7 +2389,8 @@
       "Action",
       "Thriller"
     ],
-    "source": "popular"
+    "is_popular": false,
+    "is_top_rated": false
   },
   {
     "id": 6844,
@@ -2241,7 +2403,8 @@
       "Drama",
       "History"
     ],
-    "source": "popular"
+    "is_popular": false,
+    "is_top_rated": false
   },
   {
     "id": 255669,
@@ -2253,7 +2416,8 @@
     "genres": [
       "Drama"
     ],
-    "source": "popular"
+    "is_popular": false,
+    "is_top_rated": false
   },
   {
     "id": 1196067,
@@ -2267,7 +2431,8 @@
       "Action",
       "Horror"
     ],
-    "source": "popular"
+    "is_popular": false,
+    "is_top_rated": false
   },
   {
     "id": 62201,
@@ -2279,7 +2444,8 @@
     "genres": [
       "Action"
     ],
-    "source": "popular"
+    "is_popular": false,
+    "is_top_rated": false
   },
   {
     "id": 13,
@@ -2293,7 +2459,8 @@
       "Drama",
       "Romance"
     ],
-    "source": "popular"
+    "is_popular": false,
+    "is_top_rated": false
   },
   {
     "id": 567609,
@@ -2306,7 +2473,8 @@
       "Horror",
       "Comedy"
     ],
-    "source": "popular"
+    "is_popular": false,
+    "is_top_rated": false
   },
   {
     "id": 14836,
@@ -2320,7 +2488,8 @@
       "Family",
       "Fantasy"
     ],
-    "source": "popular"
+    "is_popular": false,
+    "is_top_rated": false
   },
   {
     "id": 533533,
@@ -2334,7 +2503,8 @@
       "Adventure",
       "Action"
     ],
-    "source": "popular"
+    "is_popular": false,
+    "is_top_rated": false
   },
   {
     "id": 1266990,
@@ -2346,7 +2516,8 @@
     "genres": [
       "Drama"
     ],
-    "source": "popular"
+    "is_popular": false,
+    "is_top_rated": false
   },
   {
     "id": 646380,
@@ -2360,7 +2531,8 @@
       "Science Fiction",
       "Drama"
     ],
-    "source": "popular"
+    "is_popular": false,
+    "is_top_rated": false
   },
   {
     "id": 1015606,
@@ -2372,7 +2544,8 @@
     "genres": [
       "Documentary"
     ],
-    "source": "popular"
+    "is_popular": false,
+    "is_top_rated": false
   },
   {
     "id": 378236,
@@ -2386,7 +2559,8 @@
       "Family",
       "Comedy"
     ],
-    "source": "popular"
+    "is_popular": false,
+    "is_top_rated": false
   },
   {
     "id": 1266992,
@@ -2398,7 +2572,8 @@
     "genres": [
       "Drama"
     ],
-    "source": "popular"
+    "is_popular": false,
+    "is_top_rated": false
   },
   {
     "id": 807,
@@ -2412,7 +2587,8 @@
       "Mystery",
       "Thriller"
     ],
-    "source": "popular"
+    "is_popular": false,
+    "is_top_rated": false
   },
   {
     "id": 550,
@@ -2425,7 +2601,8 @@
       "Drama",
       "Thriller"
     ],
-    "source": "popular"
+    "is_popular": false,
+    "is_top_rated": false
   },
   {
     "id": 105,
@@ -2439,7 +2616,8 @@
       "Comedy",
       "Science Fiction"
     ],
-    "source": "popular"
+    "is_popular": false,
+    "is_top_rated": false
   },
   {
     "id": 438631,
@@ -2452,7 +2630,8 @@
       "Science Fiction",
       "Adventure"
     ],
-    "source": "popular"
+    "is_popular": false,
+    "is_top_rated": false
   },
   {
     "id": 1184918,
@@ -2467,7 +2646,8 @@
       "Science Fiction",
       "Adventure"
     ],
-    "source": "popular"
+    "is_popular": false,
+    "is_top_rated": false
   },
   {
     "id": 769,
@@ -2480,7 +2660,8 @@
       "Drama",
       "Crime"
     ],
-    "source": "popular"
+    "is_popular": false,
+    "is_top_rated": false
   },
   {
     "id": 240,
@@ -2493,7 +2674,8 @@
       "Drama",
       "Crime"
     ],
-    "source": "popular"
+    "is_popular": false,
+    "is_top_rated": false
   },
   {
     "id": 346698,
@@ -2506,7 +2688,8 @@
       "Comedy",
       "Adventure"
     ],
-    "source": "popular"
+    "is_popular": false,
+    "is_top_rated": false
   },
   {
     "id": 1305781,
@@ -2520,7 +2703,8 @@
       "Drama",
       "History"
     ],
-    "source": "popular"
+    "is_popular": false,
+    "is_top_rated": false
   },
   {
     "id": 497,
@@ -2534,7 +2718,8 @@
       "Drama",
       "Crime"
     ],
-    "source": "popular"
+    "is_popular": false,
+    "is_top_rated": false
   },
   {
     "id": 493125,
@@ -2547,7 +2732,8 @@
       "Drama",
       "Romance"
     ],
-    "source": "popular"
+    "is_popular": false,
+    "is_top_rated": false
   },
   {
     "id": 1315303,
@@ -2560,7 +2746,8 @@
       "Horror",
       "Thriller"
     ],
-    "source": "popular"
+    "is_popular": false,
+    "is_top_rated": false
   },
   {
     "id": 1180831,
@@ -2574,7 +2761,8 @@
       "Fantasy",
       "Thriller"
     ],
-    "source": "popular"
+    "is_popular": false,
+    "is_top_rated": false
   },
   {
     "id": 1038392,
@@ -2586,7 +2774,8 @@
     "genres": [
       "Horror"
     ],
-    "source": "popular"
+    "is_popular": false,
+    "is_top_rated": false
   },
   {
     "id": 1424965,
@@ -2599,7 +2788,8 @@
       "Drama",
       "Thriller"
     ],
-    "source": "popular"
+    "is_popular": false,
+    "is_top_rated": false
   },
   {
     "id": 269149,
@@ -2614,7 +2804,8 @@
       "Family",
       "Comedy"
     ],
-    "source": "popular"
+    "is_popular": false,
+    "is_top_rated": false
   },
   {
     "id": 1175942,
@@ -2630,7 +2821,8 @@
       "Adventure",
       "Animation"
     ],
-    "source": "popular"
+    "is_popular": false,
+    "is_top_rated": false
   },
   {
     "id": 912649,
@@ -2644,7 +2836,8 @@
       "Action",
       "Adventure"
     ],
-    "source": "popular"
+    "is_popular": false,
+    "is_top_rated": false
   },
   {
     "id": 150540,
@@ -2660,7 +2853,8 @@
       "Drama",
       "Comedy"
     ],
-    "source": "popular"
+    "is_popular": false,
+    "is_top_rated": false
   },
   {
     "id": 424,
@@ -2674,7 +2868,8 @@
       "History",
       "War"
     ],
-    "source": "popular"
+    "is_popular": false,
+    "is_top_rated": false
   },
   {
     "id": 193972,
@@ -2686,7 +2881,8 @@
     "genres": [
       "Comedy"
     ],
-    "source": "popular"
+    "is_popular": false,
+    "is_top_rated": false
   },
   {
     "id": 1480382,
@@ -2699,7 +2895,8 @@
       "Drama",
       "History"
     ],
-    "source": "popular"
+    "is_popular": false,
+    "is_top_rated": false
   },
   {
     "id": 1487320,
@@ -2711,7 +2908,8 @@
     "genres": [
       "Drama"
     ],
-    "source": "popular"
+    "is_popular": false,
+    "is_top_rated": false
   },
   {
     "id": 1191876,
@@ -2723,7 +2921,8 @@
     "genres": [
       "Drama"
     ],
-    "source": "popular"
+    "is_popular": false,
+    "is_top_rated": false
   },
   {
     "id": 980477,
@@ -2737,7 +2936,8 @@
       "Fantasy",
       "Adventure"
     ],
-    "source": "popular"
+    "is_popular": false,
+    "is_top_rated": false
   },
   {
     "id": 1363123,
@@ -2750,7 +2950,8 @@
       "Action",
       "Comedy"
     ],
-    "source": "popular"
+    "is_popular": false,
+    "is_top_rated": false
   },
   {
     "id": 1658214,
@@ -2762,7 +2963,8 @@
     "genres": [
       "Drama"
     ],
-    "source": "popular"
+    "is_popular": false,
+    "is_top_rated": false
   },
   {
     "id": 429617,
@@ -2776,7 +2978,8 @@
       "Adventure",
       "Science Fiction"
     ],
-    "source": "popular"
+    "is_popular": false,
+    "is_top_rated": false
   },
   {
     "id": 67395,
@@ -2789,7 +2992,8 @@
       "Action",
       "Thriller"
     ],
-    "source": "popular"
+    "is_popular": false,
+    "is_top_rated": false
   },
   {
     "id": 693134,
@@ -2802,7 +3006,8 @@
       "Science Fiction",
       "Adventure"
     ],
-    "source": "popular"
+    "is_popular": false,
+    "is_top_rated": false
   },
   {
     "id": 557,
@@ -2815,7 +3020,8 @@
       "Action",
       "Science Fiction"
     ],
-    "source": "popular"
+    "is_popular": false,
+    "is_top_rated": false
   },
   {
     "id": 264980,
@@ -2827,7 +3033,8 @@
     "genres": [
       "Comedy"
     ],
-    "source": "popular"
+    "is_popular": false,
+    "is_top_rated": false
   },
   {
     "id": 137051,
@@ -2842,7 +3049,8 @@
       "Thriller",
       "TV Movie"
     ],
-    "source": "popular"
+    "is_popular": false,
+    "is_top_rated": false
   },
   {
     "id": 1304313,
@@ -2855,7 +3063,8 @@
       "Horror",
       "Mystery"
     ],
-    "source": "popular"
+    "is_popular": false,
+    "is_top_rated": false
   },
   {
     "id": 8587,
@@ -2870,7 +3079,8 @@
       "Drama",
       "Adventure"
     ],
-    "source": "popular"
+    "is_popular": false,
+    "is_top_rated": false
   },
   {
     "id": 950396,
@@ -2884,7 +3094,8 @@
       "Science Fiction",
       "Thriller"
     ],
-    "source": "popular"
+    "is_popular": false,
+    "is_top_rated": false
   },
   {
     "id": 1497970,
@@ -2900,7 +3111,8 @@
       "Fantasy",
       "Adventure"
     ],
-    "source": "popular"
+    "is_popular": false,
+    "is_top_rated": false
   },
   {
     "id": 1408208,
@@ -2913,7 +3125,8 @@
       "Horror",
       "Mystery"
     ],
-    "source": "popular"
+    "is_popular": false,
+    "is_top_rated": false
   },
   {
     "id": 862739,
@@ -2926,7 +3139,8 @@
       "Horror",
       "Thriller"
     ],
-    "source": "popular"
+    "is_popular": false,
+    "is_top_rated": false
   },
   {
     "id": 1341137,
@@ -2939,7 +3153,8 @@
       "Drama",
       "History"
     ],
-    "source": "popular"
+    "is_popular": false,
+    "is_top_rated": false
   },
   {
     "id": 337404,
@@ -2953,7 +3168,8 @@
       "Crime",
       "Adventure"
     ],
-    "source": "popular"
+    "is_popular": false,
+    "is_top_rated": false
   },
   {
     "id": 1317672,
@@ -2966,7 +3182,8 @@
       "Romance",
       "Drama"
     ],
-    "source": "popular"
+    "is_popular": false,
+    "is_top_rated": false
   },
   {
     "id": 354912,
@@ -2981,7 +3198,8 @@
       "Music",
       "Adventure"
     ],
-    "source": "popular"
+    "is_popular": false,
+    "is_top_rated": false
   },
   {
     "id": 1156594,
@@ -2994,7 +3212,8 @@
       "Romance",
       "Drama"
     ],
-    "source": "popular"
+    "is_popular": false,
+    "is_top_rated": false
   },
   {
     "id": 10138,
@@ -3008,7 +3227,8 @@
       "Action",
       "Science Fiction"
     ],
-    "source": "popular"
+    "is_popular": false,
+    "is_top_rated": false
   },
   {
     "id": 939243,
@@ -3023,7 +3243,8 @@
       "Comedy",
       "Family"
     ],
-    "source": "popular"
+    "is_popular": false,
+    "is_top_rated": false
   },
   {
     "id": 1314481,
@@ -3036,7 +3257,8 @@
       "Drama",
       "Comedy"
     ],
-    "source": "popular"
+    "is_popular": false,
+    "is_top_rated": false
   },
   {
     "id": 672,
@@ -3049,7 +3271,8 @@
       "Adventure",
       "Fantasy"
     ],
-    "source": "popular"
+    "is_popular": false,
+    "is_top_rated": false
   },
   {
     "id": 11,
@@ -3063,7 +3286,8 @@
       "Action",
       "Science Fiction"
     ],
-    "source": "popular"
+    "is_popular": false,
+    "is_top_rated": false
   },
   {
     "id": 7131,
@@ -3077,7 +3301,8 @@
       "Adventure",
       "Action"
     ],
-    "source": "popular"
+    "is_popular": false,
+    "is_top_rated": false
   },
   {
     "id": 106646,
@@ -3091,7 +3316,8 @@
       "Drama",
       "Comedy"
     ],
-    "source": "popular"
+    "is_popular": false,
+    "is_top_rated": false
   },
   {
     "id": 1197306,
@@ -3105,7 +3331,8 @@
       "Crime",
       "Thriller"
     ],
-    "source": "popular"
+    "is_popular": false,
+    "is_top_rated": false
   },
   {
     "id": 1078605,
@@ -3118,7 +3345,8 @@
       "Horror",
       "Mystery"
     ],
-    "source": "popular"
+    "is_popular": false,
+    "is_top_rated": false
   },
   {
     "id": 1662432,
@@ -3130,7 +3358,8 @@
     "genres": [
       "Documentary"
     ],
-    "source": "popular"
+    "is_popular": false,
+    "is_top_rated": false
   },
   {
     "id": 541671,
@@ -3144,7 +3373,8 @@
       "Thriller",
       "Crime"
     ],
-    "source": "popular"
+    "is_popular": false,
+    "is_top_rated": false
   },
   {
     "id": 858024,
@@ -3158,7 +3388,8 @@
       "Romance",
       "History"
     ],
-    "source": "popular"
+    "is_popular": false,
+    "is_top_rated": false
   },
   {
     "id": 4935,
@@ -3172,7 +3403,8 @@
       "Animation",
       "Adventure"
     ],
-    "source": "popular"
+    "is_popular": false,
+    "is_top_rated": false
   },
   {
     "id": 674,
@@ -3185,7 +3417,8 @@
       "Adventure",
       "Fantasy"
     ],
-    "source": "popular"
+    "is_popular": false,
+    "is_top_rated": false
   },
   {
     "id": 218,
@@ -3199,7 +3432,8 @@
       "Thriller",
       "Science Fiction"
     ],
-    "source": "popular"
+    "is_popular": false,
+    "is_top_rated": false
   },
   {
     "id": 862,
@@ -3214,7 +3448,8 @@
       "Animation",
       "Adventure"
     ],
-    "source": "popular"
+    "is_popular": false,
+    "is_top_rated": false
   },
   {
     "id": 324857,
@@ -3229,7 +3464,8 @@
       "Adventure",
       "Science Fiction"
     ],
-    "source": "popular"
+    "is_popular": false,
+    "is_top_rated": false
   },
   {
     "id": 101,
@@ -3243,7 +3479,8 @@
       "Drama",
       "Action"
     ],
-    "source": "popular"
+    "is_popular": false,
+    "is_top_rated": false
   },
   {
     "id": 574475,
@@ -3256,7 +3493,8 @@
       "Horror",
       "Mystery"
     ],
-    "source": "popular"
+    "is_popular": false,
+    "is_top_rated": false
   },
   {
     "id": 475557,
@@ -3270,7 +3508,8 @@
       "Thriller",
       "Drama"
     ],
-    "source": "popular"
+    "is_popular": false,
+    "is_top_rated": false
   },
   {
     "id": 508947,
@@ -3285,7 +3524,8 @@
       "Comedy",
       "Fantasy"
     ],
-    "source": "popular"
+    "is_popular": false,
+    "is_top_rated": false
   },
   {
     "id": 1401778,
@@ -3301,7 +3541,8 @@
       "Drama",
       "Fantasy"
     ],
-    "source": "popular"
+    "is_popular": false,
+    "is_top_rated": false
   },
   {
     "id": 361743,
@@ -3314,7 +3555,8 @@
       "Action",
       "Drama"
     ],
-    "source": "popular"
+    "is_popular": false,
+    "is_top_rated": false
   },
   {
     "id": 1726,
@@ -3328,7 +3570,8 @@
       "Science Fiction",
       "Adventure"
     ],
-    "source": "popular"
+    "is_popular": false,
+    "is_top_rated": false
   },
   {
     "id": 244786,
@@ -3342,7 +3585,8 @@
       "Music",
       "Thriller"
     ],
-    "source": "popular"
+    "is_popular": false,
+    "is_top_rated": false
   },
   {
     "id": 9769,
@@ -3355,7 +3599,8 @@
       "Drama",
       "Romance"
     ],
-    "source": "popular"
+    "is_popular": false,
+    "is_top_rated": false
   },
   {
     "id": 969681,
@@ -3369,7 +3614,8 @@
       "Action",
       "Adventure"
     ],
-    "source": "popular"
+    "is_popular": false,
+    "is_top_rated": false
   },
   {
     "id": 3558,
@@ -3381,7 +3627,8 @@
     "genres": [
       "Drama"
     ],
-    "source": "popular"
+    "is_popular": false,
+    "is_top_rated": false
   },
   {
     "id": 76341,
@@ -3395,7 +3642,8 @@
       "Adventure",
       "Science Fiction"
     ],
-    "source": "popular"
+    "is_popular": false,
+    "is_top_rated": false
   },
   {
     "id": 1020969,
@@ -3409,7 +3657,8 @@
       "Adventure",
       "Fantasy"
     ],
-    "source": "popular"
+    "is_popular": false,
+    "is_top_rated": false
   },
   {
     "id": 1007734,
@@ -3422,7 +3671,8 @@
       "Action",
       "Thriller"
     ],
-    "source": "popular"
+    "is_popular": false,
+    "is_top_rated": false
   },
   {
     "id": 1646142,
@@ -3434,7 +3684,8 @@
     "genres": [
       "Horror"
     ],
-    "source": "popular"
+    "is_popular": false,
+    "is_top_rated": false
   },
   {
     "id": 121,
@@ -3448,7 +3699,8 @@
       "Fantasy",
       "Action"
     ],
-    "source": "popular"
+    "is_popular": false,
+    "is_top_rated": false
   },
   {
     "id": 414906,
@@ -3462,7 +3714,8 @@
       "Mystery",
       "Thriller"
     ],
-    "source": "popular"
+    "is_popular": false,
+    "is_top_rated": false
   },
   {
     "id": 293660,
@@ -3476,7 +3729,8 @@
       "Adventure",
       "Comedy"
     ],
-    "source": "popular"
+    "is_popular": false,
+    "is_top_rated": false
   },
   {
     "id": 673,
@@ -3489,7 +3743,8 @@
       "Adventure",
       "Fantasy"
     ],
-    "source": "popular"
+    "is_popular": false,
+    "is_top_rated": false
   },
   {
     "id": 675,
@@ -3502,7 +3757,8 @@
       "Adventure",
       "Fantasy"
     ],
-    "source": "popular"
+    "is_popular": false,
+    "is_top_rated": false
   },
   {
     "id": 1336770,
@@ -3516,7 +3772,8 @@
       "Drama",
       "Action"
     ],
-    "source": "popular"
+    "is_popular": false,
+    "is_top_rated": false
   },
   {
     "id": 1284496,
@@ -3529,7 +3786,8 @@
       "Comedy",
       "Science Fiction"
     ],
-    "source": "popular"
+    "is_popular": false,
+    "is_top_rated": false
   },
   {
     "id": 177572,
@@ -3545,7 +3803,8 @@
       "Action",
       "Comedy"
     ],
-    "source": "popular"
+    "is_popular": false,
+    "is_top_rated": false
   },
   {
     "id": 324786,
@@ -3559,7 +3818,8 @@
       "History",
       "War"
     ],
-    "source": "popular"
+    "is_popular": false,
+    "is_top_rated": false
   },
   {
     "id": 300496,
@@ -3571,7 +3831,8 @@
     "genres": [
       "Romance"
     ],
-    "source": "popular"
+    "is_popular": false,
+    "is_top_rated": false
   },
   {
     "id": 1542995,
@@ -3584,7 +3845,8 @@
       "Drama",
       "Comedy"
     ],
-    "source": "popular"
+    "is_popular": false,
+    "is_top_rated": false
   },
   {
     "id": 933260,
@@ -3598,7 +3860,8 @@
       "Science Fiction",
       "Drama"
     ],
-    "source": "popular"
+    "is_popular": false,
+    "is_top_rated": false
   },
   {
     "id": 102382,
@@ -3612,7 +3875,8 @@
       "Adventure",
       "Science Fiction"
     ],
-    "source": "popular"
+    "is_popular": false,
+    "is_top_rated": false
   },
   {
     "id": 429,
@@ -3624,7 +3888,8 @@
     "genres": [
       "Western"
     ],
-    "source": "popular"
+    "is_popular": false,
+    "is_top_rated": false
   },
   {
     "id": 216015,
@@ -3638,7 +3903,8 @@
       "Romance",
       "Thriller"
     ],
-    "source": "popular"
+    "is_popular": false,
+    "is_top_rated": false
   },
   {
     "id": 389,
@@ -3650,7 +3916,8 @@
     "genres": [
       "Drama"
     ],
-    "source": "popular"
+    "is_popular": false,
+    "is_top_rated": false
   },
   {
     "id": 585,
@@ -3664,7 +3931,8 @@
       "Comedy",
       "Family"
     ],
-    "source": "popular"
+    "is_popular": false,
+    "is_top_rated": false
   },
   {
     "id": 1611398,
@@ -3678,7 +3946,8 @@
       "Romance",
       "Drama"
     ],
-    "source": "popular"
+    "is_popular": false,
+    "is_top_rated": false
   },
   {
     "id": 12445,
@@ -3691,7 +3960,8 @@
       "Adventure",
       "Fantasy"
     ],
-    "source": "popular"
+    "is_popular": false,
+    "is_top_rated": false
   },
   {
     "id": 564,
@@ -3705,7 +3975,8 @@
       "Action",
       "Fantasy"
     ],
-    "source": "popular"
+    "is_popular": false,
+    "is_top_rated": false
   },
   {
     "id": 286687,
@@ -3719,7 +3990,8 @@
       "Drama",
       "Comedy"
     ],
-    "source": "popular"
+    "is_popular": false,
+    "is_top_rated": false
   },
   {
     "id": 1406657,
@@ -3734,7 +4006,8 @@
       "Drama",
       "Science Fiction"
     ],
-    "source": "popular"
+    "is_popular": false,
+    "is_top_rated": false
   },
   {
     "id": 210577,
@@ -3748,7 +4021,8 @@
       "Thriller",
       "Drama"
     ],
-    "source": "popular"
+    "is_popular": false,
+    "is_top_rated": false
   },
   {
     "id": 1087891,
@@ -3761,7 +4035,8 @@
       "Thriller",
       "Action"
     ],
-    "source": "popular"
+    "is_popular": false,
+    "is_top_rated": false
   },
   {
     "id": 767,
@@ -3774,7 +4049,8 @@
       "Adventure",
       "Fantasy"
     ],
-    "source": "popular"
+    "is_popular": false,
+    "is_top_rated": false
   },
   {
     "id": 1223601,
@@ -3787,7 +4063,8 @@
       "Action",
       "War"
     ],
-    "source": "popular"
+    "is_popular": false,
+    "is_top_rated": false
   },
   {
     "id": 1418657,
@@ -3800,7 +4077,8 @@
       "Horror",
       "Thriller"
     ],
-    "source": "popular"
+    "is_popular": false,
+    "is_top_rated": false
   },
   {
     "id": 359410,
@@ -3814,7 +4092,8 @@
       "Thriller",
       "Drama"
     ],
-    "source": "popular"
+    "is_popular": false,
+    "is_top_rated": false
   },
   {
     "id": 99861,
@@ -3828,7 +4107,8 @@
       "Adventure",
       "Science Fiction"
     ],
-    "source": "popular"
+    "is_popular": false,
+    "is_top_rated": false
   },
   {
     "id": 1575337,
@@ -3843,7 +4123,8 @@
       "Music",
       "Science Fiction"
     ],
-    "source": "popular"
+    "is_popular": false,
+    "is_top_rated": false
   },
   {
     "id": 1930,
@@ -3857,7 +4138,8 @@
       "Adventure",
       "Science Fiction"
     ],
-    "source": "popular"
+    "is_popular": false,
+    "is_top_rated": false
   },
   {
     "id": 12,
@@ -3871,7 +4153,8 @@
       "Family",
       "Adventure"
     ],
-    "source": "popular"
+    "is_popular": false,
+    "is_top_rated": false
   },
   {
     "id": 12444,
@@ -3884,7 +4167,8 @@
       "Adventure",
       "Fantasy"
     ],
-    "source": "popular"
+    "is_popular": false,
+    "is_top_rated": false
   },
   {
     "id": 1455079,
@@ -3897,7 +4181,8 @@
       "Romance",
       "Comedy"
     ],
-    "source": "popular"
+    "is_popular": false,
+    "is_top_rated": false
   },
   {
     "id": 1248226,
@@ -3911,7 +4196,8 @@
       "Comedy",
       "Family"
     ],
-    "source": "popular"
+    "is_popular": false,
+    "is_top_rated": false
   },
   {
     "id": 80785,
@@ -3925,7 +4211,8 @@
       "Adventure",
       "Action"
     ],
-    "source": "popular"
+    "is_popular": false,
+    "is_top_rated": false
   },
   {
     "id": 1197137,
@@ -3938,7 +4225,8 @@
       "Horror",
       "Thriller"
     ],
-    "source": "popular"
+    "is_popular": false,
+    "is_top_rated": false
   },
   {
     "id": 986056,
@@ -3952,7 +4240,8 @@
       "Science Fiction",
       "Adventure"
     ],
-    "source": "popular"
+    "is_popular": false,
+    "is_top_rated": false
   },
   {
     "id": 687259,
@@ -3964,7 +4253,8 @@
     "genres": [
       "Horror"
     ],
-    "source": "popular"
+    "is_popular": false,
+    "is_top_rated": false
   },
   {
     "id": 385687,
@@ -3978,7 +4268,8 @@
       "Crime",
       "Thriller"
     ],
-    "source": "popular"
+    "is_popular": false,
+    "is_top_rated": false
   },
   {
     "id": 109445,
@@ -3993,7 +4284,8 @@
       "Adventure",
       "Fantasy"
     ],
-    "source": "popular"
+    "is_popular": false,
+    "is_top_rated": false
   },
   {
     "id": 37165,
@@ -4006,7 +4298,8 @@
       "Comedy",
       "Drama"
     ],
-    "source": "popular"
+    "is_popular": false,
+    "is_top_rated": false
   },
   {
     "id": 1214931,
@@ -4019,7 +4312,8 @@
       "History",
       "Drama"
     ],
-    "source": "popular"
+    "is_popular": false,
+    "is_top_rated": false
   },
   {
     "id": 348,
@@ -4032,7 +4326,8 @@
       "Horror",
       "Science Fiction"
     ],
-    "source": "popular"
+    "is_popular": false,
+    "is_top_rated": false
   },
   {
     "id": 637649,
@@ -4046,7 +4341,8 @@
       "Crime",
       "Drama"
     ],
-    "source": "popular"
+    "is_popular": false,
+    "is_top_rated": false
   },
   {
     "id": 559,
@@ -4060,7 +4356,8 @@
       "Adventure",
       "Science Fiction"
     ],
-    "source": "popular"
+    "is_popular": false,
+    "is_top_rated": false
   },
   {
     "id": 14160,
@@ -4075,7 +4372,8 @@
       "Family",
       "Adventure"
     ],
-    "source": "popular"
+    "is_popular": false,
+    "is_top_rated": false
   },
   {
     "id": 411,
@@ -4089,7 +4387,8 @@
       "Family",
       "Fantasy"
     ],
-    "source": "popular"
+    "is_popular": false,
+    "is_top_rated": false
   },
   {
     "id": 122917,
@@ -4103,7 +4402,8 @@
       "Adventure",
       "Fantasy"
     ],
-    "source": "popular"
+    "is_popular": false,
+    "is_top_rated": false
   },
   {
     "id": 19404,
@@ -4117,7 +4417,8 @@
       "Drama",
       "Romance"
     ],
-    "source": "top_rated"
+    "is_popular": false,
+    "is_top_rated": false
   },
   {
     "id": 346,
@@ -4130,7 +4431,8 @@
       "Action",
       "Drama"
     ],
-    "source": "top_rated"
+    "is_popular": false,
+    "is_top_rated": false
   },
   {
     "id": 12477,
@@ -4144,7 +4446,8 @@
       "Drama",
       "War"
     ],
-    "source": "top_rated"
+    "is_popular": false,
+    "is_top_rated": false
   },
   {
     "id": 637,
@@ -4157,7 +4460,8 @@
       "Comedy",
       "Drama"
     ],
-    "source": "top_rated"
+    "is_popular": false,
+    "is_top_rated": false
   },
   {
     "id": 14537,
@@ -4171,7 +4475,8 @@
       "Drama",
       "History"
     ],
-    "source": "top_rated"
+    "is_popular": false,
+    "is_top_rated": false
   },
   {
     "id": 598,
@@ -4184,7 +4489,8 @@
       "Drama",
       "Crime"
     ],
-    "source": "top_rated"
+    "is_popular": false,
+    "is_top_rated": false
   },
   {
     "id": 11216,
@@ -4197,7 +4503,8 @@
       "Drama",
       "Romance"
     ],
-    "source": "top_rated"
+    "is_popular": false,
+    "is_top_rated": false
   },
   {
     "id": 40096,
@@ -4212,7 +4519,8 @@
       "Fantasy",
       "Romance"
     ],
-    "source": "top_rated"
+    "is_popular": false,
+    "is_top_rated": false
   },
   {
     "id": 539,
@@ -4226,7 +4534,8 @@
       "Thriller",
       "Mystery"
     ],
-    "source": "top_rated"
+    "is_popular": false,
+    "is_top_rated": false
   },
   {
     "id": 510,
@@ -4238,7 +4547,8 @@
     "genres": [
       "Drama"
     ],
-    "source": "top_rated"
+    "is_popular": false,
+    "is_top_rated": false
   },
   {
     "id": 1891,
@@ -4252,7 +4562,8 @@
       "Action",
       "Science Fiction"
     ],
-    "source": "top_rated"
+    "is_popular": false,
+    "is_top_rated": false
   },
   {
     "id": 696374,
@@ -4265,7 +4576,8 @@
       "Romance",
       "Drama"
     ],
-    "source": "top_rated"
+    "is_popular": false,
+    "is_top_rated": false
   },
   {
     "id": 378064,
@@ -4279,7 +4591,8 @@
       "Drama",
       "Romance"
     ],
-    "source": "top_rated"
+    "is_popular": false,
+    "is_top_rated": false
   },
   {
     "id": 311,
@@ -4292,7 +4605,8 @@
       "Drama",
       "Crime"
     ],
-    "source": "top_rated"
+    "is_popular": false,
+    "is_top_rated": false
   },
   {
     "id": 423,
@@ -4305,7 +4619,8 @@
       "Drama",
       "War"
     ],
-    "source": "top_rated"
+    "is_popular": false,
+    "is_top_rated": false
   },
   {
     "id": 724089,
@@ -4318,7 +4633,8 @@
       "Romance",
       "Drama"
     ],
-    "source": "top_rated"
+    "is_popular": false,
+    "is_top_rated": false
   },
   {
     "id": 761053,
@@ -4331,7 +4647,8 @@
       "Romance",
       "Drama"
     ],
-    "source": "top_rated"
+    "is_popular": false,
+    "is_top_rated": false
   },
   {
     "id": 12493,
@@ -4345,7 +4662,8 @@
       "Crime",
       "Thriller"
     ],
-    "source": "top_rated"
+    "is_popular": false,
+    "is_top_rated": false
   },
   {
     "id": 274,
@@ -4359,7 +4677,8 @@
       "Thriller",
       "Drama"
     ],
-    "source": "top_rated"
+    "is_popular": false,
+    "is_top_rated": false
   },
   {
     "id": 567,
@@ -4372,7 +4691,8 @@
       "Thriller",
       "Mystery"
     ],
-    "source": "top_rated"
+    "is_popular": false,
+    "is_top_rated": false
   },
   {
     "id": 73,
@@ -4384,7 +4704,8 @@
     "genres": [
       "Drama"
     ],
-    "source": "top_rated"
+    "is_popular": false,
+    "is_top_rated": false
   },
   {
     "id": 128,
@@ -4398,7 +4719,8 @@
       "Fantasy",
       "Animation"
     ],
-    "source": "top_rated"
+    "is_popular": false,
+    "is_top_rated": false
   },
   {
     "id": 3782,
@@ -4410,7 +4732,8 @@
     "genres": [
       "Drama"
     ],
-    "source": "top_rated"
+    "is_popular": false,
+    "is_top_rated": false
   },
   {
     "id": 10494,
@@ -4423,7 +4746,8 @@
       "Animation",
       "Thriller"
     ],
-    "source": "top_rated"
+    "is_popular": false,
+    "is_top_rated": false
   },
   {
     "id": 207,
@@ -4435,7 +4759,8 @@
     "genres": [
       "Drama"
     ],
-    "source": "top_rated"
+    "is_popular": false,
+    "is_top_rated": false
   },
   {
     "id": 1585,
@@ -4449,7 +4774,8 @@
       "Family",
       "Fantasy"
     ],
-    "source": "top_rated"
+    "is_popular": false,
+    "is_top_rated": false
   },
   {
     "id": 914,
@@ -4462,7 +4788,8 @@
       "Comedy",
       "War"
     ],
-    "source": "top_rated"
+    "is_popular": false,
+    "is_top_rated": false
   },
   {
     "id": 3082,
@@ -4476,7 +4803,8 @@
       "Drama",
       "Romance"
     ],
-    "source": "top_rated"
+    "is_popular": false,
+    "is_top_rated": false
   },
   {
     "id": 599,
@@ -4488,7 +4816,8 @@
     "genres": [
       "Drama"
     ],
-    "source": "top_rated"
+    "is_popular": false,
+    "is_top_rated": false
   },
   {
     "id": 335,
@@ -4501,7 +4830,8 @@
       "Drama",
       "Western"
     ],
-    "source": "top_rated"
+    "is_popular": false,
+    "is_top_rated": false
   },
   {
     "id": 77338,
@@ -4514,7 +4844,8 @@
       "Drama",
       "Comedy"
     ],
-    "source": "top_rated"
+    "is_popular": false,
+    "is_top_rated": false
   },
   {
     "id": 28,
@@ -4527,7 +4858,8 @@
       "Drama",
       "War"
     ],
-    "source": "top_rated"
+    "is_popular": false,
+    "is_top_rated": false
   },
   {
     "id": 18491,
@@ -4542,7 +4874,8 @@
       "Drama",
       "Fantasy"
     ],
-    "source": "top_rated"
+    "is_popular": false,
+    "is_top_rated": false
   },
   {
     "id": 975,
@@ -4555,7 +4888,8 @@
       "War",
       "Drama"
     ],
-    "source": "top_rated"
+    "is_popular": false,
+    "is_top_rated": false
   },
   {
     "id": 901,
@@ -4569,7 +4903,8 @@
       "Drama",
       "Romance"
     ],
-    "source": "top_rated"
+    "is_popular": false,
+    "is_top_rated": false
   },
   {
     "id": 637920,
@@ -4581,7 +4916,8 @@
     "genres": [
       "Drama"
     ],
-    "source": "top_rated"
+    "is_popular": false,
+    "is_top_rated": false
   },
   {
     "id": 92321,
@@ -4595,7 +4931,8 @@
       "Animation",
       "Fantasy"
     ],
-    "source": "top_rated"
+    "is_popular": false,
+    "is_top_rated": false
   },
   {
     "id": 10376,
@@ -4608,7 +4945,8 @@
       "Drama",
       "Music"
     ],
-    "source": "top_rated"
+    "is_popular": false,
+    "is_top_rated": false
   },
   {
     "id": 630566,
@@ -4622,7 +4960,8 @@
       "Drama",
       "Romance"
     ],
-    "source": "top_rated"
+    "is_popular": false,
+    "is_top_rated": false
   },
   {
     "id": 670,
@@ -4637,7 +4976,8 @@
       "Mystery",
       "Action"
     ],
-    "source": "top_rated"
+    "is_popular": false,
+    "is_top_rated": false
   },
   {
     "id": 447362,
@@ -4650,7 +4990,8 @@
       "Drama",
       "Romance"
     ],
-    "source": "top_rated"
+    "is_popular": false,
+    "is_top_rated": false
   },
   {
     "id": 508965,
@@ -4665,7 +5006,8 @@
       "Comedy",
       "Adventure"
     ],
-    "source": "top_rated"
+    "is_popular": false,
+    "is_top_rated": false
   },
   {
     "id": 98,
@@ -4679,7 +5021,8 @@
       "Drama",
       "Adventure"
     ],
-    "source": "top_rated"
+    "is_popular": false,
+    "is_top_rated": false
   },
   {
     "id": 490132,
@@ -4693,7 +5036,8 @@
       "Comedy",
       "History"
     ],
-    "source": "top_rated"
+    "is_popular": false,
+    "is_top_rated": false
   },
   {
     "id": 857,
@@ -4707,7 +5051,8 @@
       "Drama",
       "History"
     ],
-    "source": "top_rated"
+    "is_popular": false,
+    "is_top_rated": false
   },
   {
     "id": 504253,
@@ -4721,7 +5066,8 @@
       "Drama",
       "Romance"
     ],
-    "source": "top_rated"
+    "is_popular": false,
+    "is_top_rated": false
   },
   {
     "id": 110420,
@@ -4736,7 +5082,8 @@
       "Drama",
       "Fantasy"
     ],
-    "source": "top_rated"
+    "is_popular": false,
+    "is_top_rated": false
   },
   {
     "id": 25237,
@@ -4749,7 +5096,8 @@
       "Drama",
       "War"
     ],
-    "source": "top_rated"
+    "is_popular": false,
+    "is_top_rated": false
   },
   {
     "id": 527641,
@@ -4762,7 +5110,8 @@
       "Romance",
       "Drama"
     ],
-    "source": "top_rated"
+    "is_popular": false,
+    "is_top_rated": false
   },
   {
     "id": 16869,
@@ -4776,7 +5125,8 @@
       "Thriller",
       "War"
     ],
-    "source": "top_rated"
+    "is_popular": false,
+    "is_top_rated": false
   },
   {
     "id": 265177,
@@ -4788,7 +5138,8 @@
     "genres": [
       "Drama"
     ],
-    "source": "top_rated"
+    "is_popular": false,
+    "is_top_rated": false
   },
   {
     "id": 37257,
@@ -4802,7 +5153,8 @@
       "Mystery",
       "Crime"
     ],
-    "source": "top_rated"
+    "is_popular": false,
+    "is_top_rated": false
   },
   {
     "id": 1124,
@@ -4816,7 +5168,8 @@
       "Mystery",
       "Science Fiction"
     ],
-    "source": "top_rated"
+    "is_popular": false,
+    "is_top_rated": false
   },
   {
     "id": 694,
@@ -4829,7 +5182,8 @@
       "Horror",
       "Thriller"
     ],
-    "source": "top_rated"
+    "is_popular": false,
+    "is_top_rated": false
   },
   {
     "id": 618344,
@@ -4844,7 +5198,8 @@
       "Adventure",
       "Fantasy"
     ],
-    "source": "top_rated"
+    "is_popular": false,
+    "is_top_rated": false
   },
   {
     "id": 315162,
@@ -4860,7 +5215,8 @@
       "Comedy",
       "Family"
     ],
-    "source": "top_rated"
+    "is_popular": false,
+    "is_top_rated": false
   },
   {
     "id": 635302,
@@ -4874,7 +5230,8 @@
       "Action",
       "Fantasy"
     ],
-    "source": "top_rated"
+    "is_popular": false,
+    "is_top_rated": false
   },
   {
     "id": 11324,
@@ -4888,19 +5245,21 @@
       "Thriller",
       "Mystery"
     ],
-    "source": "top_rated"
+    "is_popular": false,
+    "is_top_rated": false
   },
   {
     "id": 50014,
     "title": "The Help",
     "overview": "Aibileen Clark is a middle-aged African-American maid who has spent her life raising white children and has recently lost her only son; Minny Jackson is an African-American maid who has often offended her employers despite her family's struggles with money and her desperate need for jobs; and Eugenia \"Skeeter\" Phelan is a young white woman who has recently moved back home after graduating college to find out her childhood maid has mysteriously disappeared. These three stories intertwine to explain how life in Jackson, Mississippi revolves around \"the help\"; yet they are always kept at a certain distance because of racial lines.",
     "poster": "https://image.tmdb.org/t/p/w500/3kmfoWWEc9Vtyuaf9v5VipRgdjx.jpg",
-    "rating": 8.2,
+    "rating": 8.198,
     "release_year": "2011",
     "genres": [
       "Drama"
     ],
-    "source": "top_rated"
+    "is_popular": false,
+    "is_top_rated": false
   },
   {
     "id": 441130,
@@ -4915,20 +5274,22 @@
       "Adventure",
       "Fantasy"
     ],
-    "source": "top_rated"
+    "is_popular": false,
+    "is_top_rated": false
   },
   {
     "id": 68718,
     "title": "Django Unchained",
     "overview": "With the help of a German bounty hunter, a freed slave sets out to rescue his wife from a brutal Mississippi plantation owner.",
     "poster": "https://image.tmdb.org/t/p/w500/7oWY8VDWW7thTzWh3OKYRkWUlD5.jpg",
-    "rating": 8.2,
+    "rating": 8.191,
     "release_year": "2012",
     "genres": [
       "Drama",
       "Western"
     ],
-    "source": "top_rated"
+    "is_popular": false,
+    "is_top_rated": false
   },
   {
     "id": 290098,
@@ -4942,7 +5303,8 @@
       "Drama",
       "Romance"
     ],
-    "source": "top_rated"
+    "is_popular": false,
+    "is_top_rated": false
   },
   {
     "id": 284,
@@ -4956,7 +5318,8 @@
       "Drama",
       "Romance"
     ],
-    "source": "top_rated"
+    "is_popular": false,
+    "is_top_rated": false
   },
   {
     "id": 185,
@@ -4969,20 +5332,22 @@
       "Science Fiction",
       "Crime"
     ],
-    "source": "top_rated"
+    "is_popular": false,
+    "is_top_rated": false
   },
   {
     "id": 77,
     "title": "Memento",
     "overview": "Leonard Shelby is tracking down the man who raped and murdered his wife. The difficulty of locating his wife's killer, however, is compounded by the fact that he suffers from a rare, untreatable form of short-term memory loss. Although he can recall details of life before his accident, Leonard cannot remember what happened fifteen minutes ago, where he's going, or why.",
     "poster": "https://image.tmdb.org/t/p/w500/fKTPH2WvH8nHTXeBYBVhawtRqtR.jpg",
-    "rating": 8.177,
+    "rating": 8.2,
     "release_year": "2000",
     "genres": [
       "Mystery",
       "Thriller"
     ],
-    "source": "top_rated"
+    "is_popular": false,
+    "is_top_rated": false
   },
   {
     "id": 5156,
@@ -4994,7 +5359,8 @@
     "genres": [
       "Drama"
     ],
-    "source": "top_rated"
+    "is_popular": false,
+    "is_top_rated": false
   },
   {
     "id": 522924,
@@ -5007,7 +5373,8 @@
       "Drama",
       "Romance"
     ],
-    "source": "top_rated"
+    "is_popular": false,
+    "is_top_rated": false
   },
   {
     "id": 629,
@@ -5021,7 +5388,8 @@
       "Crime",
       "Thriller"
     ],
-    "source": "top_rated"
+    "is_popular": false,
+    "is_top_rated": false
   },
   {
     "id": 18148,
@@ -5033,7 +5401,8 @@
     "genres": [
       "Drama"
     ],
-    "source": "top_rated"
+    "is_popular": false,
+    "is_top_rated": false
   },
   {
     "id": 490,
@@ -5046,7 +5415,8 @@
       "Fantasy",
       "Drama"
     ],
-    "source": "top_rated"
+    "is_popular": false,
+    "is_top_rated": false
   },
   {
     "id": 1422,
@@ -5060,7 +5430,8 @@
       "Thriller",
       "Crime"
     ],
-    "source": "top_rated"
+    "is_popular": false,
+    "is_top_rated": false
   },
   {
     "id": 489,
@@ -5072,7 +5443,8 @@
     "genres": [
       "Drama"
     ],
-    "source": "top_rated"
+    "is_popular": false,
+    "is_top_rated": false
   },
   {
     "id": 111,
@@ -5086,7 +5458,8 @@
       "Crime",
       "Drama"
     ],
-    "source": "top_rated"
+    "is_popular": false,
+    "is_top_rated": false
   },
   {
     "id": 399106,
@@ -5099,7 +5472,8 @@
       "Family",
       "Animation"
     ],
-    "source": "top_rated"
+    "is_popular": false,
+    "is_top_rated": false
   },
   {
     "id": 426,
@@ -5113,7 +5487,8 @@
       "Romance",
       "Thriller"
     ],
-    "source": "top_rated"
+    "is_popular": false,
+    "is_top_rated": false
   },
   {
     "id": 280,
@@ -5127,7 +5502,8 @@
       "Thriller",
       "Science Fiction"
     ],
-    "source": "top_rated"
+    "is_popular": false,
+    "is_top_rated": false
   },
   {
     "id": 289,
@@ -5140,7 +5516,8 @@
       "Drama",
       "Romance"
     ],
-    "source": "top_rated"
+    "is_popular": false,
+    "is_top_rated": false
   },
   {
     "id": 10098,
@@ -5153,7 +5530,8 @@
       "Comedy",
       "Drama"
     ],
-    "source": "top_rated"
+    "is_popular": false,
+    "is_top_rated": false
   },
   {
     "id": 517814,
@@ -5165,7 +5543,8 @@
     "genres": [
       "Drama"
     ],
-    "source": "top_rated"
+    "is_popular": false,
+    "is_top_rated": false
   },
   {
     "id": 9702,
@@ -5179,7 +5558,8 @@
       "Drama",
       "Thriller"
     ],
-    "source": "top_rated"
+    "is_popular": false,
+    "is_top_rated": false
   },
   {
     "id": 797,
@@ -5191,7 +5571,8 @@
     "genres": [
       "Drama"
     ],
-    "source": "top_rated"
+    "is_popular": false,
+    "is_top_rated": false
   },
   {
     "id": 872,
@@ -5204,7 +5585,8 @@
       "Comedy",
       "Romance"
     ],
-    "source": "top_rated"
+    "is_popular": false,
+    "is_top_rated": false
   },
   {
     "id": 666,
@@ -5216,7 +5598,8 @@
     "genres": [
       "Drama"
     ],
-    "source": "top_rated"
+    "is_popular": false,
+    "is_top_rated": false
   },
   {
     "id": 592350,
@@ -5231,7 +5614,8 @@
       "Fantasy",
       "Adventure"
     ],
-    "source": "top_rated"
+    "is_popular": false,
+    "is_top_rated": false
   },
   {
     "id": 606856,
@@ -5244,7 +5628,8 @@
       "Adventure",
       "Family"
     ],
-    "source": "top_rated"
+    "is_popular": false,
+    "is_top_rated": false
   },
   {
     "id": 103,
@@ -5257,7 +5642,8 @@
       "Crime",
       "Drama"
     ],
-    "source": "top_rated"
+    "is_popular": false,
+    "is_top_rated": false
   },
   {
     "id": 458220,
@@ -5269,7 +5655,8 @@
     "genres": [
       "Drama"
     ],
-    "source": "top_rated"
+    "is_popular": false,
+    "is_top_rated": false
   },
   {
     "id": 935,
@@ -5282,7 +5669,8 @@
       "Comedy",
       "War"
     ],
-    "source": "top_rated"
+    "is_popular": false,
+    "is_top_rated": false
   },
   {
     "id": 600,
@@ -5295,7 +5683,8 @@
       "Drama",
       "War"
     ],
-    "source": "top_rated"
+    "is_popular": false,
+    "is_top_rated": false
   },
   {
     "id": 500,
@@ -5308,7 +5697,8 @@
       "Crime",
       "Thriller"
     ],
-    "source": "top_rated"
+    "is_popular": false,
+    "is_top_rated": false
   },
   {
     "id": 810693,
@@ -5322,7 +5712,8 @@
       "Action",
       "Fantasy"
     ],
-    "source": "top_rated"
+    "is_popular": false,
+    "is_top_rated": false
   },
   {
     "id": 10681,
@@ -5336,7 +5727,8 @@
       "Family",
       "Science Fiction"
     ],
-    "source": "top_rated"
+    "is_popular": false,
+    "is_top_rated": false
   },
   {
     "id": 422,
@@ -5348,7 +5740,8 @@
     "genres": [
       "Drama"
     ],
-    "source": "top_rated"
+    "is_popular": false,
+    "is_top_rated": false
   },
   {
     "id": 406997,
@@ -5361,7 +5754,8 @@
       "Family",
       "Drama"
     ],
-    "source": "top_rated"
+    "is_popular": false,
+    "is_top_rated": false
   },
   {
     "id": 146233,
@@ -5375,7 +5769,8 @@
       "Thriller",
       "Crime"
     ],
-    "source": "top_rated"
+    "is_popular": false,
+    "is_top_rated": false
   },
   {
     "id": 46738,
@@ -5389,7 +5784,8 @@
       "War",
       "Mystery"
     ],
-    "source": "top_rated"
+    "is_popular": false,
+    "is_top_rated": false
   },
   {
     "id": 531428,
@@ -5402,7 +5798,8 @@
       "Drama",
       "Romance"
     ],
-    "source": "top_rated"
+    "is_popular": false,
+    "is_top_rated": false
   },
   {
     "id": 655,
@@ -5414,7 +5811,8 @@
     "genres": [
       "Drama"
     ],
-    "source": "top_rated"
+    "is_popular": false,
+    "is_top_rated": false
   },
   {
     "id": 600354,
@@ -5426,7 +5824,8 @@
     "genres": [
       "Drama"
     ],
-    "source": "top_rated"
+    "is_popular": false,
+    "is_top_rated": false
   },
   {
     "id": 149871,
@@ -5440,7 +5839,8 @@
       "Drama",
       "Fantasy"
     ],
-    "source": "top_rated"
+    "is_popular": false,
+    "is_top_rated": false
   },
   {
     "id": 103663,
@@ -5452,7 +5852,8 @@
     "genres": [
       "Drama"
     ],
-    "source": "top_rated"
+    "is_popular": false,
+    "is_top_rated": false
   },
   {
     "id": 1398,
@@ -5465,7 +5866,8 @@
       "Science Fiction",
       "Drama"
     ],
-    "source": "top_rated"
+    "is_popular": false,
+    "is_top_rated": false
   },
   {
     "id": 100,
@@ -5478,7 +5880,8 @@
       "Comedy",
       "Crime"
     ],
-    "source": "top_rated"
+    "is_popular": false,
+    "is_top_rated": false
   },
   {
     "id": 996,
@@ -5491,7 +5894,8 @@
       "Crime",
       "Thriller"
     ],
-    "source": "top_rated"
+    "is_popular": false,
+    "is_top_rated": false
   },
   {
     "id": 508442,
@@ -5507,7 +5911,8 @@
       "Music",
       "Fantasy"
     ],
-    "source": "top_rated"
+    "is_popular": false,
+    "is_top_rated": false
   },
   {
     "id": 398818,
@@ -5520,7 +5925,8 @@
       "Romance",
       "Drama"
     ],
-    "source": "top_rated"
+    "is_popular": false,
+    "is_top_rated": false
   },
   {
     "id": 791373,
@@ -5534,7 +5940,8 @@
       "Adventure",
       "Fantasy"
     ],
-    "source": "top_rated"
+    "is_popular": false,
+    "is_top_rated": false
   },
   {
     "id": 823219,
@@ -5549,7 +5956,8 @@
       "Fantasy",
       "Family"
     ],
-    "source": "top_rated"
+    "is_popular": false,
+    "is_top_rated": false
   },
   {
     "id": 19,
@@ -5562,7 +5970,8 @@
       "Drama",
       "Science Fiction"
     ],
-    "source": "top_rated"
+    "is_popular": false,
+    "is_top_rated": false
   },
   {
     "id": 755812,
@@ -5578,7 +5987,8 @@
       "Action",
       "Adventure"
     ],
-    "source": "top_rated"
+    "is_popular": false,
+    "is_top_rated": false
   },
   {
     "id": 664767,
@@ -5592,7 +6002,8 @@
       "Action",
       "Fantasy"
     ],
-    "source": "top_rated"
+    "is_popular": false,
+    "is_top_rated": false
   },
   {
     "id": 843,
@@ -5605,7 +6016,8 @@
       "Drama",
       "Romance"
     ],
-    "source": "top_rated"
+    "is_popular": false,
+    "is_top_rated": false
   },
   {
     "id": 387,
@@ -5619,7 +6031,8 @@
       "History",
       "War"
     ],
-    "source": "top_rated"
+    "is_popular": false,
+    "is_top_rated": false
   },
   {
     "id": 406,
@@ -5631,7 +6044,8 @@
     "genres": [
       "Drama"
     ],
-    "source": "top_rated"
+    "is_popular": false,
+    "is_top_rated": false
   },
   {
     "id": 239,
@@ -5645,7 +6059,8 @@
       "Romance",
       "Crime"
     ],
-    "source": "top_rated"
+    "is_popular": false,
+    "is_top_rated": false
   },
   {
     "id": 11878,
@@ -5658,7 +6073,8 @@
       "Drama",
       "Thriller"
     ],
-    "source": "top_rated"
+    "is_popular": false,
+    "is_top_rated": false
   },
   {
     "id": 470044,
@@ -5671,7 +6087,8 @@
       "Crime",
       "Drama"
     ],
-    "source": "top_rated"
+    "is_popular": false,
+    "is_top_rated": false
   },
   {
     "id": 411088,
@@ -5685,7 +6102,8 @@
       "Mystery",
       "Thriller"
     ],
-    "source": "top_rated"
+    "is_popular": false,
+    "is_top_rated": false
   },
   {
     "id": 614,
@@ -5697,7 +6115,8 @@
     "genres": [
       "Drama"
     ],
-    "source": "top_rated"
+    "is_popular": false,
+    "is_top_rated": false
   },
   {
     "id": 1026227,
@@ -5711,7 +6130,8 @@
       "Comedy",
       "History"
     ],
-    "source": "top_rated"
+    "is_popular": false,
+    "is_top_rated": false
   },
   {
     "id": 705,
@@ -5723,7 +6143,8 @@
     "genres": [
       "Drama"
     ],
-    "source": "top_rated"
+    "is_popular": false,
+    "is_top_rated": false
   },
   {
     "id": 7345,
@@ -5735,7 +6156,8 @@
     "genres": [
       "Drama"
     ],
-    "source": "top_rated"
+    "is_popular": false,
+    "is_top_rated": false
   },
   {
     "id": 1091,
@@ -5749,7 +6171,8 @@
       "Mystery",
       "Science Fiction"
     ],
-    "source": "top_rated"
+    "is_popular": false,
+    "is_top_rated": false
   },
   {
     "id": 8392,
@@ -5763,7 +6186,8 @@
       "Animation",
       "Family"
     ],
-    "source": "top_rated"
+    "is_popular": false,
+    "is_top_rated": false
   },
   {
     "id": 832,
@@ -5777,7 +6201,8 @@
       "Thriller",
       "Crime"
     ],
-    "source": "top_rated"
+    "is_popular": false,
+    "is_top_rated": false
   },
   {
     "id": 7347,
@@ -5791,7 +6216,8 @@
       "Action",
       "Crime"
     ],
-    "source": "top_rated"
+    "is_popular": false,
+    "is_top_rated": false
   },
   {
     "id": 359940,
@@ -5804,7 +6230,8 @@
       "Crime",
       "Drama"
     ],
-    "source": "top_rated"
+    "is_popular": false,
+    "is_top_rated": false
   },
   {
     "id": 11423,
@@ -5818,7 +6245,8 @@
       "Drama",
       "Thriller"
     ],
-    "source": "top_rated"
+    "is_popular": false,
+    "is_top_rated": false
   },
   {
     "id": 522518,
@@ -5832,7 +6260,8 @@
       "Adventure",
       "Drama"
     ],
-    "source": "top_rated"
+    "is_popular": false,
+    "is_top_rated": false
   },
   {
     "id": 62,
@@ -5846,7 +6275,8 @@
       "Mystery",
       "Adventure"
     ],
-    "source": "top_rated"
+    "is_popular": false,
+    "is_top_rated": false
   },
   {
     "id": 762975,
@@ -5859,7 +6289,8 @@
       "Romance",
       "Drama"
     ],
-    "source": "top_rated"
+    "is_popular": false,
+    "is_top_rated": false
   },
   {
     "id": 414419,
@@ -5872,7 +6303,8 @@
       "Action",
       "Crime"
     ],
-    "source": "top_rated"
+    "is_popular": false,
+    "is_top_rated": false
   },
   {
     "id": 1955,
@@ -5885,7 +6317,8 @@
       "Drama",
       "History"
     ],
-    "source": "top_rated"
+    "is_popular": false,
+    "is_top_rated": false
   },
   {
     "id": 4348,
@@ -5898,7 +6331,8 @@
       "Drama",
       "Romance"
     ],
-    "source": "top_rated"
+    "is_popular": false,
+    "is_top_rated": false
   },
   {
     "id": 548,
@@ -5912,7 +6346,8 @@
       "Drama",
       "Mystery"
     ],
-    "source": "top_rated"
+    "is_popular": false,
+    "is_top_rated": false
   },
   {
     "id": 638507,
@@ -5927,7 +6362,8 @@
       "Adventure",
       "Family"
     ],
-    "source": "top_rated"
+    "is_popular": false,
+    "is_top_rated": false
   },
   {
     "id": 381284,
@@ -5940,7 +6376,8 @@
       "Drama",
       "History"
     ],
-    "source": "top_rated"
+    "is_popular": false,
+    "is_top_rated": false
   },
   {
     "id": 334543,
@@ -5952,7 +6389,8 @@
     "genres": [
       "Drama"
     ],
-    "source": "top_rated"
+    "is_popular": false,
+    "is_top_rated": false
   },
   {
     "id": 992,
@@ -5966,7 +6404,8 @@
       "Comedy",
       "Mystery"
     ],
-    "source": "top_rated"
+    "is_popular": false,
+    "is_top_rated": false
   },
   {
     "id": 439,
@@ -5979,7 +6418,8 @@
       "Comedy",
       "Drama"
     ],
-    "source": "top_rated"
+    "is_popular": false,
+    "is_top_rated": false
   },
   {
     "id": 397567,
@@ -5995,7 +6435,8 @@
       "Fantasy",
       "Thriller"
     ],
-    "source": "top_rated"
+    "is_popular": false,
+    "is_top_rated": false
   },
   {
     "id": 582,
@@ -6008,7 +6449,8 @@
       "Drama",
       "Thriller"
     ],
-    "source": "top_rated"
+    "is_popular": false,
+    "is_top_rated": false
   },
   {
     "id": 437068,
@@ -6022,7 +6464,8 @@
       "Drama",
       "History"
     ],
-    "source": "top_rated"
+    "is_popular": false,
+    "is_top_rated": false
   },
   {
     "id": 11645,
@@ -6036,7 +6479,8 @@
       "Drama",
       "History"
     ],
-    "source": "top_rated"
+    "is_popular": false,
+    "is_top_rated": false
   },
   {
     "id": 120467,
@@ -6049,7 +6493,8 @@
       "Comedy",
       "Drama"
     ],
-    "source": "top_rated"
+    "is_popular": false,
+    "is_top_rated": false
   },
   {
     "id": 279,
@@ -6063,7 +6508,8 @@
       "Music",
       "Drama"
     ],
-    "source": "top_rated"
+    "is_popular": false,
+    "is_top_rated": false
   },
   {
     "id": 555604,
@@ -6078,7 +6524,8 @@
       "Adventure",
       "Drama"
     ],
-    "source": "top_rated"
+    "is_popular": false,
+    "is_top_rated": false
   },
   {
     "id": 26022,
@@ -6091,7 +6538,8 @@
       "Drama",
       "Romance"
     ],
-    "source": "top_rated"
+    "is_popular": false,
+    "is_top_rated": false
   },
   {
     "id": 538362,
@@ -6103,7 +6551,8 @@
     "genres": [
       "Drama"
     ],
-    "source": "top_rated"
+    "is_popular": false,
+    "is_top_rated": false
   },
   {
     "id": 938,
@@ -6115,7 +6564,8 @@
     "genres": [
       "Western"
     ],
-    "source": "top_rated"
+    "is_popular": false,
+    "is_top_rated": false
   },
   {
     "id": 147,
@@ -6127,7 +6577,8 @@
     "genres": [
       "Drama"
     ],
-    "source": "top_rated"
+    "is_popular": false,
+    "is_top_rated": false
   },
   {
     "id": 9277,
@@ -6141,7 +6592,8 @@
       "Crime",
       "Drama"
     ],
-    "source": "top_rated"
+    "is_popular": false,
+    "is_top_rated": false
   },
   {
     "id": 641,
@@ -6154,7 +6606,8 @@
       "Crime",
       "Drama"
     ],
-    "source": "top_rated"
+    "is_popular": false,
+    "is_top_rated": false
   },
   {
     "id": 204,
@@ -6168,7 +6621,8 @@
       "Thriller",
       "Adventure"
     ],
-    "source": "top_rated"
+    "is_popular": false,
+    "is_top_rated": false
   },
   {
     "id": 43949,
@@ -6181,7 +6635,8 @@
       "Romance",
       "Drama"
     ],
-    "source": "top_rated"
+    "is_popular": false,
+    "is_top_rated": false
   },
   {
     "id": 359724,
@@ -6195,7 +6650,8 @@
       "Action",
       "History"
     ],
-    "source": "top_rated"
+    "is_popular": false,
+    "is_top_rated": false
   },
   {
     "id": 28178,
@@ -6208,7 +6664,8 @@
       "Drama",
       "Family"
     ],
-    "source": "top_rated"
+    "is_popular": false,
+    "is_top_rated": false
   },
   {
     "id": 14,
@@ -6220,7 +6677,8 @@
     "genres": [
       "Drama"
     ],
-    "source": "top_rated"
+    "is_popular": false,
+    "is_top_rated": false
   },
   {
     "id": 521,
@@ -6233,7 +6691,8 @@
       "Thriller",
       "Crime"
     ],
-    "source": "top_rated"
+    "is_popular": false,
+    "is_top_rated": false
   },
   {
     "id": 400928,
@@ -6246,7 +6705,8 @@
       "Drama",
       "Comedy"
     ],
-    "source": "top_rated"
+    "is_popular": false,
+    "is_top_rated": false
   },
   {
     "id": 947,
@@ -6260,7 +6720,8 @@
       "History",
       "War"
     ],
-    "source": "top_rated"
+    "is_popular": false,
+    "is_top_rated": false
   },
   {
     "id": 595,
@@ -6272,7 +6733,8 @@
     "genres": [
       "Drama"
     ],
-    "source": "top_rated"
+    "is_popular": false,
+    "is_top_rated": false
   },
   {
     "id": 264644,
@@ -6285,7 +6747,8 @@
       "Drama",
       "Thriller"
     ],
-    "source": "top_rated"
+    "is_popular": false,
+    "is_top_rated": false
   },
   {
     "id": 110416,
@@ -6299,7 +6762,8 @@
       "Animation",
       "Fantasy"
     ],
-    "source": "top_rated"
+    "is_popular": false,
+    "is_top_rated": false
   },
   {
     "id": 20453,
@@ -6312,7 +6776,8 @@
       "Drama",
       "Comedy"
     ],
-    "source": "top_rated"
+    "is_popular": false,
+    "is_top_rated": false
   },
   {
     "id": 3175,
@@ -6327,7 +6792,8 @@
       "War",
       "History"
     ],
-    "source": "top_rated"
+    "is_popular": false,
+    "is_top_rated": false
   },
   {
     "id": 524,
@@ -6340,7 +6806,8 @@
       "Crime",
       "Drama"
     ],
-    "source": "top_rated"
+    "is_popular": false,
+    "is_top_rated": false
   },
   {
     "id": 140420,
@@ -6356,7 +6823,8 @@
       "Comedy",
       "Fantasy"
     ],
-    "source": "top_rated"
+    "is_popular": false,
+    "is_top_rated": false
   },
   {
     "id": 515001,
@@ -6370,6 +6838,7 @@
       "War",
       "Drama"
     ],
-    "source": "top_rated"
+    "is_popular": false,
+    "is_top_rated": false
   }
 ]
