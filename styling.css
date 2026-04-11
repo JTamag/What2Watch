@@ -388,7 +388,6 @@ section { margin-bottom: 52px; }
   font-weight: 500;
   cursor: pointer;
   letter-spacing: 0.6px;
-  transition: all 0.2s;
 }
 .modal-actions button:hover {
   background: var(--accent2);
