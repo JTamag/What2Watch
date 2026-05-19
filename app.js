@@ -46,6 +46,7 @@ function toggleWatched(movie) {
     if (isInWatched(movie.id)) {
         watched = watched.filter(m => m.id !== movie.id);
     } else {
+        if(isInWatchlist(movie.id)) watchlist = watchlist.filter(m => m.id !== movie.id);
         watched.push(movie);
     }
     save();
@@ -114,7 +115,6 @@ function buildCardTop(movie,rank = null) {
 
     const isWL = isInWatchlist(movie.id);
     const isWT = isInWatched(movie.id);
-    //////////////////////////////////////////////////// TODO 
     card.innerHTML = `
         <img src="${movie.poster}" alt="${movie.title} poster" loading="lazy"
             onerror="this.style.display='none'">
@@ -135,7 +135,6 @@ function buildCardTop(movie,rank = null) {
             </button>
         </div>
     `;
-    /////////////////////////////////////////////////////////
     card.querySelector(".watchlist-btn").addEventListener("click", e => {
         e.stopPropagation();
         toggleWatchlist(movie);
@@ -175,13 +174,13 @@ function renderSection(section) {
 }
 
 function refreshCurrentSection() {
-    renderSection(currentSection);
+    if (currentSection === "recommendations") {
+        getRecommendations(); // changes the recommendations based on user interaction
+    } else {
+        renderSection(currentSection);
+    }
 }
 
-//////////// Recommendation algo might be the last thing done
-function getRecommendations() {
-
-}
 // Search
 function handleSearch(query) {
     const existingResults = document.getElementById("search-results");
@@ -448,6 +447,118 @@ function exportData() {
     a.click();
     document.body.removeChild(a);
     URL.revokeObjectURL(url);
+}
+
+//////////// Recommendations
+function getRecommendations() {
+    currentSection = "recommendations";
+    // watched -> 2 ; watchlist ->1
+    const userMovies = [
+        ...watched.map(m=>({...m, weight:2})),
+        ...watchlist.map(m=>({...m, weight:1})) // posso colocar 1.5?
+    ];
+
+
+    //// maybe add a prepare_rendering function
+    // hide sections
+    document.querySelectorAll("main > section").forEach(s => s.classList.add("hidden"));
+
+    // make sure there are no present search results
+    const searchResults = document.getElementById("search-results");
+    if (searchResults) searchResults.remove();
+
+    document.getElementById("recommendations-section").classList.remove("hidden");
+
+    if(userMovies.length === 0){
+        renderRecommendationsEmpty("Add films to your Watchlist or films that you've watched to get personalised recommendations.");
+        return;
+    }
+
+    // weighed sums of genres 
+    const genreCounts = {};
+    let totalGenreWeight = 0;
+    userMovies.forEach(({genres,weight}) => {
+        (genres || []).forEach(g=> {
+            genreCounts[g] = (genreCounts[g] || 0) + weight;
+            totalGenreWeight += weight;
+        });
+    });
+    const genreAffinityy = {};
+    Object.keys(genreCounts).forEach(g => {
+        genreAffinityy[g] = genreCounts[g] / totalGenreWeight;
+    });
+
+
+    // Era
+    const  weightSum = userMovies.reduce((s,m) => s +m.weight,0);
+    const avgYear = userMovies.reduce((s,m) => s + (m.release_year || 2000)*m.weight,0)/weightSum; // fallback using the year 2000
+
+    // Exclude movies that were previously watched
+    const excludeIds = new Set(watched.map(m=>m.id));
+    const candidates = allMovies.filter(m => !excludeIds.has(m.id));
+
+    // Movie scores
+    const scored = candidates.map(movie => {
+        const genreRaw = (movie.genres || []).reduce((s,g)=>
+        s + (genreAffinityy[g] || 0 ),0);
+
+        const ratingScore = (movie.rating || 0) / 10;
+
+        const yearScore = Math.exp(-Math.abs((movie.release_year || 2000)- avgYear)/20);
+
+        //Presence in top-rated
+        const bonus = movie.is_top_rated ? 1:0;
+        return {movie,genreRaw,ratingScore,yearScore,bonus};
+    });
+
+    const maxGenre = Math.max(...scored.map(s => s.genreRaw),1e-6);
+
+    const results  =scored.map(({movie,genreRaw,ratingScore,yearScore,bonus})=> ({
+        ...movie,
+        _score:
+            (genreRaw/maxGenre) * 0.50 +
+            ratingScore * 0.35 +
+            yearScore * 0.1 + 
+            bonus * 0.05
+    })).sort((a, b) => b._score - a._score).slice(0, 20);
+    const topGenres = Object.entries(genreAffinityy).sort((a,b)=>b[1]-a[1]).slice(0,3).map(([g])=>g)
+    renderRecommendations(results, topGenres);
+}
+function renderRecommendations(movies, topGenres = []){
+    const section = document.getElementById("recommendations-section");
+
+    section.innerHTML = `
+    <div class = "recommendations-header">
+        <h2 class= "section-title">Recommended for You</h2>
+        ${topGenres.length ? `
+            <p class = "recommendations-sub">
+                Based on your taste in
+                ${topGenres.map(g=> `<span class = "genre-tag">${g}</span>`).join("")}
+                </p>`:""}
+    </div>
+    <div class = "grid" id = "recommendations-grid"></div>
+    `;
+    const grid = section.querySelector("#recommendations-grid");
+
+    movies.forEach(movie => {
+        const card = buildCard(movie);
+
+        const matchedGenres = (movie.genres || []).filter(g=>topGenres.includes(g));
+        if(matchedGenres.length>0){
+            const badge = document.createElement("div");
+            badge.className ="rec-badge";
+            badge.textContent = matchedGenres.slice(0,2).join(" · ");
+            card.querySelector(".card-content").appendChild(badge);
+        }
+        grid.appendChild(card);
+    });
+}
+function renderRecommendationsEmpty(message){
+    document.getElementById("recommendations-section").innerHTML = 
+    `
+    <h2 class= "section-title">Recommended for You</h2>
+    <p class = "empty-message">${message}</p>
+    `;
 }
 // Init
 loadMovies();
