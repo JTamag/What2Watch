@@ -355,7 +355,23 @@ section { margin-bottom: 52px; }
   flex-wrap: wrap;
   font-weight: 400;
 }
-
+.rec-badge {
+  display: block;
+  width: fit-content;
+  bottom: 48px;
+  margin: 6px auto 0; 
+  background: rgba(0, 0, 0, 0.72);
+  color: var(--text);
+  font-size: 0.68rem;
+  padding: 2px 8px;
+  border-radius: 99px;
+  backdrop-filter: blur(4px);
+}
+.recommendations-sub {
+  font-size: 0.85rem;
+  color: var(--muted); 
+  margin: -0.5rem 0 1rem; 
+}
 .genre-tag {
   background: var(--bg3);
   border: 1px solid var(--border);
