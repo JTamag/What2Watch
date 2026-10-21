@@ -120,33 +120,46 @@ main {
   border-radius: var(--radius);
   padding: 16px 24px;
   margin-bottom: 40px;
+  gap: 16px; /* Prevents text and buttons from smashing together on smaller screens */
 }
+
 .recommend-text {
   font-size: 14px;
   color: var(--muted);
 }
 
-#recommend-btn {
+/* Group container for the buttons */
+.recommend-actions {
+  display: flex;
+  gap: 10px; /* Space between the two buttons */
+  flex-shrink: 0;
+}
+
+/* Combined styles for both buttons */
+#recommend-btn,
+#surprise-btn {
   background: var(--accent);
   border: none;
   border-radius: var(--radius);
   color: var(--text);
   padding: 10px 22px;
-  border-radius: var(--radius);
-  font-family: 'DM Sans',sans-serif;
+  font-family: 'DM Sans', sans-serif;
   font-size: 14px;
   font-weight: 500;
   cursor: pointer;
   transition: background 0.2s, transform 0.1s;
   white-space: nowrap;
 }
-#recommend-btn:hover {
+
+#recommend-btn:hover,
+#surprise-btn:hover {
   background: var(--accent2);
 }
-#recommend-btn:active {
+
+#recommend-btn:active,
+#surprise-btn:active {
   transform: scale(0.97);
 }
-
 
 /* Sections */
 
