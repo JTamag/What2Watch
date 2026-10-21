@@ -331,7 +331,7 @@ document.getElementById("import-input").addEventListener("change", e => {
 // Import files
 function importData(file) {
     const fileName = file.name.toLowerCase();
-    if (fileName.endsWith(".csv")) {
+    if (fileName.endsWith(".csv") || file.type === "text/csv" || file.type === "application/vnd.ms-excel"){
         importLetterboxd(file);
         return;
     }

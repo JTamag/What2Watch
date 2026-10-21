@@ -131,11 +131,10 @@ main {
 /* Group container for the buttons */
 .recommend-actions {
   display: flex;
-  gap: 10px; /* Space between the two buttons */
+  gap: 10px;
   flex-shrink: 0;
 }
 
-/* Combined styles for both buttons */
 #recommend-btn,
 #surprise-btn {
   background: var(--accent);
