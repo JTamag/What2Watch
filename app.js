@@ -536,8 +536,8 @@ function getRecommendations() {
     currentSection = "recommendations";
     // watched -> 2 ; watchlist ->1
     const userMovies = [
-        ...watched.map(m=>({...m, weight:2})),
-        ...watchlist.map(m=>({...m, weight:1})) // posso colocar 1.5?
+        ...watched.map(m=>({...m, weight:1.5})),
+        ...watchlist.map(m=>({...m, weight:2.5})) 
     ];
 
 
@@ -644,3 +644,29 @@ function renderRecommendationsEmpty(message){
 }
 // Init
 loadMovies();
+
+
+// Shuffle / random movie from watchlist
+function surpriseMe(){
+    let pool = watchlist;
+
+
+    if(pool.length === 0){
+        pool = allMovies.filter(m => m.is_popular);
+    }
+
+    if(pool.length === 0){
+        pool = allMovies;
+    }
+    
+    if(pool.length>0){
+        const randomM = Math.floor(Math.random()*pool.length);
+        const selectedMovie = pool[randomM];
+        openModal(selectedMovie);
+    }
+}
+
+const surpriseBtn = document.getElementById("surprise-btn");
+surpriseBtn.addEventListener('click',()=>{
+    surpriseMe();
+});
