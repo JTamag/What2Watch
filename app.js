@@ -328,9 +328,13 @@ document.getElementById("import-input").addEventListener("change", e => {
         e.target.value = "";
     }
 });
-
 // Import files
 function importData(file) {
+    const fileName = file.name.toLowerCase();
+    if (fileName.endsWith(".csv")) {
+        importLetterboxd(file);
+        return;
+    }
     const reader = new FileReader();
     reader.onload  = function(event) {
         try {
@@ -372,47 +376,119 @@ function importData(file) {
 }
 
 
-/// STILL NEED TO DO TMDB REQUEST OR OTHER OPTIONS TO GET MOVIE IDS 
-/// thinking how to do this rn
-async function importLetterboxd(file) {
+//helper function to help split csv
+function parseCSVLine(line) {
+    const result = [];
+    let current = "";
+    let inQuotes = false;
+
+    for(let i = 0;i<line.length;i++){
+        const char = line[i];
+        if(char === '"' || char === "'"){
+            inQuotes = !inQuotes;
+        } else if(char === ',' && !inQuotes){
+            result.push(current.trim().replace(/^["']|["']$/g, ""));
+            current = "";
+        } else {
+            current += char;
+        }
+    }
+    result.push(current.trim().replace(/^["']|["']$/g, ""));
+    return result;
+}
+
+
+async function importLetterboxd(file, forcedTarget = null) {
     const reader = new FileReader();
     reader.onload = async function(event) {
         const text = event.target.result;
-        const lines = text.split("\n");
+        const lines = text.split(/\r?\n/);
 
-        let imported = 0;
+        if (lines.length < 2) {
+            alert("The selected CSV file appears to be empty.");
+            return;
+        }
+
+        // 1. Determine header indices
+        const headers = parseCSVLine(lines[0]).map(h => h.toLowerCase());
+        const titleIdx = headers.indexOf("name") !== -1 ? headers.indexOf("name") : headers.indexOf("title");
+        const yearIdx = headers.indexOf("year");
+
+        if (titleIdx === -1) {
+            alert("Could not find a 'Name' or 'Title' column in the CSV file.");
+            return;
+        }
+
+        // 2. Auto-detect list type from file name if not explicitly provided
+        let targetListType = forcedTarget;
+        if (!targetListType) {
+            const fileName = file.name.toLowerCase();
+            if (fileName.includes("watchlist")) {
+                targetListType = "watchlist";
+            } else if (fileName.includes("watched") || fileName.includes("ratings") || fileName.includes("diary")) {
+                targetListType = "watched";
+            } else {
+                targetListType = "watched"; // Default fallback
+            }
+        }
+
+        // Fetch current list state from localStorage
+        let currentTarget = JSON.parse(localStorage.getItem(targetListType) || "[]");
+
+        let importedCount = 0;
         let localMatches = 0;
-        let apiMatches = 0;
-        let failed = 0;
-        
-        for(let i = 1; i < lines.length; i++) {
-            const cols = lines[i].split(",");
+        let failedCount = 0;
 
-            const title = cols[0].trim();
-            const year = cols[1].trim();
+        // 3. Process CSV rows
+        for (let i = 1; i < lines.length; i++) {
+            const line = lines[i].trim();
+            if (!line) continue;
 
-            if(!title) continue;
+            const cols = parseCSVLine(line);
+            const title = cols[titleIdx];
+            const year = yearIdx !== -1 ? cols[yearIdx] : "";
 
-            imported++;
+            if (!title) continue;
 
-            let match = findLocalMatch(title, year);
-            if(!match){
-                try{ 
-                    ///
-                } catch(e) {
-                    console.error(`Error searching TMDB for "${title} (${year})":`, e);
+            importedCount++;
+
+            // Check if movie exists in local database (allMovies)
+            const match = findLocalMatch(title, year);
+
+            if (match) {
+                localMatches++;
+                // Add to current target list if not already present
+                if (!currentTarget.some(m => m.id === match.id)) {
+                    currentTarget.push(match);
                 }
             } else {
-                localMatches++;
+                // If not found in allMovies.json
+                failedCount++;
             }
-
-            // not actually working ofc
         }
+
+        // 4. Update localStorage and App State
+        localStorage.setItem(targetListType, JSON.stringify(currentTarget));
+
+        if (targetListType === "watchlist") {
+            watchlist = currentTarget;
+        } else if (targetListType === "watched") {
+            watched = currentTarget;
+        }
+
         save();
         refreshCurrentSection();
 
-        alert(`Import complete! ${imported} entries processed.\n${localMatches} matched locally, ${apiMatches} matched via API, ${failed} failed.`);
-    }
+        alert(
+            `Import Complete!\n` +
+            `• List updated: ${targetListType.toUpperCase()}\n` +
+            `• Rows processed: ${importedCount}\n` +
+            `• Matched with database: ${localMatches}\n` +
+            `• Not found in database: ${failedCount}`
+        );
+    };
+
+    reader.readAsText(file);
 }
 
 // Auxiliary functions to match existing movies in the database and look for new ones
@@ -420,10 +496,16 @@ function normalizeTitle(title) {
     return title.toLowerCase().replace(/[^a-z0-9]+/g, "");
 }
 function findLocalMatch(title, year) {
-    return allMovies.find(movie => 
-        normalizeTitle(movie.title) === normalizeTitle(title) &&
-        String(movie.release_year) === String(year)
-    );
+    const normTitle = normalizeTitle(title);
+    return allMovies.find(movie => {
+        const titleMatch = normalizeTitle(movie.title) === normTitle;
+        if(!titleMatch) return false;
+
+        if(year && movie.release_year) {
+            return String(movie.release_year).trim() === String(year).trim();
+        }
+        return true;
+    });
 }
 async function searchTMDB(title, year) {
     // TODO
