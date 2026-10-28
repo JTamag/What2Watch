@@ -54,8 +54,10 @@ Generates personalised recommendations using your watchlist and watched history.
 
 ### Automated Movie Dataset Pipeline
 
-- **Python Scraper:** Fetches up to 15 pages each of popular and top-rated movies from TMDB, applying a minimum vote threshold of 1,000 and deduplicating records.
-- **Data Processing:** Normalises movie metadata and genre information into a structured JSON dataset.
+- **Python Scraper:** Builds the catalogue from up to 15 pages each of popular and top-rated movies, plus five pages per genre from TMDB's discovery endpoint.
+- **Catalogue Quality:** Applies a minimum vote threshold of 1,000 to top-rated results and 500 to genre-discovery results, skips movies without posters, deduplicates records, and caps the catalogue at 2,500 movies.
+- **Reliable Updates:** Reuses HTTP connections, retries rate-limit and server errors with backoff, validates responses, preserves the existing dataset if the new result unexpectedly shrinks below 50%, and writes updates atomically.
+- **Stable Output:** Sorts records by TMDB ID and leaves `data/movies.json` untouched when the generated content has not changed.
 - **GitHub Actions:** Automatically refreshes `data/movies.json` daily at 06:00 UTC, with support for manual workflow dispatch.
 - **Static Deployment:** Updates the dataset without requiring a separate backend or frontend build process.
 
@@ -135,13 +137,13 @@ npx serve . -l 8000
 
 ### 3. Run the scraper (optional)
 
-Install the Python dependency:
+Install the scraper dependency:
 
 ```bash
 python -m pip install requests
 ```
 
-Set your TMDB API key as an environment variable.
+Run the scraper from the repository root and set your TMDB API key as an environment variable. The script fetches the popular and top-rated lists first, then expands the catalogue with genre discovery results, and writes the final dataset to `data/movies.json`.
 
 **Linux / macOS**
 
@@ -157,7 +159,7 @@ $env:TMDB_API_KEY = "your_api_key_here"
 python scraper/scraper.py
 ```
 
-The scraper updates `data/movies.json`. Do not commit API credentials to the repository.
+The scraper skips movies without poster artwork and keeps the existing `data/movies.json` if a run produces fewer than half as many records as the current dataset. Do not commit API credentials to the repository.
 
 ## Credits & Attribution
 
