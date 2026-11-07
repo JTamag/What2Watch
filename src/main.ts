@@ -6,10 +6,12 @@ import { importLetterboxdCSV } from "./importers/letterboxd.js";
 import { createViews } from "./ui/views.js";
 import { createModalController } from "./ui/modal.js";
 import { initSettings } from "./ui/settings.js";
+import '../styling.css';
+import { Movie } from "./types.js";
 
-let catalog = [];
+let catalog: Movie[] = [];
 let userData = loadUserData();
-let views;
+let views: ReturnType<typeof createViews>;
 
 function save() {
     saveUserData(userData);
@@ -19,7 +21,7 @@ function refresh() {
     views?.refreshCurrentSection();
 }
 
-function toggleWatchlist(movie) {
+function toggleWatchlist(movie: Movie) {
     const exists = userData.watchlist.some(item => item.id === movie.id);
     userData.watchlist = exists
         ? userData.watchlist.filter(item => item.id !== movie.id)
@@ -28,7 +30,7 @@ function toggleWatchlist(movie) {
     refresh();
 }
 
-function toggleWatched(movie) {
+function toggleWatched(movie: Movie) {
     const exists = userData.watched.some(item => item.id === movie.id);
     userData.watched = exists
         ? userData.watched.filter(item => item.id !== movie.id)
@@ -38,7 +40,7 @@ function toggleWatched(movie) {
     refresh();
 }
 
-async function importFile(file) {
+async function importFile(file: File) {
     try {
         const text = await file.text();
         if (file.name.toLowerCase().endsWith(".csv") || file.type === "text/csv" || file.type === "application/vnd.ms-excel") {
@@ -58,7 +60,7 @@ async function importFile(file) {
         alert("Data imported successfully!");
     } catch (error) {
         console.error("Import failed:", error);
-        alert(error.message || "Could not import the selected file.");
+        alert(error instanceof Error ? error.message : "Could not import the selected file.");
     }
 }
 
@@ -100,7 +102,7 @@ views = createViews({
     getUserData: () => userData,
     onToggleWatchlist: toggleWatchlist,
     onToggleWatched: toggleWatched,
-    onOpenMovie: movie => modal.open(movie),
+    onOpenMovie: (movie: Movie) => modal.open(movie),
     onRecommendations: showRecommendations,
     onSurprise: surpriseMe
 });
