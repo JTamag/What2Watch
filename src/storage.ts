@@ -1,15 +1,17 @@
-const emptyUserData = () => ({ watchlist: [], watched: [], ratings: {} });
+import { Movie, UserData } from "./types";
 
-function readArray(storage, key) {
+const emptyUserData = (): UserData => ({version: 1, watchlist: [], watched: [], ratings: {} });
+
+function readArray(storage: Storage, key: string): Movie[] {
     try {
-        const value = JSON.parse(storage.getItem(key) || "[]");
-        return Array.isArray(value) ? value : [];
+        const value:unknown = JSON.parse(storage.getItem(key) ?? "[]");
+        return Array.isArray(value) ? (value as Movie[]) : [];
     } catch {
         return [];
     }
 }
 
-export function loadUserData(storage = localStorage) {
+export function loadUserData(storage: Storage = localStorage): UserData {
     const legacyWatchlist = readArray(storage, "watchlist");
     const legacyWatched = readArray(storage, "watched");
     try {
@@ -38,7 +40,7 @@ export function loadUserData(storage = localStorage) {
     };
 }
 
-export function saveUserData(userData, storage = localStorage) {
+export function saveUserData(userData: UserData, storage = localStorage) {
     const data = {
         version: 1,
         watchlist: Array.isArray(userData.watchlist) ? userData.watchlist : [],
@@ -51,7 +53,7 @@ export function saveUserData(userData, storage = localStorage) {
     storage.setItem("watched", JSON.stringify(data.watched));
 }
 
-export function mergeById(existing = [], incoming = []) {
+export function mergeById(existing: Movie[] = [], incoming: Movie[] = []) {
     const merged = [...existing];
     const ids = new Set(merged.map(movie => movie.id));
     for (const movie of incoming) {

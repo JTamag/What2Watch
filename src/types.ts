@@ -24,3 +24,10 @@ export interface Recommendation {
     score: number;
     reasons: string[];
 }
+
+export interface PaginationState {
+    page: number;
+    movies: Movie[];
+    options: Record<string, unknown>;
+    controls: HTMLElement;
+}

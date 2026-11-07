@@ -1,9 +1,11 @@
-function buildTasteProfile(userData) {
+import { Movie, UserData } from "./types";
+
+function buildTasteProfile(userData: UserData) {
     const weightedMovies = [
         ...(userData.watched || []).map(movie => ({ ...movie, weight: 1.5 })),
         ...(userData.watchlist || []).map(movie => ({ ...movie, weight: 2.5 }))
     ];
-    const genreWeights = {};
+    const genreWeights: Record<string, number> = {};
     let totalGenreWeight = 0;
 
     for (const movie of weightedMovies) {
@@ -14,7 +16,7 @@ function buildTasteProfile(userData) {
     }
 
     const genres = Object.fromEntries(
-        Object.entries(genreWeights).map(([genre, weight]) => [genre, totalGenreWeight ? weight / totalGenreWeight : 0])
+        Object.entries(genreWeights).map(([genre, weight]: [string, number]) => [genre, totalGenreWeight ? weight / totalGenreWeight : 0])
     );
     const totalMovieWeight = weightedMovies.reduce((sum, movie) => sum + movie.weight, 0);
     const averageYear = totalMovieWeight
@@ -24,12 +26,12 @@ function buildTasteProfile(userData) {
     return { genres, averageYear };
 }
 
-export function getTopGenres(userData, limit = 3) {
+export function getTopGenres(userData: UserData, limit = 3) {
     const { genres } = buildTasteProfile(userData);
     return Object.entries(genres).sort((a, b) => b[1] - a[1]).slice(0, limit).map(([genre]) => genre);
 }
 
-export function recommend(catalog, userData, { limit = 20 } = {}) {
+export function recommend(catalog: Movie[], userData: UserData, { limit = 20 } = {}) {
     const { genres, averageYear } = buildTasteProfile(userData);
     const watchedIds = new Set((userData.watched || []).map(movie => movie.id));
     const candidates = catalog.filter(movie => !watchedIds.has(movie.id));
@@ -43,7 +45,7 @@ export function recommend(catalog, userData, { limit = 20 } = {}) {
     const maxGenreScore = Math.max(...scored.map(item => item.genreScore), 1e-6);
 
     return scored.map(({ movie, genreScore, ratingScore, yearScore, topRatedBonus }) => {
-        const matchingGenres = (movie.genres || []).filter(genre => genres[genre] > 0);
+        const matchingGenres = (movie.genres || []).filter(genre => (genres[genre] ?? 0) > 0);
         const reasons = [];
         if (matchingGenres.length) reasons.push(`Matches your interest in ${matchingGenres.slice(0, 2).join(" and ")}`);
         if (movie.is_top_rated) reasons.push("Included in the top-rated collection");

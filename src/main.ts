@@ -7,7 +7,7 @@ import { createViews } from "./ui/views.js";
 import { createModalController } from "./ui/modal.js";
 import { initSettings } from "./ui/settings.js";
 import '../styling.css';
-import { Movie } from "./types.js";
+import { Movie } from "./types";
 
 let catalog: Movie[] = [];
 let userData = loadUserData();
@@ -94,7 +94,8 @@ function surpriseMe() {
             ? catalog.filter(movie => movie.is_popular)
             : catalog;
     if (!pool.length) return;
-    modal.open(pool[Math.floor(Math.random() * pool.length)]);
+    const randomMovie = pool[Math.floor(Math.random() * pool.length)];
+    if (randomMovie) modal.open(randomMovie);
 }
 
 views = createViews({
