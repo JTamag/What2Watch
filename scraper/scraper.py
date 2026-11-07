@@ -19,7 +19,7 @@ from urllib3.util.retry import Retry
 API_KEY = os.environ.get("TMDB_API_KEY")
 BASE_URL = "https://api.themoviedb.org/3"
 IMAGE_URL = "https://image.tmdb.org/t/p/w500"
-OUTPUT = "data/movies.json"
+OUTPUT = "public/data/movies.json"
 
 # ---- Tuning knobs -------------------------------------------------------
 POPULAR_PAGES = 15          # 20 movies per page
