@@ -4,6 +4,8 @@ let watchlist = JSON.parse(localStorage.getItem("watchlist") || "[]");
 let watched   = JSON.parse(localStorage.getItem("watched")   || "[]");
 let currentSection = "popular";
 let searchTimeout = null;
+const PAGE_SIZE = 20;
+let paginationState = new WeakMap(); // To track pagination state for each section
 
 
 // Load movies
@@ -102,10 +104,10 @@ function renderGrid(gridEl, movies) {
 }
 
 // Grid rendering for top-rated
-function renderGridTop(gridEl, movies) {
+function renderGridTop(gridEl, movies,startIndex = 0) {
     gridEl.innerHTML = "";
     movies.forEach((movie, index) => {
-        gridEl.appendChild(buildCardTop(movie, index + 1));
+        gridEl.appendChild(buildCardTop(movie,startIndex+ index + 1));
     });
 }
 // Build card for top-rated
@@ -158,20 +160,112 @@ function renderSection(section) {
     if (searchResults) searchResults.remove();
     if (section === "popular") {
         document.getElementById("popular-section").classList.remove("hidden");
-        renderGrid(document.getElementById("popular-grid"), allMovies.filter(m=> m.is_popular));
+        renderPaginatedGrid(document.getElementById("popular-grid"), allMovies.filter(m=> m.is_popular));
     }   else if (section === "top-rated") {
         document.getElementById("top-rated-section").classList.remove("hidden");
-        renderGridTop(document.getElementById("top-rated-grid"), allMovies.filter(m => m.is_top_rated).sort((a, b) => b.rating - a.rating));
+        renderPaginatedGrid(document.getElementById("top-rated-grid"), allMovies.filter(m => m.is_top_rated).sort((a, b) => b.rating - a.rating),renderGridTop);
     }   else if (section === "watchlist") {
         document.getElementById("watchlist-section").classList.remove("hidden");
         document.getElementById("watchlist-empty").style.display = watchlist.length  ? "none" : "block";
-        renderGrid(document.getElementById("watchlist-grid"), watchlist);
+        renderPaginatedGrid(document.getElementById("watchlist-grid"), watchlist);
     } else if (section === "watched") {
         document.getElementById("watched-section").classList.remove("hidden");
         document.getElementById("watched-empty").style.display = watched.length  ? "none" : "block";
-        renderGrid(document.getElementById("watched-grid"), watched);
+        renderPaginatedGrid(document.getElementById("watched-grid"), watched);
     }
 }
+
+function renderPaginatedGrid(grid,movies,renderMovies = renderGrid) {
+    let state = paginationState.get(grid)
+
+    if(!state){
+        const controls = document.createElement("div");
+        controls.className = "pagination";
+        controls.innerHTML = `
+            <button type = "button" class = "page-prev">Previous</button>
+            <div class = "page-numbers"></div>
+            <span class = "page-info"></span>
+            <button type = "button" class = "page-next">Next</button>
+        `;
+        grid.after(controls);
+        
+        state = {
+            page: 1,
+            movies: [],
+            renderMovies,
+            controls
+        };
+        paginationState.set(grid,state);
+
+        controls.querySelector(".page-prev").addEventListener("click", () => {
+            if(state.page > 1){
+                state.page--;
+                renderCurrentPage(grid,state);
+            }
+        });
+        controls.querySelector(".page-next").addEventListener("click", () => {
+            if(state.page < Math.ceil(state.movies.length / PAGE_SIZE)){
+                state.page++;
+                renderCurrentPage(grid,state);
+            }
+        });
+    }
+
+    state.movies = movies;
+    state.renderMovies = renderMovies;
+    renderCurrentPage(grid,state);
+}
+
+function renderCurrentPage(grid, state) {
+    const totalPages = Math.ceil(state.movies.length / PAGE_SIZE);
+    const pageCount = Math.max(totalPages,1);
+
+    state.page = Math.min(Math.max(state.page,1),pageCount);
+    const start = (state.page - 1) * PAGE_SIZE;
+    const pageMovies = state.movies.slice(start,start+PAGE_SIZE);
+
+    state.renderMovies(grid,pageMovies,start);
+    state.controls.querySelector(".page-info").textContent = `Page ${state.page} of ${pageCount}`;
+
+    const pageNumbers = state.controls.querySelector(".page-numbers");
+    pageNumbers.innerHTML = "";
+
+    let pagesToShow;
+    if(pageCount <= 5){
+        pagesToShow = Array.from({ length: pageCount }, (_, index) => index + 1);
+    } else {
+        const windowStart = Math.max(2, Math.min(state.page - 1, pageCount - 3));
+        pagesToShow = [1, windowStart, windowStart + 1, windowStart + 2, pageCount];
+    }
+
+    let previousPage = 0;
+    for(const page of pagesToShow){
+        if(page - previousPage > 1){
+            const ellipsis = document.createElement("span");
+            ellipsis.className = "page-ellipsis";
+            ellipsis.textContent = "…";
+            pageNumbers.appendChild(ellipsis);
+        }
+
+        const button = document.createElement("button");
+        button.type = "button";
+        button.className = "page-number";
+        button.textContent = page;
+        button.disabled = page === state.page;
+        if(page === state.page) button.setAttribute("aria-current", "page");
+        button.addEventListener("click", () => {
+            state.page = page;
+            renderCurrentPage(grid,state);
+        });
+        pageNumbers.appendChild(button);
+        previousPage = page;
+    }
+
+    state.controls.querySelector(".page-prev").disabled = state.page === 1;
+    state.controls.querySelector(".page-next").disabled = state.page === pageCount;
+    state.controls.hidden = state.movies.length <= PAGE_SIZE;
+}
+
 
 function refreshCurrentSection() {
     if (currentSection === "recommendations") {
@@ -212,7 +306,7 @@ function handleSearch(query) {
     container.appendChild(grid);
     document.querySelector("main").insertBefore(container, document.querySelector(".recommend-bar").nextSibling);
 
-    renderGrid(grid, results);
+    renderPaginatedGrid(grid, results);
 }
 
 // Modal 
