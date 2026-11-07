@@ -54,6 +54,7 @@ export function createViews({ getMovies, getUserData, onToggleWatchlist, onToggl
             rankOffset: start,
             ...state.options
         });
+        window.scrollTo({ top: 0, behavior: "smooth" });
         (state.controls.querySelector(".page-info") as HTMLElement).textContent = `Page ${state.page} of ${pageCount}`;
         (state.controls.querySelector(".page-prev") as HTMLButtonElement).disabled = state.page === 1;
         (state.controls.querySelector(".page-next") as HTMLButtonElement).disabled = state.page === pageCount;
