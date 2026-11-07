@@ -75,6 +75,7 @@ def to_record(movie, genres_map):
         "genres": [genres_map[g] for g in movie.get("genre_ids", []) if g in genres_map],
         "is_popular": False,
         "is_top_rated": False,
+        "popularity": movie.get("popularity",0),
     }
 
 

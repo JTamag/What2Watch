@@ -160,7 +160,8 @@ function renderSection(section) {
     if (searchResults) searchResults.remove();
     if (section === "popular") {
         document.getElementById("popular-section").classList.remove("hidden");
-        renderPaginatedGrid(document.getElementById("popular-grid"), allMovies.filter(m=> m.is_popular));
+        const popularMovies = allMovies.filter(movie => movie.is_popular).sort((a, b) => (b.popularity || 0) - (a.popularity || 0));
+        renderPaginatedGrid(document.getElementById("popular-grid"), popularMovies);
     }   else if (section === "top-rated") {
         document.getElementById("top-rated-section").classList.remove("hidden");
         renderPaginatedGrid(document.getElementById("top-rated-grid"), allMovies.filter(m => m.is_top_rated).sort((a, b) => b.rating - a.rating),renderGridTop);
