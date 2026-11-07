@@ -1,7 +1,8 @@
-import { findLocalMatch } from "../search.js";
-import { mergeById } from "../storage.js";
+import { findLocalMatch } from "../search";
+import { mergeById } from "../storage";
+import { Movie } from "../types";
 
-export function parseCSV(text) {
+export function parseCSV(text : string):string[][] {
     const rows = [];
     let row = [];
     let field = "";
@@ -40,22 +41,22 @@ export function parseCSV(text) {
     return rows;
 }
 
-export function detectLetterboxdTarget(filename, forcedTarget = null) {
+export function detectLetterboxdTarget(filename:string, forcedTarget : 'watchlist' | 'watched' | null = null): 'watchlist' | 'watched' {
     if (forcedTarget === "watchlist" || forcedTarget === "watched") return forcedTarget;
     const name = filename.toLowerCase();
     return name.includes("watchlist") ? "watchlist" : "watched";
 }
 
-export function importLetterboxdCSV(text, filename, catalog, existing = [], forcedTarget = null) {
+export function importLetterboxdCSV(text : string, filename : string, catalog : Movie[], existing : Movie[] = [], forcedTarget : 'watchlist' | 'watched' | null = null) {
     const rows = parseCSV(text);
     if (rows.length < 2) throw new Error("The selected CSV appears to be empty.");
 
-    const headers = rows[0].map(value => value.toLowerCase());
+    const headers = rows[0]!.map(value => value.toLowerCase());
     const titleIndex = headers.includes("name") ? headers.indexOf("name") : headers.indexOf("title");
     const yearIndex = headers.indexOf("year");
     if (titleIndex < 0) throw new Error("Could not find a Name or Title column in the CSV.");
 
-    const target = detectLetterboxdTarget(filename, forcedTarget);
+    const target = detectLetterboxdTarget(filename, forcedTarget );
     const matched = [];
     let importedCount = 0;
     let failedCount = 0;
@@ -63,7 +64,7 @@ export function importLetterboxdCSV(text, filename, catalog, existing = [], forc
         const title = columns[titleIndex];
         if (!title) continue;
         importedCount++;
-        const movie = findLocalMatch(title, yearIndex < 0 ? "" : columns[yearIndex], catalog);
+        const movie = findLocalMatch(title, yearIndex < 0 ? "" : (columns[yearIndex] ?? ""),catalog);
         if (movie) matched.push(movie);
         else failedCount++;
     }
