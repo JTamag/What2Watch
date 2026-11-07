@@ -1,0 +1,118 @@
+import { loadMovies } from "./data.js";
+import { loadUserData, saveUserData } from "./storage.js";
+import { recommend, getTopGenres } from "./recommender.js";
+import { parsePersonalData, mergePersonalData, exportPersonalData } from "./importers/default_importers.js";
+import { importLetterboxdCSV } from "./importers/letterboxd.js";
+import { createViews } from "./ui/views.js";
+import { createModalController } from "./ui/modal.js";
+import { initSettings } from "./ui/settings.js";
+
+let catalog = [];
+let userData = loadUserData();
+let views;
+
+function save() {
+    saveUserData(userData);
+}
+
+function refresh() {
+    views?.refreshCurrentSection();
+}
+
+function toggleWatchlist(movie) {
+    const exists = userData.watchlist.some(item => item.id === movie.id);
+    userData.watchlist = exists
+        ? userData.watchlist.filter(item => item.id !== movie.id)
+        : [...userData.watchlist, movie];
+    save();
+    refresh();
+}
+
+function toggleWatched(movie) {
+    const exists = userData.watched.some(item => item.id === movie.id);
+    userData.watched = exists
+        ? userData.watched.filter(item => item.id !== movie.id)
+        : [...userData.watched, movie];
+    if (!exists) userData.watchlist = userData.watchlist.filter(item => item.id !== movie.id);
+    save();
+    refresh();
+}
+
+async function importFile(file) {
+    try {
+        const text = await file.text();
+        if (file.name.toLowerCase().endsWith(".csv") || file.type === "text/csv" || file.type === "application/vnd.ms-excel") {
+            const target = /watchlist/i.test(file.name) ? "watchlist" : "watched";
+            const result = importLetterboxdCSV(text, file.name, catalog, userData[target]);
+            userData[target] = result.movies;
+            save();
+            refresh();
+            alert(`Import complete!\nList updated: ${result.target.toUpperCase()}\nRows processed: ${result.importedCount}\nMatched with catalogue: ${result.matchedCount}\nNot found: ${result.failedCount}`);
+            return;
+        }
+
+        const incoming = parsePersonalData(text);
+        userData = mergePersonalData(userData, incoming);
+        save();
+        refresh();
+        alert("Data imported successfully!");
+    } catch (error) {
+        console.error("Import failed:", error);
+        alert(error.message || "Could not import the selected file.");
+    }
+}
+
+const settings = initSettings({
+    getUserData: () => userData,
+    onImport: importFile,
+    onExport: () => exportPersonalData(userData)
+});
+
+const modal = createModalController({
+    getUserData: () => userData,
+    onToggleWatchlist: toggleWatchlist,
+    onToggleWatched: toggleWatched,
+    isSettingsOpen: settings.isOpen,
+    closeSettings: settings.close
+});
+
+function showRecommendations() {
+    if (!userData.watchlist.length && !userData.watched.length) {
+        views.showRecommendationsEmpty("Add films to your Watchlist or mark films as watched to get personalised recommendations.");
+        return;
+    }
+    const results = recommend(catalog, userData);
+    views.showRecommendations(results, getTopGenres(userData));
+}
+
+function surpriseMe() {
+    const pool = userData.watchlist.length
+        ? userData.watchlist
+        : catalog.filter(movie => movie.is_popular).length
+            ? catalog.filter(movie => movie.is_popular)
+            : catalog;
+    if (!pool.length) return;
+    modal.open(pool[Math.floor(Math.random() * pool.length)]);
+}
+
+views = createViews({
+    getMovies: () => catalog,
+    getUserData: () => userData,
+    onToggleWatchlist: toggleWatchlist,
+    onToggleWatched: toggleWatched,
+    onOpenMovie: movie => modal.open(movie),
+    onRecommendations: showRecommendations,
+    onSurprise: surpriseMe
+});
+
+views.init();
+
+loadMovies()
+    .then(data => {
+        catalog = data.movies;
+        views.renderSection("popular");
+    })
+    .catch(error => {
+        console.error("Could not load the movie catalogue:", error);
+        alert("Could not load the movie catalogue. Please refresh and try again.");
+    });
