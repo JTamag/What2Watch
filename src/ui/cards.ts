@@ -1,4 +1,6 @@
-export function renderMovieGrid(grid, movies, {
+import { Movie, UserData } from "../types";
+
+export function renderMovieGrid(grid: HTMLElement, movies: Movie[], {
     getUserData,
     onToggleWatchlist,
     onToggleWatched,
@@ -6,6 +8,14 @@ export function renderMovieGrid(grid, movies, {
     rankOffset = 0,
     showRanks = false,
     topGenres = []
+}: {
+    getUserData: () => UserData;
+    onToggleWatchlist: (movie: Movie) => void;
+    onToggleWatched: (movie: Movie) => void;
+    onOpenMovie: (movie: Movie) => void;
+    rankOffset?: number;
+    showRanks?: boolean;
+    topGenres?: string[];
 }) {
     grid.innerHTML = "";
     const data = getUserData();
@@ -29,12 +39,12 @@ export function renderMovieGrid(grid, movies, {
                 <button type="button" class="watchlist-btn ${watchlistIds.has(movie.id) ? "active" : ""}">${watchlistIds.has(movie.id) ? "In Watchlist" : "Add to Watchlist"}</button>
                 <button type="button" class="watched-btn ${watchedIds.has(movie.id) ? "active" : ""}">${watchedIds.has(movie.id) ? "Watched" : "Mark as Watched"}</button>
             </div>`;
-        card.querySelector(".card-title").textContent = movie.title;
-        card.querySelector(".watchlist-btn").addEventListener("click", event => {
+        card.querySelector(".card-title")!.textContent = movie.title;
+        (card.querySelector(".watchlist-btn")as HTMLButtonElement).addEventListener("click", event => {
             event.stopPropagation();
             onToggleWatchlist(movie);
         });
-        card.querySelector(".watched-btn").addEventListener("click", event => {
+        (card.querySelector(".watched-btn")as HTMLButtonElement).addEventListener("click", event => {
             event.stopPropagation();
             onToggleWatched(movie);
         });

@@ -1,6 +1,6 @@
 # What2Watch
 
-A client-side movie discovery, recommendation, and tracking web application built with vanilla JavaScript, powered by a daily-updated movie dataset from [The Movie Database (TMDB)](https://www.themoviedb.org/).
+A client-side movie discovery, recommendation, and tracking web application built with TypeScript and Vite, powered by a daily-updated movie dataset from [The Movie Database (TMDB)](https://www.themoviedb.org/).
 
 **[Live Demo](https://jtamag.github.io/What2Watch/)** · **[Source Code](https://github.com/JTamag/What2Watch)**
 
@@ -70,10 +70,10 @@ Generates personalised recommendations using your watchlist and watched history.
                  Python Scraper
                         |
                         v
-                 data/movies.json
+            public/data/movies.json
                         |
                         v
-              Frontend (JavaScript)
+              Frontend (TypeScript / Vite)
                         |
              +----------+-----------+
              |          |           |
@@ -95,22 +95,24 @@ Generates personalised recommendations using your watchlist and watched history.
 
 | Component | Technologies |
 |---|---|
-| Frontend | Vanilla JavaScript (ES6+), HTML5, CSS3 |
+| Frontend | TypeScript (Strict), Vite, HTML5, CSS3 |
+| Validation | Zod |
+| Testing | Vitest |
 | Styling | CSS Variables, Flexbox, CSS Grid |
 | Data & Ingestion | Python 3, Requests, TMDB API |
-| Automation | GitHub Actions |
+| Automation & CI/CD | GitHub Actions (Daily Scraper + Automated Build & Deploy) |
 | Client-Side Storage | Browser `localStorage` |
 | Data Formats | JSON, CSV |
-| Hosting | GitHub Pages |
+| Hosting | GitHub Pages (via GitHub Actions) |
 | Typography | Bebas Neue, DM Sans |
 
 ## Local Development
 
 ### Prerequisites
 
-- Python 3 for the local HTTP server and optional scraper.
-- A modern web browser.
-- A TMDB API key only if running the data scraper manually.
+- Node.js 20+ and npm
+- Python 3 (only needed if running the data scraper manually)
+- A TMDB API key (only needed if running the data scraper manually)
 
 ### 1. Clone the repository
 
@@ -119,23 +121,37 @@ git clone https://github.com/JTamag/What2Watch.git
 cd What2Watch
 ```
 
-### 2. Run the application
-
-The frontend loads `data/movies.json` using the Fetch API, so serve the project over HTTP rather than opening `index.html` directly.
+### 2. Install dependencies
 
 ```bash
-python -m http.server 8000
+npm install
 ```
 
-Open [http://localhost:8000](http://localhost:8000) in your browser.
-
-Alternatively, with Node.js installed:
+### 3. Run the development server
 
 ```bash
-npx serve . -l 8000
+npm run dev
 ```
 
-### 3. Run the scraper (optional)
+Open the printed URL (e.g. [http://localhost:5173/What2Watch/](http://localhost:5173/What2Watch/)) in your browser.
+
+### 4. Running tests, typechecking & building
+
+```bash
+# Run unit tests with Vitest
+npm test
+
+# Run strict TypeScript typecheck
+npm run typecheck
+
+# Build for production (outputs to dist/)
+npm run build
+
+# Preview production build locally
+npm run preview
+```
+
+### 5. Run the scraper (optional)
 
 Install the scraper dependency:
 

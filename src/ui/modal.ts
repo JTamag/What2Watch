@@ -1,17 +1,25 @@
-export function createModalController({ getUserData, onToggleWatchlist, onToggleWatched, isSettingsOpen, closeSettings }) {
-    const overlay = document.getElementById("modal-overlay");
+import { Movie, UserData } from "../types";
+
+export function createModalController({ getUserData, onToggleWatchlist, onToggleWatched, isSettingsOpen, closeSettings }:{
+    getUserData: () => UserData;
+    onToggleWatchlist: (movie: Movie) => void;
+    onToggleWatched: (movie: Movie) => void;
+    isSettingsOpen: () => boolean;
+    closeSettings: () => void;
+}) {
+    const overlay = document.getElementById("modal-overlay")!;
 
     function close() {
         overlay.classList.add("hidden");
         document.body.style.overflow = "";
-        document.getElementById("modal").scrollTo({ top: 0, behavior: "instant" });
+        document.getElementById("modal")!.scrollTo({ top: 0, behavior: "instant" });
     }
 
-    function open(movie) {
+    function open(movie: Movie) {
         const data = getUserData();
         const inWatchlist = data.watchlist.some(item => item.id === movie.id);
         const isWatched = data.watched.some(item => item.id === movie.id);
-        const body = overlay.querySelector("#modal-body");
+        const body = overlay.querySelector("#modal-body")!;
         body.innerHTML = `
             <div class="modal-layout">
                 ${movie.poster ? `<img class="modal-poster" src="${movie.poster}" alt="${movie.title} poster" onerror="this.style.display='none'">` : ""}
@@ -26,16 +34,16 @@ export function createModalController({ getUserData, onToggleWatchlist, onToggle
                     </div>
                 </div>
             </div>`;
-        body.querySelector(".modal-title").textContent = movie.title;
-        body.querySelector(".modal-overview").textContent = movie.overview || "No overview available.";
+        body.querySelector(".modal-title")!.textContent = movie.title;
+        body.querySelector(".modal-overview")!.textContent = movie.overview || "No overview available.";
         body.querySelectorAll(".modal-genre").forEach((element, index) => {
-            element.textContent = movie.genres[index];
+            element.textContent = movie.genres[index] ?? '';
         });
-        body.querySelector("#modal-wl").addEventListener("click", () => {
+        body.querySelector("#modal-wl")!.addEventListener("click", () => {
             onToggleWatchlist(movie);
             open(movie);
         });
-        body.querySelector("#modal-wt").addEventListener("click", () => {
+        body.querySelector("#modal-wt")!.addEventListener("click", () => {
             onToggleWatched(movie);
             open(movie);
         });
@@ -43,7 +51,7 @@ export function createModalController({ getUserData, onToggleWatchlist, onToggle
         document.body.style.overflow = "hidden";
     }
 
-    document.getElementById("modal-close").addEventListener("click", close);
+    document.getElementById("modal-close")!.addEventListener("click", close);
     overlay.addEventListener("click", event => {
         if (event.target === overlay) close();
     });
