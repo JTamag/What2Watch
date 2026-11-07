@@ -4,7 +4,7 @@ let watchlist = JSON.parse(localStorage.getItem("watchlist") || "[]");
 let watched   = JSON.parse(localStorage.getItem("watched")   || "[]");
 let currentSection = "popular";
 let searchTimeout = null;
-const PAGE_SIZE = 20;
+const PAGE_SIZE = 36; // 6 columns x 6 rows on the desktop layout
 let paginationState = new WeakMap(); // To track pagination state for each section
 
 
