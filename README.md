@@ -25,6 +25,15 @@ Generates personalised recommendations using your watchlist and watched history.
 - **Taste Breakdown:** Highlights your leading genre preferences and matching tags on recommendation cards.
 - **Personalised Feed:** Generates a ranked selection of 20 recommendations from the available catalogue.
 
+### Recommendation Engine Benchmarks
+
+We evaluate recommendation quality using a hold-out test (Top-50 Hit Rate) on authentic user ratings: 20% of highly rated films (>= 4.0 stars) are hidden, and we measure how many appear in the recommender's top 50 suggestions.
+
+| Version | Taste Weighting | TMDB Scoring | Diversity | Hit Rate @ 50 | Hits | Status |
+|---|---|---|---|:---:|:---:|:---:|
+| **v1 (Baseline)** | Flat weights (2.5 watchlist / 1.5 watched) | Raw score / 10 | None | **8.8%** | 3 / 34 | Recorded (Phase 3.2) |
+| **v2** | Rating-derived weights | Bayesian shrinkage prior | MMR re-ranking | *In progress* | *Pending* | Developing (Phase 3.3+) |
+
 ### Surprise Me!
 
 - Picks a random film and opens its details.

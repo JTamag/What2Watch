@@ -1,4 +1,4 @@
-import { Movie, UserData } from "./types";
+import { Movie, UserData } from "../types";
 
 function buildTasteProfile(userData: UserData) {
     const weightedMovies = [
@@ -30,8 +30,7 @@ export function getTopGenres(userData: UserData, limit = 3) {
     const { genres } = buildTasteProfile(userData);
     return Object.entries(genres).sort((a, b) => b[1] - a[1]).slice(0, limit).map(([genre]) => genre);
 }
-
-export function recommend(catalog: Movie[], userData: UserData, { limit = 20 } = {}) {
+function recommend(catalog: Movie[], userData: UserData, { limit = 20 } = {}) {
     const { genres, averageYear } = buildTasteProfile(userData);
     const watchedIds = new Set((userData.watched || []).map(movie => movie.id));
     const candidates = catalog.filter(movie => !watchedIds.has(movie.id));
@@ -57,3 +56,6 @@ export function recommend(catalog: Movie[], userData: UserData, { limit = 20 } =
         };
     }).sort((a, b) => b._score - a._score).slice(0, limit);
 }
+
+
+export { recommend, recommend as recommendV1 };

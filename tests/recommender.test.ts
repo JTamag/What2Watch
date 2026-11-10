@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { recommend, getTopGenres } from '../src/recommender';
+import { recommendV1, getTopGenres } from '../src/recommenders/v1';
 
 // ---------------------------------------------------------------------------
 // Helpers
@@ -39,19 +39,19 @@ describe('recommend', () => {
             watchlist: [],
             ratings: {},
         };
-        const results = recommend(catalog, userData);
+        const results = recommendV1(catalog, userData);
         const ids = results.map((r: any) => r.id);
         expect(ids).not.toContain(actionMovie.id);
     });
 
     it('does not crash on empty userData', () => {
         const userData = { version: 1 as const, watched: [], watchlist: [], ratings: {} };
-        expect(() => recommend(catalog, userData)).not.toThrow();
+        expect(() => recommendV1(catalog, userData)).not.toThrow();
     });
 
     it('returns an empty array when every catalog film is watched', () => {
         const userData = { version: 1 as const, watched: catalog, watchlist: [], ratings: {} };
-        const results = recommend(catalog, userData);
+        const results = recommendV1(catalog, userData);
         expect(results).toHaveLength(0);
     });
 
@@ -67,7 +67,7 @@ describe('recommend', () => {
             ],
             ratings: {},
         };
-        const results = recommend(catalog, userData) as any[];
+        const results = recommendV1(catalog, userData) as any[];
         const topResult = results[0];
         expect(topResult.genres).toContain('Action');
     });
@@ -77,7 +77,7 @@ describe('recommend', () => {
             makeMovie({ id: 100 + i, title: `Film ${i}` })
         );
         const userData = { version: 1 as const, watched: [], watchlist: [], ratings: {} };
-        const results = recommend(bigCatalog, userData, { limit: 10 });
+        const results = recommendV1(bigCatalog, userData, { limit: 10 });
         expect(results).toHaveLength(10);
     });
 
@@ -88,7 +88,7 @@ describe('recommend', () => {
             watchlist: [makeMovie({ id: 20, genres: ['Action'] })],
             ratings: {},
         };
-        const results = recommend(catalog, userData) as any[];
+        const results = recommendV1(catalog, userData) as any[];
         // Every result should have a reasons array (may be empty for unrelated films)
         for (const r of results) {
             expect(Array.isArray(r.reasons)).toBe(true);
@@ -97,7 +97,7 @@ describe('recommend', () => {
 
     it('includes a _score on each result', () => {
         const userData = { version: 1 as const, watched: [], watchlist: [], ratings: {} };
-        const results = recommend(catalog, userData) as any[];
+        const results = recommendV1(catalog, userData) as any[];
         for (const r of results) {
             expect(typeof r._score).toBe('number');
         }
@@ -110,7 +110,7 @@ describe('recommend', () => {
             watchlist: [makeMovie({ id: 30, genres: ['Action'] })],
             ratings: {},
         };
-        const results = recommend(catalog, userData) as any[];
+        const results = recommendV1(catalog, userData) as any[];
         for (let i = 1; i < results.length; i++) {
             expect(results[i - 1]._score).toBeGreaterThanOrEqual(results[i]._score);
         }
