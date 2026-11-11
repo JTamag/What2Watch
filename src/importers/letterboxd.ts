@@ -41,10 +41,16 @@ export function parseCSV(text : string):string[][] {
     return rows;
 }
 
-export function detectLetterboxdTarget(filename:string, forcedTarget : 'watchlist' | 'watched' | null = null): 'watchlist' | 'watched' {
+export function detectLetterboxdTarget(filename: string, forcedTarget: 'watchlist' | 'watched' | null = null): 'watchlist' | 'watched' {
     if (forcedTarget === "watchlist" || forcedTarget === "watched") return forcedTarget;
     const name = filename.toLowerCase();
-    return name.includes("watchlist") ? "watchlist" : "watched";
+    if (name.includes("watchlist")) return "watchlist";
+    // ratings.csv, watched.csv, diary.csv: a rated or logged film counts as watched
+    return "watched";
+}
+
+export function isLetterboxdRatingsFile(filename: string): boolean {
+    return filename.toLowerCase().includes("ratings");
 }
 
 export function importLetterboxdCSV(text : string, filename : string, catalog : Movie[], existing : Movie[] = [], forcedTarget : 'watchlist' | 'watched' | null = null) {
@@ -54,10 +60,14 @@ export function importLetterboxdCSV(text : string, filename : string, catalog : 
     const headers = rows[0]!.map(value => value.toLowerCase());
     const titleIndex = headers.includes("name") ? headers.indexOf("name") : headers.indexOf("title");
     const yearIndex = headers.indexOf("year");
+    const ratingIndex = headers.indexOf("rating");
     if (titleIndex < 0) throw new Error("Could not find a Name or Title column in the CSV.");
 
     const target = detectLetterboxdTarget(filename, forcedTarget );
+    const readRatings = target === "watched" && isLetterboxdRatingsFile(filename) && ratingIndex >= 0;
+
     const matched = [];
+    const ratings: Record<number, number> = {};
     let importedCount = 0;
     let failedCount = 0;
     for (const columns of rows.slice(1)) {
@@ -65,7 +75,13 @@ export function importLetterboxdCSV(text : string, filename : string, catalog : 
         if (!title) continue;
         importedCount++;
         const movie = findLocalMatch(title, yearIndex < 0 ? "" : (columns[yearIndex] ?? ""),catalog);
-        if (movie) matched.push(movie);
+        if (movie) {
+            matched.push(movie);
+            if(readRatings){
+                const rating = parseFloat(columns[ratingIndex] ?? "");
+                if(!Number.isNaN(rating)) ratings[movie.id] = rating;
+            }
+        }
         else failedCount++;
     }
 
@@ -74,6 +90,7 @@ export function importLetterboxdCSV(text : string, filename : string, catalog : 
         movies: mergeById(existing, matched),
         importedCount,
         matchedCount: matched.length,
-        failedCount
+        failedCount,
+        ratings,
     };
 }
