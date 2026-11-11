@@ -36,6 +36,22 @@ function toggleWatched(movie: Movie) {
         ? userData.watched.filter(item => item.id !== movie.id)
         : [...userData.watched, movie];
     if (!exists) userData.watchlist = userData.watchlist.filter(item => item.id !== movie.id);
+    if (exists && userData.ratings) delete userData.ratings[movie.id];
+    save();
+    refresh();
+}
+
+function rateMovie(movie: Movie, rating: number | undefined) {
+    userData.ratings ??= {};
+    if(rating === undefined) {
+        if(userData.watched.some(item => item.id === movie.id)) {
+            toggleWatched(movie);
+        } else {
+            delete userData.ratings[movie.id];
+        }
+        return;
+    }
+    userData.ratings[movie.id] = rating;
     save();
     refresh();
 }
@@ -77,6 +93,7 @@ const modal = createModalController({
     getUserData: () => userData,
     onToggleWatchlist: toggleWatchlist,
     onToggleWatched: toggleWatched,
+    onRate: rateMovie,
     isSettingsOpen: settings.isOpen,
     closeSettings: settings.close
 });
