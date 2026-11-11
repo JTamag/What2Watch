@@ -47,6 +47,9 @@ async function importFile(file: File) {
             const target = /watchlist/i.test(file.name) ? "watchlist" : "watched";
             const result = importLetterboxdCSV(text, file.name, catalog, userData[target]);
             userData[target] = result.movies;
+            if(result.ratings){
+                userData.ratings = {...userData.ratings, ...result.ratings};
+            }
             save();
             refresh();
             alert(`Import complete!\nList updated: ${result.target.toUpperCase()}\nRows processed: ${result.importedCount}\nMatched with catalogue: ${result.matchedCount}\nNot found: ${result.failedCount}`);
