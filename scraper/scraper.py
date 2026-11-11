@@ -76,6 +76,7 @@ def to_record(movie, genres_map):
         "is_popular": False,
         "is_top_rated": False,
         "popularity": movie.get("popularity",0),
+        "vote_count": movie.get("vote_count", 0),
     }
 
 
