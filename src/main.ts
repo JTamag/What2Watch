@@ -1,6 +1,6 @@
 import { loadMovies } from "./data.js";
 import { loadUserData, saveUserData } from "./storage.js";
-import { recommendV1, getTopGenres } from "./recommenders/v1.js";
+import { recommendV2, getTopGenres } from "./recommenders/recommender";
 import { parsePersonalData, mergePersonalData, exportPersonalData } from "./importers/default_importers.js";
 import { importLetterboxdCSV } from "./importers/letterboxd.js";
 import { createViews } from "./ui/views.js";
@@ -86,7 +86,7 @@ function showRecommendations() {
         views.showRecommendationsEmpty("Add films to your Watchlist or mark films as watched to get personalised recommendations.");
         return;
     }
-    const results = recommendV1(catalog, userData);
+    const results = recommendV2(catalog, userData);
     views.showRecommendations(results, getTopGenres(userData));
 }
 
