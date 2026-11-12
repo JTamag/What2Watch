@@ -47,31 +47,50 @@ export function getTopGenres(userData: UserData, limit = 3): string[] {
    .slice(0, limit)
    .map(([genre]) => genre);
 }
+
+// Bayesian shrinkage: WR = v/(v+m)*R + m/(v+m)*C, on TMDB's 0-10 scale. 
+
+export function bayesianScore(rating:number, vote_count:number, catalogAverage:number,m = 500): number {
+    const R = Number(rating) || 0;
+    const v = Number(vote_count);
+    const votes = Number.isFinite(v) && v > 0 ? v : 0;
+    return (votes / (votes + m)) * R + (m / (votes + m)) * catalogAverage;
+}
+
+
 function recommend(catalog: Movie[], userData: UserData, { limit = 20 } = {}) {
     const { genres, averageYear } = buildTasteProfile(userData);
 
     const watchedIds = new Set((userData.watched || []).map(movie => movie.id));
     const candidates = catalog.filter(movie => !watchedIds.has(movie.id));
 
+
+    // Catalog mean Rating
+    const ratedValues = catalog.map(movie => Number(movie.rating) || 0).filter(r => r > 0);
+    const catalogAverage = ratedValues.length  ? ratedValues.reduce((sum, r) => sum + r, 0) / ratedValues.length : 6.8;
+    const hasVotes = catalog.some(movie => Number(movie.vote_count) > 0);
+    const tmdbScore = (movie: Movie) => hasVotes ? bayesianScore(Number(movie.rating), Number(movie.vote_count), catalogAverage) : Number(movie.rating) || 0;
+
+
     const scored = candidates.map(movie => {
         const genreScore = (movie.genres || []).reduce((sum, genre) => sum + (genres[genre] || 0), 0);
-        const ratingScore = (Number(movie.rating) || 0) / 10;
+        const wr = tmdbScore(movie);
         const yearScore = Math.exp(-Math.abs((Number(movie.release_year) || 2000) - averageYear) / 20);
         const topRatedBonus = movie.is_top_rated ? 1 : 0;
-        return { movie, genreScore, ratingScore, yearScore, topRatedBonus };
+        return { movie, genreScore, wr , yearScore, topRatedBonus };
     });
 
     const maxGenreScore = Math.max(...scored.map(item => item.genreScore), 1e-6);
 
-    return scored.map(({ movie, genreScore, ratingScore, yearScore, topRatedBonus }) => {
+    return scored.map(({ movie, genreScore,wr, yearScore, topRatedBonus }) => {
         const matchingGenres = (movie.genres || []).filter(genre => (genres[genre] ?? 0) > 0);
         const reasons: string[] = [];
         if (matchingGenres.length) reasons.push(`Matches your interest in ${matchingGenres.slice(0, 2).join(" and ")}`);
         if (movie.is_top_rated) reasons.push("Included in the top-rated collection");
-        if (ratingScore >= 0.8) reasons.push("Highly rated by TMDB users");
+        if (wr >= 7.5) reasons.push("Highly rated by TMDB users");
         return {
             ...movie,
-            _score: (genreScore / maxGenreScore) * 0.5 + ratingScore * 0.35 + yearScore * 0.1 + topRatedBonus * 0.05,
+            _score: (genreScore / maxGenreScore) * 0.6 + (wr / 10) * 0.2 + yearScore * 0.15 + topRatedBonus * 0.05,
             reasons
         };
     }).sort((a, b) => b._score - a._score).slice(0, limit);
