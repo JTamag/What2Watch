@@ -26,9 +26,37 @@ Generates personalised recommendations using your watchlist and watched history.
 - **Taste Breakdown:** Highlights your leading genre preferences and matching tags on recommendation cards.
 - **Personalised Feed:** Generates a ranked selection of 20 recommendations from the available catalogue.
 
-### Recommendation Engine Benchmarks
+## Recommendation Algorithm
 
-We evaluate recommendation quality using a hold-out test (Top-50 Hit Rate) on authentic user ratings: 20% of highly rated films (>= 4.0 stars) are hidden, and we measure how many appear in the recommender's top 50 suggestions.
+**V1**
+
+- Original recommendation scoring.
+- Basic genre and catalogue-rating ranking.
+
+**V2**
+
+- User-rating-derived genre preferences and release-era preference.
+- Bayesian-adjusted TMDB ratings using vote counts.
+- Configurable scoring weights.
+- MMR-style genre diversity re-ranking.
+- Explanations generated from the signals that affected each selected movie.
+
+Recommendation explanations are deliberately limited to three supported signals: matching genres, a strong adjusted TMDB rating, diversity relative to earlier selections, and watchlist membership.
+
+### Evaluation Methodology
+
+The evaluation uses the same matched catalogue and Letterboxd fixture data for both versions:
+
+1. Select movies rated at least 4.0 stars as positive targets.
+2. Hide 20% using a fixed seeded shuffle.
+3. Remove hidden movies from watched movies, ratings, and watchlist candidates before building the profile.
+4. Calculate `Hit Rate@50` as hidden movies found in the top 50 divided by hidden movies.
+5. Run the V2 weight grid on an 80% tuning slice of the hidden targets.
+6. Evaluate the selected configuration once on the separate 20% held-out slice.
+
+The 50-seed results below are the primary comparison. The fixed-split grid search is reported separately because its held-out slice is intentionally not used to select weights.
+
+### Recommendation Engine Benchmarks
 
 | Version | Taste Weighting | TMDB Scoring | Diversity | Hit Rate @ 50 | Hits | Status |
 |---|---|---|---|:---:|:---:|:---:|

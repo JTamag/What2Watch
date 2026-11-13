@@ -154,11 +154,29 @@ function recommend(catalog: Movie[], userData: UserData, options: RecommendOptio
 
         });
         const chosen = remaining.splice(bestIndex, 1)[0]!;
+        const matchingGenres = (chosen.movie.genres || []).filter(
+            genre => (genres[genre] ?? 0) > 0
+        );
+        const simToPicked = maxSim.get(chosen.movie.id) ?? 0;
+        const reasons: string[] = [];
+
+        if (matchingGenres.length) {
+            reasons.push(`Matches your interest in ${matchingGenres.slice(0, 2).join(" and ")}`);
+        }
+        if (chosen.wr >= 7.5) {
+            reasons.push("Highly rated by TMDB users");
+        }
+        if (results.length >= 3 && simToPicked <= 0.25) {
+            reasons.push("Adds variety to your recommendations");
+        }
+        if (watchlistIds.has(chosen.movie.id)) {
+            reasons.push("Already on your watchlist");
+        }
 
         results.push({
             ...chosen.movie,
             _score: bestScore,
-            reasons: []
+            reasons: reasons.slice(0, 3)
         });
 
         for(const other of remaining){
