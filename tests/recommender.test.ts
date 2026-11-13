@@ -228,6 +228,24 @@ describe('getTopGenres', () => {
             expect(bayesianScore(10, -1, 6, 500)).toBe(6);
         });
 
+        it('can use metadata signals without affecting movies missing metadata', () => {
+            const sameDirector = makeMovie({ id: 70, director: 'Ava Director' });
+            const differentDirector = makeMovie({ id: 71, director: 'Other Director' });
+            const userData = {
+                version: 1 as const,
+                watched: [makeMovie({ id: 72, director: 'Ava Director' })],
+                watchlist: [],
+                ratings: { 72: 5 },
+            };
+
+            const results = recommendV2([differentDirector, sameDirector], userData, {
+                limit: 2,
+                weights: { metadata: 0.5, genre: 0 },
+                metadataSignals: ['director'],
+            });
+            expect(results[0]?.id).toBe(sameDirector.id);
+        });
+
         it('explains the signals used for recommendations', () => {
             const action = makeMovie({ id: 56, genres: ['Action'], rating: 8, vote_count: 10000 });
             const drama = makeMovie({ id: 57, genres: ['Drama'], rating: 9, vote_count: 10000 });

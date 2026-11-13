@@ -9,9 +9,13 @@ export const MovieSchema = z.object({
     vote_count: z.number(),
     popularity: z.number(),
     genres: z.array(z.string()),
-    release_year: z.string(),
+    release_year: z.string().nullable(),
     is_popular: z.boolean(),
     is_top_rated: z.boolean(),
+    keywords: z.array(z.string()).optional(),
+    director: z.string().nullable().optional(),
+    cast: z.array(z.string()).optional(),
+    original_language: z.string().optional(),
 });
 
 export const MovieArraySchema = z.array(MovieSchema);

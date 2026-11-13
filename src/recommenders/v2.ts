@@ -13,6 +13,7 @@ export function getRatingWeight(rating:number | undefined): number{
 
 export interface RecommendWeights {
     genre: number;
+    metadata: number;
     tmdb: number;
     era: number;
     topRated: number;
@@ -21,16 +22,20 @@ export interface RecommendWeights {
 
 export const DEFAULT_WEIGHTS: RecommendWeights = {
     genre: 0.40,
+    metadata: 0,
     tmdb: 0.20,
     era: 0.15,
     topRated: 0.05,
     diversity: 0.20,
 };
 
+export type MetadataSignal = "director" | "cast" | "keywords" | "language";
+
 export interface RecommendOptions {
     limit?: number;
     weights?: Partial<RecommendWeights>;
     excludeWatchlist?: boolean;
+    metadataSignals?: MetadataSignal[];
 }
 
 function jaccard(a: Set<string>, b: Set<string>): number {
@@ -44,6 +49,65 @@ function jaccard(a: Set<string>, b: Set<string>): number {
 
     return shared / (a.size + b.size - shared);
 }
+
+function normalizeMetadataValue(value: string): string {
+    return value.trim().toLocaleLowerCase();
+}
+
+function getMetadataTokens(movie: Movie, signals: MetadataSignal[]): string[] {
+    const tokens: string[] = [];
+    if (signals.includes("director") && movie.director) {
+        tokens.push(`director:${normalizeMetadataValue(movie.director)}`);
+    }
+    if (signals.includes("cast")) {
+        for (const actor of movie.cast || []) {
+            tokens.push(`cast:${normalizeMetadataValue(actor)}`);
+        }
+    }
+    if (signals.includes("keywords")) {
+        for (const keyword of movie.keywords || []) {
+            tokens.push(`keyword:${normalizeMetadataValue(keyword)}`);
+        }
+    }
+    if (signals.includes("language") && movie.original_language) {
+        tokens.push(`language:${normalizeMetadataValue(movie.original_language)}`);
+    }
+    return [...new Set(tokens)];
+}
+
+function buildMetadataProfile(userData: UserData, signals: MetadataSignal[]) {
+    const positive: Record<string, number> = {};
+    const negative: Record<string, number> = {};
+    const weightedMovies = [
+        ...(userData.watched || []).map(movie => ({ movie, weight: getRatingWeight((userData.ratings || {})[movie.id]) })),
+        ...(userData.watchlist || []).map(movie => ({ movie, weight: 2.5 }))
+    ];
+
+    for (const { movie, weight } of weightedMovies) {
+        if (weight === 0) continue;
+        for (const token of getMetadataTokens(movie, signals)) {
+            if (weight > 0) positive[token] = (positive[token] || 0) + weight;
+            else negative[token] = (negative[token] || 0) - weight;
+        }
+    }
+    return { positive, negative };
+}
+
+function buildMetadataIdf(catalog: Movie[], signals: MetadataSignal[]) {
+    const documentFrequency: Record<string, number> = {};
+    for (const movie of catalog) {
+        for (const token of getMetadataTokens(movie, signals)) {
+            documentFrequency[token] = (documentFrequency[token] || 0) + 1;
+        }
+    }
+    return Object.fromEntries(
+        Object.entries(documentFrequency).map(([token, frequency]) => [
+            token,
+            Math.log((catalog.length + 1) / (frequency + 1)) + 1
+        ])
+    );
+}
+
 export function buildTasteProfile(userData: UserData) {
     const ratings = userData.ratings || {};
 
@@ -116,10 +180,16 @@ export function bayesianScore(rating:number, vote_count:number, catalogAverage:n
 
 
 function recommend(catalog: Movie[], userData: UserData, options: RecommendOptions = {}) {
-    const { limit = 36, excludeWatchlist = false } = options;
+    const {
+        limit = 36,
+        excludeWatchlist = false,
+        metadataSignals = ["director", "cast", "keywords", "language"]
+    } = options;
     const w: RecommendWeights = { ...DEFAULT_WEIGHTS, ...options.weights };
 
     const { positiveGenres, negativeGenres, averageYear } = buildTasteProfile(userData);
+    const metadataProfile = buildMetadataProfile(userData, metadataSignals);
+    const metadataIdf = buildMetadataIdf(catalog, metadataSignals);
 
     const watchedIds = new Set((userData.watched || []).map(movie => movie.id));
     const watchlistIds = new Set((userData.watchlist || []).map(movie => movie.id));
@@ -140,15 +210,36 @@ function recommend(catalog: Movie[], userData: UserData, options: RecommendOptio
         const genreSet = new Set(movie.genres || []);
         const positiveGenreScore = [...genreSet].reduce((sum, genre) => sum + (positiveGenres[genre] || 0), 0);
         const negativeGenreScore = [...genreSet].reduce((sum, genre) => sum + (negativeGenres[genre] || 0), 0);
+        const metadataTokens = getMetadataTokens(movie, metadataSignals);
+        const positiveMetadataScore = metadataTokens.reduce(
+            (sum, token) => sum + (metadataProfile.positive[token] || 0) * (metadataIdf[token] || 1),
+            0
+        );
+        const negativeMetadataScore = metadataTokens.reduce(
+            (sum, token) => sum + (metadataProfile.negative[token] || 0) * (metadataIdf[token] || 1),
+            0
+        );
 
         const wr = tmdbScore(movie);
         const yearScore = Math.exp(-Math.abs((Number(movie.release_year) || 2000) - averageYear) / 20);
         const topRatedBonus = movie.is_top_rated ? 1 : 0;
-        return { movie,genreSet, positiveGenreScore, negativeGenreScore, wr , yearScore, topRatedBonus };
+        return {
+            movie,
+            genreSet,
+            positiveGenreScore,
+            negativeGenreScore,
+            positiveMetadataScore,
+            negativeMetadataScore,
+            wr,
+            yearScore,
+            topRatedBonus
+        };
     });
 
     const maxPositiveGenreScore = Math.max(...scored.map(item => item.positiveGenreScore), 1e-6);
     const maxNegativeGenreScore = Math.max(...scored.map(item => item.negativeGenreScore), 1e-6);
+    const maxPositiveMetadataScore = Math.max(...scored.map(item => item.positiveMetadataScore), 1e-6);
+    const maxNegativeMetadataScore = Math.max(...scored.map(item => item.negativeMetadataScore), 1e-6);
 
     const ranked = scored.map(item => ({
         ...item,
@@ -156,6 +247,10 @@ function recommend(catalog: Movie[], userData: UserData, options: RecommendOptio
             w.genre * (
                 item.positiveGenreScore / maxPositiveGenreScore -
                 item.negativeGenreScore / maxNegativeGenreScore
+            ) +
+            w.metadata * (
+                item.positiveMetadataScore / maxPositiveMetadataScore -
+                item.negativeMetadataScore / maxNegativeMetadataScore
             ) +
             w.tmdb * (item.wr / 10) +
             w.era * item.yearScore +

@@ -43,11 +43,11 @@ interface EvalMetrics {
 }
 
 const weightConfigurations: RecommendWeights[] = [
-    { genre: 0.50, tmdb: 0.15, era: 0.10, topRated: 0.05, diversity: 0.20 },
-    { genre: 0.35, tmdb: 0.25, era: 0.15, topRated: 0.05, diversity: 0.20 },
-    { genre: 0.40, tmdb: 0.20, era: 0.10, topRated: 0.10, diversity: 0.20 },
-    { genre: 0.45, tmdb: 0.20, era: 0.10, topRated: 0.05, diversity: 0.20 },
-    { genre: 0.30, tmdb: 0.25, era: 0.20, topRated: 0.05, diversity: 0.20 },
+    { genre: 0.50, metadata: 0, tmdb: 0.15, era: 0.10, topRated: 0.05, diversity: 0.20 },
+    { genre: 0.35, metadata: 0, tmdb: 0.25, era: 0.15, topRated: 0.05, diversity: 0.20 },
+    { genre: 0.40, metadata: 0, tmdb: 0.20, era: 0.10, topRated: 0.10, diversity: 0.20 },
+    { genre: 0.45, metadata: 0, tmdb: 0.20, era: 0.10, topRated: 0.05, diversity: 0.20 },
+    { genre: 0.30, metadata: 0, tmdb: 0.25, era: 0.20, topRated: 0.05, diversity: 0.20 },
     DEFAULT_WEIGHTS,
 ];
 
@@ -240,9 +240,20 @@ describe('Airtight Recommender Evaluation (Leak-Free, 50 Seeds)', () => {
             console.log(`V2 initial Hit@50: ${initialV2.toFixed(1)}%`);
             console.log(`Selected ${best.label}; held-out Hit@50: ${heldOutHitRate.toFixed(1)}%`);
 
+            const metadataSignals = ['director', 'cast', 'keywords', 'language'] as const;
+            const metadataResults = metadataSignals.map(signal => ({
+                signal,
+                tuningHitRate: evaluateMetadataSignal(signal, catalog, makeTrainingData, tuning),
+            }));
+            console.table(metadataResults.map(result => ({
+                Signal: result.signal,
+                "Tuning Hit@50": `${result.tuningHitRate.toFixed(1)}%`,
+            })));
+
             expect(hidden.length).toBeGreaterThan(1);
             expect(heldOut.length).toBeGreaterThan(0);
             expect(results).toHaveLength(weightConfigurations.length);
+            expect(metadataResults).toHaveLength(metadataSignals.length);
         });
     });
 });
@@ -291,6 +302,21 @@ function stats(values: number[]) {
 
 function meanMetric(metrics: EvalMetrics[], selector: (metric: EvalMetrics) => number) {
     return stats(metrics.map(selector)).mean;
+}
+
+function evaluateMetadataSignal(
+    signal: 'director' | 'cast' | 'keywords' | 'language',
+    catalog: Movie[],
+    makeTrainingData: () => UserData,
+    targets: Movie[]
+) {
+    const recommendations = recommendV2(catalog, makeTrainingData(), {
+        limit: 50,
+        weights: { metadata: DEFAULT_WEIGHTS.metadata },
+        metadataSignals: [signal],
+        excludeWatchlist: true,
+    });
+    return computeMetrics(targets, recommendations).hitRate50;
 }
 
 function printSummary(name: string, metrics: EvalMetrics[]) {

@@ -1,13 +1,14 @@
 """TMDB scraper for What2Watch.
 
-Builds data/movies.json from three sources:
+Builds public/data/movies.json from three sources and enriches each movie with:
   1. /movie/popular
   2. /movie/top_rated (with a minimum vote count)
   3. /discover/movie per genre, sorted by vote count (this is what adds breadth)
 
-Output schema is unchanged, so app.js keeps working.
+Detail responses are cached by TMDB ID so later runs only fetch new movies.
 """
 import json
+import math
 import os
 import sys
 import time
@@ -20,6 +21,7 @@ API_KEY = os.environ.get("TMDB_API_KEY")
 BASE_URL = "https://api.themoviedb.org/3"
 IMAGE_URL = "https://image.tmdb.org/t/p/w500"
 OUTPUT = "public/data/movies.json"
+DETAILS_CACHE = "data/details-cache.json"
 
 # ---- Tuning knobs -------------------------------------------------------
 POPULAR_PAGES = 15          # 20 movies per page
@@ -30,6 +32,7 @@ GENRE_MIN_VOTES = 500       # keeps obscure/low-signal titles out
 MAX_MOVIES = 2500           # hard cap on the final catalogue size
 MIN_EXPECTED_RATIO = 0.5    # abort if the new catalogue is < 50% of the old one
 REQUEST_DELAY = 0.05        # ~20 req/s at most, well under TMDB's soft ceiling
+DETAILS_CAST_LIMIT = 5
 
 
 def make_session():
@@ -77,6 +80,10 @@ def to_record(movie, genres_map):
         "is_top_rated": False,
         "popularity": movie.get("popularity",0),
         "vote_count": movie.get("vote_count", 0),
+        "keywords": [],
+        "director": None,
+        "cast": [],
+        "original_language": movie.get("original_language", ""),
     }
 
 
@@ -133,6 +140,91 @@ def build_catalogue(session):
     return list(catalogue.values())[:MAX_MOVIES]
 
 
+def load_details_cache():
+    try:
+        with open(DETAILS_CACHE, encoding="utf-8") as f:
+            data = json.load(f)
+        if not isinstance(data, dict):
+            raise ValueError("details cache must be an object")
+        return data
+    except (OSError, ValueError):
+        return {}
+
+
+def save_details_cache(cache):
+    os.makedirs(os.path.dirname(DETAILS_CACHE), exist_ok=True)
+    tmp = DETAILS_CACHE + ".tmp"
+    with open(tmp, "w", encoding="utf-8") as f:
+        json.dump(cache, f, ensure_ascii=False, separators=(",", ":"), sort_keys=True)
+    os.replace(tmp, DETAILS_CACHE)
+
+
+def enrich_catalogue(session, movies):
+    cache = load_details_cache()
+    changed = False
+
+    for movie in movies:
+        cache_key = str(movie["id"])
+        details = cache.get(cache_key)
+        if details is None:
+            details = tmdb_get(
+                session,
+                f"/movie/{movie['id']}",
+                append_to_response="credits,keywords",
+            )
+            cache[cache_key] = details
+            save_details_cache(cache)
+            changed = True
+
+        keywords = details.get("keywords", {}).get("keywords", [])
+        crew = details.get("credits", {}).get("crew", [])
+        cast = details.get("credits", {}).get("cast", [])
+        directors = [
+            person.get("name")
+            for person in crew
+            if person.get("job") == "Director" and person.get("name")
+        ]
+        movie["keywords"] = [
+            keyword["name"]
+            for keyword in keywords
+            if keyword.get("name")
+        ]
+        movie["director"] = directors[0] if directors else None
+        movie["cast"] = [
+            person["name"]
+            for person in cast[:DETAILS_CAST_LIMIT]
+            if person.get("name")
+        ]
+        movie["original_language"] = details.get(
+            "original_language",
+            movie.get("original_language", ""),
+        )
+
+    if changed:
+        save_details_cache(cache)
+    return movies
+
+
+def validate_catalogue(movies):
+    ids = set()
+    required_fields = ("id", "title", "overview", "poster", "rating", "vote_count", "popularity", "genres")
+    for movie in movies:
+        missing = [field for field in required_fields if field not in movie]
+        if missing:
+            raise ValueError(f"Movie {movie.get('id', '<unknown>')} is missing fields: {', '.join(missing)}")
+        if movie["id"] in ids:
+            raise ValueError(f"Duplicate movie ID: {movie['id']}")
+        ids.add(movie["id"])
+        if not isinstance(movie["id"], int) or not isinstance(movie["title"], str):
+            raise ValueError(f"Invalid identity fields for movie {movie['id']}")
+        if not math.isfinite(float(movie["rating"])) or float(movie["vote_count"]) < 0:
+            raise ValueError(f"Invalid rating or vote count for movie {movie['id']}")
+        if not isinstance(movie["genres"], list):
+            raise ValueError(f"Invalid genres for movie {movie['id']}")
+    if not movies:
+        raise ValueError("Movie catalogue is empty")
+
+
 def previous_count():
     try:
         with open(OUTPUT, encoding="utf-8") as f:
@@ -167,7 +259,10 @@ def main():
     if not API_KEY:
         sys.exit("TMDB_API_KEY is not set")
 
-    movies = build_catalogue(make_session())
+    session = make_session()
+    movies = build_catalogue(session)
+    enrich_catalogue(session, movies)
+    validate_catalogue(movies)
 
     old = previous_count()
     if old and len(movies) < old * MIN_EXPECTED_RATIO:
