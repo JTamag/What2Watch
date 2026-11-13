@@ -128,12 +128,6 @@ function recommend(catalog: Movie[], userData: UserData, options: RecommendOptio
             w.era * item.yearScore +
             w.topRated * item.topRatedBonus
         })).sort((a, b) => b.relevance - a.relevance);;
-    return ranked.slice(0, limit).map(item => ({
-    ...item.movie,
-    _score: item.relevance,
-    reasons: []
-    }));
-
 
     const remaining = ranked.slice(0,Math.max(limit*5,100));
 
@@ -148,7 +142,7 @@ function recommend(catalog: Movie[], userData: UserData, options: RecommendOptio
         remaining.forEach((candidate, index) => {
             const sim = maxSim.get(candidate.movie.id) ?? 0;
 
-            const score = candidate.relevance - w.diversity * (1-sim);
+            const score = candidate.relevance + w.diversity * (1-sim);
             if(score > bestScore){
                 bestScore = score;
                 bestIndex = index;
@@ -170,6 +164,8 @@ function recommend(catalog: Movie[], userData: UserData, options: RecommendOptio
             }
         }
     }
+
+    return results;
 }
 
 export { recommend as recommendV2 };
