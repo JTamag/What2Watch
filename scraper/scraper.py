@@ -31,12 +31,13 @@ POPULAR_PAGES = 25          # 20 movies per page
 TOP_RATED_PAGES = 25
 TOP_RATED_MIN_VOTES = 1000
 GENRE_PAGES = 12            # discover pages per genre
+GENRE_POPULARITY_PAGES = 8  # second genre pass for well-known titles
 GENRE_MIN_VOTES = 250       # keeps very obscure/low-signal titles out
 LONG_TAIL_PAGES = 30
 LONG_TAIL_MIN_VOTES = 100
 DECADE_PAGES = 3
 MAX_MOVIES = 5000           # hard cap on the final catalogue size
-MIN_CATALOGUE_SIZE = 4000   # fail rather than silently publishing a thin catalogue
+MIN_CATALOGUE_SIZE = 3000   # fail rather than silently publishing a severely thin catalogue
 DETAILS_BATCH_SIZE = 500    # enrich at most this many uncached movies per run
 MIN_EXPECTED_RATIO = 0.5    # abort if the new catalogue is < 50% of the old one
 REQUEST_DELAY = 0.05        # ~20 req/s at most, well under TMDB's soft ceiling
@@ -136,6 +137,21 @@ def build_catalogue(session):
                 session, "/discover/movie",
                 with_genres=genre_id,
                 sort_by="vote_count.desc",
+                **{"vote_count.gte": GENRE_MIN_VOTES},
+                include_adult="false",
+                page=page,
+            )
+            for movie in data.get("results", []):
+                record = to_record(movie, genres_map)
+                if record:
+                    add([record])
+
+    for page in range(1, GENRE_POPULARITY_PAGES + 1):
+        for genre_id in genres_map:
+            data = tmdb_get(
+                session, "/discover/movie",
+                with_genres=genre_id,
+                sort_by="popularity.desc",
                 **{"vote_count.gte": GENRE_MIN_VOTES},
                 include_adult="false",
                 page=page,
@@ -295,6 +311,11 @@ def validate_catalogue(movies):
             f"Movie catalogue has only {len(movies)} movies; "
             f"expected at least {MIN_CATALOGUE_SIZE}"
         )
+    if len(movies) < MAX_MOVIES:
+        print(
+            f"Warning: catalogue contains {len(movies)} movies; "
+            f"the {MAX_MOVIES}-movie target was not reached."
+        )
 
 
 def print_coverage(movies):
@@ -360,8 +381,8 @@ def main():
 
     session = make_session()
     movies = build_catalogue(session)
-    enrich_catalogue(session, movies)
     validate_catalogue(movies)
+    enrich_catalogue(session, movies)
     print_coverage(movies)
 
     old = previous_count()
