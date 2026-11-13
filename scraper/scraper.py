@@ -4,6 +4,8 @@ Builds public/data/movies.json from three sources and enriches each movie with:
   1. /movie/popular
   2. /movie/top_rated (with a minimum vote count)
   3. /discover/movie per genre, sorted by vote count (this is what adds breadth)
+  4. /discover/movie popularity and vote-average pools
+  5. /discover/movie decade pools for older and niche films
 
 Detail responses are cached by TMDB ID so later runs only fetch new movies.
 """
@@ -12,6 +14,7 @@ import math
 import os
 import sys
 import time
+from datetime import datetime
 
 import requests
 from requests.adapters import HTTPAdapter
@@ -24,12 +27,16 @@ OUTPUT = "public/data/movies.json"
 DETAILS_CACHE = "data/details-cache.json"
 
 # ---- Tuning knobs -------------------------------------------------------
-POPULAR_PAGES = 15          # 20 movies per page
-TOP_RATED_PAGES = 15
+POPULAR_PAGES = 25          # 20 movies per page
+TOP_RATED_PAGES = 25
 TOP_RATED_MIN_VOTES = 1000
-GENRE_PAGES = 5             # discover pages per genre
-GENRE_MIN_VOTES = 500       # keeps obscure/low-signal titles out
-MAX_MOVIES = 2500           # hard cap on the final catalogue size
+GENRE_PAGES = 12            # discover pages per genre
+GENRE_MIN_VOTES = 250       # keeps very obscure/low-signal titles out
+LONG_TAIL_PAGES = 30
+LONG_TAIL_MIN_VOTES = 100
+DECADE_PAGES = 3
+MAX_MOVIES = 5000           # hard cap on the final catalogue size
+MIN_CATALOGUE_SIZE = 4000   # fail rather than silently publishing a thin catalogue
 MIN_EXPECTED_RATIO = 0.5    # abort if the new catalogue is < 50% of the old one
 REQUEST_DELAY = 0.05        # ~20 req/s at most, well under TMDB's soft ceiling
 DETAILS_CAST_LIMIT = 5
@@ -137,6 +144,35 @@ def build_catalogue(session):
                 if record:
                     add([record])
 
+    add(fetch_list(
+        session,
+        "/discover/movie",
+        LONG_TAIL_PAGES,
+        genres_map,
+        min_votes=LONG_TAIL_MIN_VOTES,
+        sort_by="popularity.desc",
+        include_adult="false",
+        **{"vote_count.gte": LONG_TAIL_MIN_VOTES},
+    ))
+
+    current_year = datetime.utcnow().year
+    for start_year in range(1930, current_year + 1, 10):
+        end_year = min(start_year + 9, current_year)
+        add(fetch_list(
+            session,
+            "/discover/movie",
+            DECADE_PAGES,
+            genres_map,
+            min_votes=LONG_TAIL_MIN_VOTES,
+            sort_by="vote_average.desc",
+            include_adult="false",
+            **{
+                "vote_count.gte": LONG_TAIL_MIN_VOTES,
+                "primary_release_date.gte": f"{start_year}-01-01",
+                "primary_release_date.lte": f"{end_year}-12-31",
+            },
+        ))
+
     return list(catalogue.values())[:MAX_MOVIES]
 
 
@@ -223,6 +259,38 @@ def validate_catalogue(movies):
             raise ValueError(f"Invalid genres for movie {movie['id']}")
     if not movies:
         raise ValueError("Movie catalogue is empty")
+    if len(movies) < MIN_CATALOGUE_SIZE:
+        raise ValueError(
+            f"Movie catalogue has only {len(movies)} movies; "
+            f"expected at least {MIN_CATALOGUE_SIZE}"
+        )
+
+
+def print_coverage(movies):
+    decades = {}
+    genres = {}
+    vote_buckets = {"0-99": 0, "100-499": 0, "500-999": 0, "1000+": 0}
+    for movie in movies:
+        year = str(movie.get("release_year") or "")
+        if len(year) == 4 and year.isdigit():
+            decade = f"{year[:3]}0s"
+            decades[decade] = decades.get(decade, 0) + 1
+        for genre in movie.get("genres", []):
+            genres[genre] = genres.get(genre, 0) + 1
+        votes = int(movie.get("vote_count", 0))
+        if votes < 100:
+            vote_buckets["0-99"] += 1
+        elif votes < 500:
+            vote_buckets["100-499"] += 1
+        elif votes < 1000:
+            vote_buckets["500-999"] += 1
+        else:
+            vote_buckets["1000+"] += 1
+
+    print(f"Catalogue coverage: {len(movies)} movies")
+    print(f"Decades: {dict(sorted(decades.items()))}")
+    print(f"Vote-count buckets: {vote_buckets}")
+    print(f"Genres: {dict(sorted(genres.items(), key=lambda item: (-item[1], item[0])))}")
 
 
 def previous_count():
@@ -263,6 +331,7 @@ def main():
     movies = build_catalogue(session)
     enrich_catalogue(session, movies)
     validate_catalogue(movies)
+    print_coverage(movies)
 
     old = previous_count()
     if old and len(movies) < old * MIN_EXPECTED_RATIO:
