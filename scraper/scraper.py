@@ -37,6 +37,7 @@ LONG_TAIL_MIN_VOTES = 100
 DECADE_PAGES = 3
 MAX_MOVIES = 5000           # hard cap on the final catalogue size
 MIN_CATALOGUE_SIZE = 4000   # fail rather than silently publishing a thin catalogue
+DETAILS_BATCH_SIZE = 500    # enrich at most this many uncached movies per run
 MIN_EXPECTED_RATIO = 0.5    # abort if the new catalogue is < 50% of the old one
 REQUEST_DELAY = 0.05        # ~20 req/s at most, well under TMDB's soft ceiling
 DETAILS_CAST_LIMIT = 5
@@ -197,20 +198,22 @@ def save_details_cache(cache):
 
 def enrich_catalogue(session, movies):
     cache = load_details_cache()
-    changed = False
+    missing = [movie for movie in movies if str(movie["id"]) not in cache]
+    batch = missing[:DETAILS_BATCH_SIZE]
+    print(
+        f"Metadata cache: {len(cache)} entries; "
+        f"{len(missing)} missing; enriching {len(batch)} this run."
+    )
 
-    for movie in movies:
+    for index, movie in enumerate(batch, start=1):
         cache_key = str(movie["id"])
-        details = cache.get(cache_key)
-        if details is None:
-            details = tmdb_get(
-                session,
-                f"/movie/{movie['id']}",
-                append_to_response="credits,keywords",
-            )
-            cache[cache_key] = details
-            save_details_cache(cache)
-            changed = True
+        details = tmdb_get(
+            session,
+            f"/movie/{movie['id']}",
+            append_to_response="credits,keywords",
+        )
+        cache[cache_key] = details
+        save_details_cache(cache)
 
         keywords = details.get("keywords", {}).get("keywords", [])
         crew = details.get("credits", {}).get("crew", [])
@@ -235,9 +238,37 @@ def enrich_catalogue(session, movies):
             "original_language",
             movie.get("original_language", ""),
         )
+        if index % 100 == 0 or index == len(batch):
+            print(f"Metadata enrichment progress: {index}/{len(batch)}")
 
-    if changed:
-        save_details_cache(cache)
+    # Apply cached details to all catalogue records, including records that
+    # were already enriched during an earlier workflow run.
+    for movie in movies:
+        details = cache.get(str(movie["id"]))
+        if details is None:
+            continue
+        keywords = details.get("keywords", {}).get("keywords", [])
+        crew = details.get("credits", {}).get("crew", [])
+        cast = details.get("credits", {}).get("cast", [])
+        directors = [
+            person.get("name")
+            for person in crew
+            if person.get("job") == "Director" and person.get("name")
+        ]
+        movie["keywords"] = [
+            keyword["name"] for keyword in keywords if keyword.get("name")
+        ]
+        movie["director"] = directors[0] if directors else None
+        movie["cast"] = [
+            person["name"]
+            for person in cast[:DETAILS_CAST_LIMIT]
+            if person.get("name")
+        ]
+        movie["original_language"] = details.get(
+            "original_language",
+            movie.get("original_language", ""),
+        )
+
     return movies
 
 
