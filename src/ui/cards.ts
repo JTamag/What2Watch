@@ -1,6 +1,6 @@
-import { Movie, UserData } from "../types";
+import { Movie, MovieWithReasons, UserData } from "../types";
 
-export function renderMovieGrid(grid: HTMLElement, movies: Movie[], {
+export function renderMovieGrid(grid: HTMLElement, movies: MovieWithReasons[], {
     getUserData,
     onToggleWatchlist,
     onToggleWatched,
