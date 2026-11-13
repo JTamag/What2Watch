@@ -1,5 +1,6 @@
 import { describe, it, expect } from 'vitest';
 import { recommendV1, getTopGenres } from '../src/recommenders/v1';
+import { recommendV2, bayesianScore } from '../src/recommenders/v2';
 
 // ---------------------------------------------------------------------------
 // Helpers
@@ -134,6 +135,46 @@ describe('getTopGenres', () => {
         };
         const top = getTopGenres(userData, 1);
         expect(top[0]).toBe('Action');
+    });
+
+    describe('recommendV2', () => {
+        it('uses personal ratings to distinguish liked and disliked genres', () => {
+            const action = makeMovie({ id: 50, genres: ['Action'] });
+            const drama = makeMovie({ id: 51, genres: ['Drama'] });
+            const userData = {
+                version: 1 as const,
+                watched: [
+                    makeMovie({ id: 52, genres: ['Action'] }),
+                    makeMovie({ id: 53, genres: ['Drama'] }),
+                ],
+                watchlist: [],
+                ratings: { 52: 5, 53: 1 },
+            };
+
+            const results = recommendV2([action, drama], userData, { limit: 2 });
+            expect(results[0]?.id).toBe(action.id);
+        });
+
+        it('excludes watchlist items when requested', () => {
+            const watchlisted = makeMovie({ id: 54 });
+            const available = makeMovie({ id: 55 });
+            const userData = {
+                version: 1 as const,
+                watched: [],
+                watchlist: [watchlisted],
+                ratings: {},
+            };
+
+            const results = recommendV2([watchlisted, available], userData, {
+                limit: 2,
+                excludeWatchlist: true,
+            });
+            expect(results.map(movie => movie.id)).not.toContain(watchlisted.id);
+        });
+
+        it('uses vote count in Bayesian TMDB scoring', () => {
+            expect(bayesianScore(10, 1, 6, 500)).toBeLessThan(bayesianScore(10, 10000, 6, 500));
+        });
     });
 
     it('respects the limit parameter', () => {
