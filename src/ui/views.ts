@@ -1,5 +1,5 @@
 import { renderMovieGrid } from "./cards";
-import { Movie, UserData,PaginationState } from "../types";
+import { Movie, MovieWithReasons, UserData,PaginationState } from "../types";
 
 const PAGE_SIZE = 36;
 
@@ -24,7 +24,7 @@ export function createViews({ getMovies, getUserData, onToggleWatchlist, onToggl
         document.getElementById("search-results")?.remove();
     }
 
-    function renderPaginatedGrid(grid: HTMLElement, movies: Movie[], options: Record<string, unknown> = {}) {
+    function renderPaginatedGrid(grid: HTMLElement, movies: MovieWithReasons[], options: Record<string, unknown> = {}) {
         let state = pagination.get(grid);
         if (!state) {
             const controls = document.createElement("div");
@@ -111,7 +111,7 @@ export function createViews({ getMovies, getUserData, onToggleWatchlist, onToggl
         else renderSection(currentSection);
     }
 
-    function showRecommendations(movies: Movie[], topGenres: string[]) {
+    function showRecommendations(movies: MovieWithReasons[], topGenres: string[]) {
         currentSection = "recommendations";
         hideSections();
         removeSearchResults();
@@ -119,9 +119,7 @@ export function createViews({ getMovies, getUserData, onToggleWatchlist, onToggl
         section.classList.remove("hidden");
         section.innerHTML = '<div class="recommendations-header"><h2 class="section-title">Recommended for You</h2><p class="recommendations-sub"></p></div><div class="grid" id="recommendations-grid"></div>';
         section.querySelector(".recommendations-sub")!.textContent = topGenres.length ? `Based on your taste in ${topGenres.join(", ")}` : "";
-        renderMovieGrid(section.querySelector("#recommendations-grid") as HTMLElement, movies, {
-            getUserData, onToggleWatchlist, onToggleWatched, onOpenMovie, topGenres
-        });
+        renderPaginatedGrid(section.querySelector("#recommendations-grid") as HTMLElement, movies, { topGenres });
     }
 
     function showRecommendationsEmpty(message : string) {

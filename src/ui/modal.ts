@@ -21,6 +21,9 @@ export function createModalController({ getUserData, onToggleWatchlist, onRate,o
         const inWatchlist = data.watchlist.some(item => item.id === movie.id);
         const isWatched = data.watched.some(item => item.id === movie.id);
         const userRating: number | undefined = data.ratings[movie.id];
+        const reasons = "reasons" in movie && Array.isArray(movie.reasons)
+            ? movie.reasons.filter((reason): reason is string => typeof reason === "string")
+            : [];
         const body = overlay.querySelector("#modal-body")!;
         body.innerHTML = `
             <div class="modal-layout">
@@ -30,6 +33,10 @@ export function createModalController({ getUserData, onToggleWatchlist, onRate,o
                     <div class="modal-meta"><span>${movie.release_year || "-"}</span><span class="modal-rating">★ ${(Number(movie.rating) || 0).toFixed(1)} / 10</span></div>
                     <div class="modal-genres">${(movie.genres || []).map(genre => `<span class="modal-genre"></span>`).join("")}</div>
                     <p class="modal-overview"></p>
+                    <div class="modal-reasons${reasons.length ? "" : " hidden"}">
+                        <div class="modal-reasons-title">Why this was recommended</div>
+                        <ul class="modal-reasons-list"></ul>
+                    </div>
                     <div class="modal-user-rating">
                         <span class="modal-user-rating-label">Your rating</span>
                         <div class="stars" id="modal-stars" aria-label="Your rating">${starsMarkup(userRating)}</div>
@@ -44,6 +51,14 @@ export function createModalController({ getUserData, onToggleWatchlist, onRate,o
             </div>`;
         body.querySelector(".modal-title")!.textContent = movie.title;
         body.querySelector(".modal-overview")!.textContent = movie.overview || "No overview available.";
+        const reasonsList = body.querySelector(".modal-reasons-list");
+        if (reasonsList) {
+            for (const reason of reasons) {
+                const item = document.createElement("li");
+                item.textContent = reason;
+                reasonsList.appendChild(item);
+            }
+        }
         body.querySelectorAll(".modal-genre").forEach((element, index) => {
             element.textContent = movie.genres[index] ?? '';
         });

@@ -103,7 +103,7 @@ function showRecommendations() {
         views.showRecommendationsEmpty("Add films to your Watchlist or mark films as watched to get personalised recommendations.");
         return;
     }
-    const results = recommendV2(catalog, userData);
+    const results = recommendV2(catalog, userData, { limit: 36 * 3 });
     views.showRecommendations(results, getTopGenres(userData));
 }
 
