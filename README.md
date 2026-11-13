@@ -17,13 +17,54 @@ A client-side movie discovery, recommendation, and tracking web application buil
 
 Generates personalised recommendations using your watchlist and watched history.
 
-- **Genre Affinity (50%):** Analyses your genre preferences, assigning a weight of 2.5 to watchlist titles and 1.5 to watched titles.
-- **TMDB Rating (35%):** Factors in user ratings to favour highly rated films.
-- **Release-Era Proximity (10%):** Uses exponential decay to account for how closely a film's release year matches your preferred era.
+- **Genre Affinity (40%):** Analyses your genre preferences using rating-derived weights from watched titles and a 2.5 weight for watchlist titles.
+- **TMDB Rating (20%):** Uses Bayesian shrinkage with TMDB vote counts so films with few votes do not dominate.
+- **Release-Era Proximity (15%):** Uses exponential decay to account for how closely a film's release year matches your preferred era.
 - **Top-Rated Bonus (5%):** Gives an additional boost to films included in the top-rated catalogue.
+- **Diversity (20%):** Applies genre-based maximal marginal relevance re-ranking.
 - **Smart Filtering:** Excludes films you have already watched.
 - **Taste Breakdown:** Highlights your leading genre preferences and matching tags on recommendation cards.
 - **Personalised Feed:** Generates a ranked selection of 20 recommendations from the available catalogue.
+
+## Recommendation Algorithm
+
+**V1**
+
+- Original recommendation scoring.
+- Basic genre and catalogue-rating ranking.
+
+**V2**
+
+- User-rating-derived genre preferences and release-era preference.
+- Bayesian-adjusted TMDB ratings using vote counts.
+- Configurable scoring weights.
+- MMR-style genre diversity re-ranking.
+- Explanations generated from the signals that affected each selected movie.
+
+Recommendation explanations are deliberately limited to three supported signals: matching genres, a strong adjusted TMDB rating, diversity relative to earlier selections, and watchlist membership.
+
+### Evaluation Methodology
+
+The evaluation uses the same matched catalogue and Letterboxd fixture data for both versions:
+
+1. Select movies rated at least 4.0 stars as positive targets.
+2. Hide 20% using a fixed seeded shuffle.
+3. Remove hidden movies from watched movies, ratings, and watchlist candidates before building the profile.
+4. Calculate `Hit Rate@50` as hidden movies found in the top 50 divided by hidden movies.
+5. Run the V2 weight grid on an 80% tuning slice of the hidden targets.
+6. Evaluate the selected configuration once on the separate 20% held-out slice.
+
+The 50-seed results below are the primary comparison. The fixed-split grid search is reported separately because its held-out slice is intentionally not used to select weights.
+
+### Recommendation Engine Benchmarks
+
+| Version | Taste Weighting | TMDB Scoring | Diversity | Hit Rate @ 50 | Hits | Status |
+|---|---|---|---|:---:|:---:|:---:|
+| **v1 (Baseline)** | Flat weights (2.5 watchlist / 1.5 watched) | Raw score / 10 | None | **11.6%** | — | 50-seed evaluation |
+| **v2** | Rating-derived weights | Bayesian shrinkage with vote count | MMR re-ranking | **14.3%** | — | 50-seed evaluation |
+
+The weight grid search is reproducible with `npm run eval`. It uses a fixed held-out split:
+Config B (genre 0.35, TMDB 0.25, era 0.15, top-rated 0.05, diversity 0.20) reached 22.2% on the tuning slice, but 0% on the held-out slice, so the production defaults were not changed. On the fixed split, the original V2 defaults reached 11.8% against 11.1% for V1.
 
 ### Surprise Me!
 

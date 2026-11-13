@@ -10,7 +10,8 @@
     "typecheck": "tsc --noEmit",
     "test": "vitest run",
     "test:watch": "vitest",
-    "lint": "eslint src --ext .ts,.js"
+    "lint": "eslint src --ext .ts,.js",
+    "eval": "vitest run tests/evaluate.test.ts"
   },
   "repository": {
     "type": "git",

@@ -26,6 +26,10 @@ export const UserDataSchema = z.object({
 // Derive TypeScript types from the Zod schemas:
 export type Movie = z.infer<typeof MovieSchema>;
 export type UserData = z.infer<typeof UserDataSchema>;
+export type MovieWithReasons = Movie & {
+    _score?: number;
+    reasons?: string[];
+};
 
 // Non-Zod runtime types stay as normal interfaces:
 export interface Recommendation {
@@ -36,7 +40,7 @@ export interface Recommendation {
 
 export interface PaginationState {
     page: number;
-    movies: Movie[];
+    movies: MovieWithReasons[];
     options: Record<string, unknown>;
     controls: HTMLElement;
 }

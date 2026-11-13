@@ -1,6 +1,6 @@
 import { loadMovies } from "./data.js";
 import { loadUserData, saveUserData } from "./storage.js";
-import { recommend, getTopGenres } from "./recommender.js";
+import { recommendV2, getTopGenres } from "./recommenders/recommender";
 import { parsePersonalData, mergePersonalData, exportPersonalData } from "./importers/default_importers.js";
 import { importLetterboxdCSV } from "./importers/letterboxd.js";
 import { createViews } from "./ui/views.js";
@@ -36,6 +36,22 @@ function toggleWatched(movie: Movie) {
         ? userData.watched.filter(item => item.id !== movie.id)
         : [...userData.watched, movie];
     if (!exists) userData.watchlist = userData.watchlist.filter(item => item.id !== movie.id);
+    if (exists && userData.ratings) delete userData.ratings[movie.id];
+    save();
+    refresh();
+}
+
+function rateMovie(movie: Movie, rating: number | undefined) {
+    userData.ratings ??= {};
+    if(rating === undefined) {
+        if(userData.watched.some(item => item.id === movie.id)) {
+            toggleWatched(movie);
+        } else {
+            delete userData.ratings[movie.id];
+        }
+        return;
+    }
+    userData.ratings[movie.id] = rating;
     save();
     refresh();
 }
@@ -47,6 +63,9 @@ async function importFile(file: File) {
             const target = /watchlist/i.test(file.name) ? "watchlist" : "watched";
             const result = importLetterboxdCSV(text, file.name, catalog, userData[target]);
             userData[target] = result.movies;
+            if(result.ratings){
+                userData.ratings = {...userData.ratings, ...result.ratings};
+            }
             save();
             refresh();
             alert(`Import complete!\nList updated: ${result.target.toUpperCase()}\nRows processed: ${result.importedCount}\nMatched with catalogue: ${result.matchedCount}\nNot found: ${result.failedCount}`);
@@ -74,6 +93,7 @@ const modal = createModalController({
     getUserData: () => userData,
     onToggleWatchlist: toggleWatchlist,
     onToggleWatched: toggleWatched,
+    onRate: rateMovie,
     isSettingsOpen: settings.isOpen,
     closeSettings: settings.close
 });
@@ -83,7 +103,7 @@ function showRecommendations() {
         views.showRecommendationsEmpty("Add films to your Watchlist or mark films as watched to get personalised recommendations.");
         return;
     }
-    const results = recommend(catalog, userData);
+    const results = recommendV2(catalog, userData, { limit: 36 * 3 });
     views.showRecommendations(results, getTopGenres(userData));
 }
 

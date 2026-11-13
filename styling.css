@@ -624,6 +624,23 @@ section { margin-bottom: 52px; }
   display: inline-block;
   transition: color 0.3s ease;
 }
+
+.modal-reasons {
+    margin: 14px 0;
+    padding: 10px 12px;
+    border-left: 3px solid var(--accent);
+    background: var(--bg3);
+}
+
+.modal-reasons-title {
+    font-weight: 700;
+    margin-bottom: 4px;
+}
+
+.modal-reasons-list {
+    margin: 0;
+    padding-left: 18px;
+}
 .github-link:hover{
   color: var(--accent);
   text-decoration: underline;
@@ -640,3 +657,9 @@ section { margin-bottom: 52px; }
   background: var(--border);
   border-radius: 4px;
 }
+
+.modal-user-rating { display: flex; align-items: center; gap: 10px; margin: 12px 0; flex-wrap: wrap; }
+.stars { display: inline-flex; font-size: 28px; line-height: 1; cursor: pointer; }
+.star { position: relative; display: inline-block; color: #555; }
+.star-fill { position: absolute; left: 0; top: 0; overflow: hidden; white-space: nowrap; color: #f5c518; pointer-events: none; }
+.link-button { background: none; border: none; color: inherit; text-decoration: underline; cursor: pointer; opacity: .7; }
