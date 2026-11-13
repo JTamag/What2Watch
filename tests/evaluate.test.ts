@@ -7,6 +7,7 @@ import { findLocalMatch } from "../src/search";
 import rawCatalog from "../public/data/movies.json";
 import ratingsCsv from "./fixtures/ratings.csv?raw";
 import watchlistCsv from "./fixtures/watchlist.csv?raw";
+import { DEFAULT_WEIGHTS, RecommendWeights } from "../src/recommenders/v2";
 
 // --- Pseudo-random Number Generator (Mulberry32) ---
 function mulberry32(seed: number) {
@@ -39,6 +40,37 @@ interface EvalMetrics {
     recall100: number;
     ndcg50: number;
     medianRank: number;
+}
+
+const weightConfigurations: RecommendWeights[] = [
+    { genre: 0.50, tmdb: 0.15, era: 0.10, topRated: 0.05, diversity: 0.20 },
+    { genre: 0.35, tmdb: 0.25, era: 0.15, topRated: 0.05, diversity: 0.20 },
+    { genre: 0.40, tmdb: 0.20, era: 0.10, topRated: 0.10, diversity: 0.20 },
+    { genre: 0.45, tmdb: 0.20, era: 0.10, topRated: 0.05, diversity: 0.20 },
+    { genre: 0.30, tmdb: 0.25, era: 0.20, topRated: 0.05, diversity: 0.20 },
+    DEFAULT_WEIGHTS,
+];
+
+function makeEvaluationData(catalog: Movie[]) {
+    const ratingsRows = parseCSV(ratingsCsv).slice(1);
+    const ratedMovies: RatedMovie[] = [];
+    for (const row of ratingsRows) {
+        const [, name, year, , ratingStr] = row;
+        if (!name) continue;
+        const rating = parseFloat(ratingStr ?? "0");
+        const matched = findLocalMatch(name, year ?? "", catalog);
+        if (matched) ratedMovies.push({ movie: matched, rating });
+    }
+
+    const rawWatchlistMovies: Movie[] = [];
+    const watchlistRows = parseCSV(watchlistCsv).slice(1);
+    for (const row of watchlistRows) {
+        const [, name, year] = row;
+        if (!name) continue;
+        const matched = findLocalMatch(name, year ?? "", catalog);
+        if (matched) rawWatchlistMovies.push(matched);
+    }
+    return { ratedMovies, rawWatchlistMovies };
 }
 
 describe('Airtight Recommender Evaluation (Leak-Free, 50 Seeds)', () => {
@@ -96,7 +128,7 @@ describe('Airtight Recommender Evaluation (Leak-Free, 50 Seeds)', () => {
             // 2. Build clean ratings record (strictly omitting test items)
             const ratingsRecord: Record<number, number> = {};
             for (const item of trainRated) {
-                ratingsRecord[item.movie.id] = item.rating * 2;
+                ratingsRecord[item.movie.id] = item.rating;
             }
 
             // 3. Purge watchlist of any items present in test set or already watched
@@ -111,7 +143,7 @@ describe('Airtight Recommender Evaluation (Leak-Free, 50 Seeds)', () => {
             };
 
             // Evaluate V1 (with excludeWatchlist option if supported)
-            const v1List = recommendV1(catalog, trainUserData, { limit: 100, excludeWatchlist: true });
+            const v1List = recommendV1(catalog, trainUserData, { limit: 100 });
             v1Metrics.push(computeMetrics(testSet, v1List));
 
             // Evaluate V2
@@ -138,6 +170,76 @@ describe('Airtight Recommender Evaluation (Leak-Free, 50 Seeds)', () => {
         console.log("=================================================\n");
 
         expect(highlyRated.length).toBeGreaterThan(0);
+    });
+
+    describe('V2 weight tuning (fixed split)', () => {
+        it('compares configurations on tuning data and reports held-out performance', () => {
+            const catalog: Movie[] = rawCatalog as Movie[];
+            const { ratedMovies, rawWatchlistMovies } = makeEvaluationData(catalog);
+            const highlyRated = ratedMovies.filter(item => item.rating >= 4.0);
+            const otherRated = ratedMovies.filter(item => item.rating < 4.0);
+            const shuffledHigh = shuffled(highlyRated, mulberry32(20261113));
+            const hidden = shuffledHigh.slice(0, Math.max(1, Math.round(shuffledHigh.length * 0.2)));
+            const tuningCount = Math.max(1, Math.floor(hidden.length * 0.8));
+            const tuning = hidden.slice(0, tuningCount).map(item => item.movie);
+            const heldOut = hidden.slice(tuningCount).map(item => item.movie);
+
+            const makeTrainingData = (): UserData => {
+                const hiddenIds = new Set(hidden.map(item => item.movie.id));
+                const trainRated = [...shuffledHigh.slice(hidden.length), ...otherRated]
+                    .filter(item => !hiddenIds.has(item.movie.id));
+                const watched = trainRated.map(item => item.movie);
+                const watchedIds = new Set(watched.map(movie => movie.id));
+                return {
+                    version: 1,
+                    watched,
+                    watchlist: rawWatchlistMovies.filter(movie =>
+                        !hiddenIds.has(movie.id) && !watchedIds.has(movie.id)
+                    ),
+                    ratings: Object.fromEntries(trainRated.map(item => [item.movie.id, item.rating])),
+                };
+            };
+
+            const evaluate = (weights: RecommendWeights, targets: Movie[]) => {
+                const recommendations = recommendV2(catalog, makeTrainingData(), {
+                    limit: 50,
+                    weights,
+                    excludeWatchlist: true,
+                });
+                return computeMetrics(targets, recommendations).hitRate50;
+            };
+
+            const initialV2 = evaluate(DEFAULT_WEIGHTS, hidden.map(item => item.movie));
+            const results = weightConfigurations.map((weights, index) => ({
+                label: index === weightConfigurations.length - 1 ? "Default" : `Config ${String.fromCharCode(65 + index)}`,
+                weights,
+                tuningHitRate: evaluate(weights, tuning),
+            }));
+            const best = results.reduce((current, candidate) =>
+                candidate.tuningHitRate > current.tuningHitRate ? candidate : current
+            );
+            const heldOutHitRate = evaluate(best.weights, heldOut);
+            const v1HitRate = computeMetrics(tuning, recommendV1(catalog, makeTrainingData(), {
+                limit: 50,
+            })).hitRate50;
+
+            console.table(results.map(result => ({
+                Configuration: result.label,
+                Genre: result.weights.genre,
+                TMDB: result.weights.tmdb,
+                Era: result.weights.era,
+                TopRated: result.weights.topRated,
+                Diversity: result.weights.diversity,
+                "Tuning Hit@50": `${result.tuningHitRate.toFixed(1)}%`,
+            })));
+            console.log(`V1 Hit@50: ${v1HitRate.toFixed(1)}%`);
+            console.log(`V2 initial Hit@50: ${initialV2.toFixed(1)}%`);
+            console.log(`Selected ${best.label}; held-out Hit@50: ${heldOutHitRate.toFixed(1)}%`);
+
+            expect(hidden.length).toBeGreaterThan(1);
+            expect(heldOut.length).toBeGreaterThan(0);
+            expect(results).toHaveLength(weightConfigurations.length);
+        });
     });
 });
 

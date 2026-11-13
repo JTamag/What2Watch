@@ -17,10 +17,11 @@ A client-side movie discovery, recommendation, and tracking web application buil
 
 Generates personalised recommendations using your watchlist and watched history.
 
-- **Genre Affinity (50%):** Analyses your genre preferences, assigning a weight of 2.5 to watchlist titles and 1.5 to watched titles.
-- **TMDB Rating (35%):** Factors in user ratings to favour highly rated films.
-- **Release-Era Proximity (10%):** Uses exponential decay to account for how closely a film's release year matches your preferred era.
+- **Genre Affinity (40%):** Analyses your genre preferences using rating-derived weights from watched titles and a 2.5 weight for watchlist titles.
+- **TMDB Rating (20%):** Uses Bayesian shrinkage with TMDB vote counts so films with few votes do not dominate.
+- **Release-Era Proximity (15%):** Uses exponential decay to account for how closely a film's release year matches your preferred era.
 - **Top-Rated Bonus (5%):** Gives an additional boost to films included in the top-rated catalogue.
+- **Diversity (20%):** Applies genre-based maximal marginal relevance re-ranking.
 - **Smart Filtering:** Excludes films you have already watched.
 - **Taste Breakdown:** Highlights your leading genre preferences and matching tags on recommendation cards.
 - **Personalised Feed:** Generates a ranked selection of 20 recommendations from the available catalogue.
@@ -31,8 +32,11 @@ We evaluate recommendation quality using a hold-out test (Top-50 Hit Rate) on au
 
 | Version | Taste Weighting | TMDB Scoring | Diversity | Hit Rate @ 50 | Hits | Status |
 |---|---|---|---|:---:|:---:|:---:|
-| **v1 (Baseline)** | Flat weights (2.5 watchlist / 1.5 watched) | Raw score / 10 | None | **8.8%** | 3 / 34 | Recorded (Phase 3.2) |
-| **v2** | Rating-derived weights | Bayesian shrinkage prior | MMR re-ranking | *In progress* | *Pending* | Developing (Phase 3.3+) |
+| **v1 (Baseline)** | Flat weights (2.5 watchlist / 1.5 watched) | Raw score / 10 | None | **11.6%** | — | 50-seed evaluation |
+| **v2** | Rating-derived weights | Bayesian shrinkage with vote count | MMR re-ranking | **14.3%** | — | 50-seed evaluation |
+
+The weight grid search is reproducible with `npm run eval`. It uses a fixed held-out split:
+Config B (genre 0.35, TMDB 0.25, era 0.15, top-rated 0.05, diversity 0.20) reached 22.2% on the tuning slice, but 0% on the held-out slice, so the production defaults were not changed. On the fixed split, the original V2 defaults reached 11.8% against 11.1% for V1.
 
 ### Surprise Me!
 

@@ -98,7 +98,11 @@ function recommend(catalog: Movie[], userData: UserData, options: RecommendOptio
     const { genres, averageYear } = buildTasteProfile(userData);
 
     const watchedIds = new Set((userData.watched || []).map(movie => movie.id));
-    const candidates = catalog.filter(movie => !watchedIds.has(movie.id));
+    const watchlistIds = new Set((userData.watchlist || []).map(movie => movie.id));
+    const candidates = catalog.filter(movie =>
+        !watchedIds.has(movie.id) &&
+        (!excludeWatchlist || !watchlistIds.has(movie.id))
+    );
 
 
     // Catalog mean Rating
