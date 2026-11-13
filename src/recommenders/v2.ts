@@ -11,6 +11,28 @@ export function getRatingWeight(rating:number | undefined): number{
     return -2.5;                     // hated
 }
 
+export interface RecommendWeights {
+    genre: number;
+    tmdb: number;
+    era: number;
+    topRated: number;
+    diversity: number;
+}
+
+export const DEFAULT_WEIGHTS: RecommendWeights = {
+    genre: 0.40,
+    tmdb: 0.20,
+    era: 0.15,
+    topRated: 0.05,
+    diversity: 0.20,
+};
+
+export interface RecommendOptions {
+    limit?: number;
+    weights?: Partial<RecommendWeights>;
+    excludeWatchlist?: boolean;
+}
+
 export function buildTasteProfile(userData: UserData) {
     const ratings = userData.ratings || {};
 
@@ -58,7 +80,10 @@ export function bayesianScore(rating:number, vote_count:number, catalogAverage:n
 }
 
 
-function recommend(catalog: Movie[], userData: UserData, { limit = 20 } = {}) {
+function recommend(catalog: Movie[], userData: UserData, options: RecommendOptions = {}) {
+    const { limit = 36, excludeWatchlist = false } = options;
+    const w: RecommendWeights = { ...DEFAULT_WEIGHTS, ...options.weights };
+
     const { genres, averageYear } = buildTasteProfile(userData);
 
     const watchedIds = new Set((userData.watched || []).map(movie => movie.id));
@@ -82,18 +107,19 @@ function recommend(catalog: Movie[], userData: UserData, { limit = 20 } = {}) {
 
     const maxGenreScore = Math.max(...scored.map(item => item.genreScore), 1e-6);
 
-    return scored.map(({ movie, genreScore,wr, yearScore, topRatedBonus }) => {
-        const matchingGenres = (movie.genres || []).filter(genre => (genres[genre] ?? 0) > 0);
-        const reasons: string[] = [];
-        if (matchingGenres.length) reasons.push(`Matches your interest in ${matchingGenres.slice(0, 2).join(" and ")}`);
-        if (movie.is_top_rated) reasons.push("Included in the top-rated collection");
-        if (wr >= 7.5) reasons.push("Highly rated by TMDB users");
-        return {
-            ...movie,
-            _score: (genreScore / maxGenreScore) * 0.6 + (wr / 10) * 0.2 + yearScore * 0.15 + topRatedBonus * 0.05,
-            reasons
-        };
-    }).sort((a, b) => b._score - a._score).slice(0, limit);
+    const ranked = scored.map(item => ({
+        ...item,
+        relevance:
+            w.genre * (item.genreScore / maxGenreScore) +
+            w.tmdb * (item.wr / 10) +
+            w.era * item.yearScore +
+            w.topRated * item.topRatedBonus
+        })).sort((a, b) => b.relevance - a.relevance);;
+    return ranked.slice(0, limit).map(item => ({
+    ...item.movie,
+    _score: item.relevance,
+    reasons: []
+    }));
 }
 
 export { recommend as recommendV2 };
