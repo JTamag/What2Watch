@@ -33,6 +33,17 @@ export interface RecommendOptions {
     excludeWatchlist?: boolean;
 }
 
+function jaccard(a: Set<string>, b: Set<string>): number {
+    if(a.size === 0 && b.size === 0) return 0;
+    
+    let shared = 0;
+
+    for(const genre of a){
+        if(b.has(genre)) shared++;
+    }
+
+    return shared / (a.size + b.size - shared);
+}
 export function buildTasteProfile(userData: UserData) {
     const ratings = userData.ratings || {};
 
@@ -98,11 +109,13 @@ function recommend(catalog: Movie[], userData: UserData, options: RecommendOptio
 
 
     const scored = candidates.map(movie => {
-        const genreScore = (movie.genres || []).reduce((sum, genre) => sum + (genres[genre] || 0), 0);
+        const genreSet = new Set(movie.genres || []);
+        const genreScore = [...genreSet].reduce((sum, genre) => sum + (genres[genre] || 0), 0);
+
         const wr = tmdbScore(movie);
         const yearScore = Math.exp(-Math.abs((Number(movie.release_year) || 2000) - averageYear) / 20);
         const topRatedBonus = movie.is_top_rated ? 1 : 0;
-        return { movie, genreScore, wr , yearScore, topRatedBonus };
+        return { movie,genreSet, genreScore, wr , yearScore, topRatedBonus };
     });
 
     const maxGenreScore = Math.max(...scored.map(item => item.genreScore), 1e-6);
@@ -120,6 +133,43 @@ function recommend(catalog: Movie[], userData: UserData, options: RecommendOptio
     _score: item.relevance,
     reasons: []
     }));
+
+
+    const remaining = ranked.slice(0,Math.max(limit*5,100));
+
+    const maxSim = new Map<Movie["id"], number>();
+
+    const results: (Movie & { _score: number; reasons: string[] })[] = [];
+
+    while( results.length < limit && remaining.length > 0){
+        let bestIndex = 0;
+        let bestScore = -Infinity;
+
+        remaining.forEach((candidate, index) => {
+            const sim = maxSim.get(candidate.movie.id) ?? 0;
+
+            const score = candidate.relevance - w.diversity * (1-sim);
+            if(score > bestScore){
+                bestScore = score;
+                bestIndex = index;
+            }
+
+        });
+        const chosen = remaining.splice(bestIndex, 1)[0]!;
+
+        results.push({
+            ...chosen.movie,
+            _score: bestScore,
+            reasons: []
+        });
+
+        for(const other of remaining){
+            const sim = jaccard(chosen.genreSet, other.genreSet);
+            if(sim> (maxSim.get(other.movie.id) ?? 0)){
+                maxSim.set(other.movie.id, sim);
+            }
+        }
+    }
 }
 
 export { recommend as recommendV2 };
