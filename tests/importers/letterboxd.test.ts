@@ -115,6 +115,30 @@ describe('importLetterboxdCSV', () => {
         const result = importLetterboxdCSV(withUnknown, 'watched.csv', catalog);
         expect(result.failedCount).toBe(1);
         expect(result.matchedCount).toBe(1);
+        expect(result.unmatchedTitles).toEqual(['Unknown Film']);
+    });
+
+    it('allows a unique one-year release-date difference', () => {
+        const result = importLetterboxdCSV(
+            csv('Name,Year', 'Star Wars,1976'),
+            'watched.csv',
+            catalog
+        );
+        expect(result.matchedCount).toBe(1);
+    });
+
+    it('does not guess between ambiguous nearby matches', () => {
+        const duplicateTitles = [
+            ...catalog,
+            { id: 5, title: 'Star Wars', release_year: '1975', genres: ['Action'] },
+        ] as any[];
+        const result = importLetterboxdCSV(
+            csv('Name,Year', 'Star Wars,1976'),
+            'watched.csv',
+            duplicateTitles
+        );
+        expect(result.matchedCount).toBe(0);
+        expect(result.unmatchedTitles).toEqual(['Star Wars']);
     });
 
     it('deduplicates against an existing list', () => {

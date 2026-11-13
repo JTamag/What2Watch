@@ -68,7 +68,10 @@ async function importFile(file: File) {
             }
             save();
             refresh();
-            alert(`Import complete!\nList updated: ${result.target.toUpperCase()}\nRows processed: ${result.importedCount}\nMatched with catalogue: ${result.matchedCount}\nNot found: ${result.failedCount}`);
+            const unmatched = result.unmatchedTitles.length
+                ? `\n\nUnmatched titles:\n${result.unmatchedTitles.join("\n")}`
+                : "";
+            alert(`Import complete!\nList updated: ${result.target.toUpperCase()}\nRows processed: ${result.importedCount}\nMatched with catalogue: ${result.matchedCount}\nNot found: ${result.failedCount}${unmatched}`);
             return;
         }
 

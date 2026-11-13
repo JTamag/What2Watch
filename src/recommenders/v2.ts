@@ -1,7 +1,7 @@
 import { Movie, UserData } from "../types";
 
 export function getRatingWeight(rating:number | undefined): number{
-    if(rating === undefined || Number.isNaN(rating)) return 1.0;
+    if(rating === undefined || Number.isNaN(rating)) return 0;
 
     if (rating >= 4.5) return 3.5;   // loved
     if (rating >= 4.0) return 2.5;   // liked
@@ -52,25 +52,49 @@ export function buildTasteProfile(userData: UserData) {
         ...(userData.watchlist || []).map(movie => ({ ...movie, weight: 2.5 }))
     ];
     const genreWeights: Record<string, number> = {};
-    let totalGenreWeight = 0;
+    const positiveGenreWeights: Record<string, number> = {};
+    const negativeGenreWeights: Record<string, number> = {};
 
     for (const movie of weightedMovies) {
         for (const genre of movie.genres || []) {
             genreWeights[genre] = (genreWeights[genre] || 0) + movie.weight;
-            if(movie.weight>0) totalGenreWeight += movie.weight;
+            if (movie.weight > 0) {
+                positiveGenreWeights[genre] = (positiveGenreWeights[genre] || 0) + movie.weight;
+            } else if (movie.weight < 0) {
+                negativeGenreWeights[genre] = (negativeGenreWeights[genre] || 0) - movie.weight;
+            }
         }
     }
 
-    const genres = Object.fromEntries(
-        Object.entries(genreWeights).map(([genre, weight]: [string, number]) => [genre, totalGenreWeight ? weight / totalGenreWeight : 0])
-    );
+    const totalPositiveGenreWeight = Object.values(positiveGenreWeights).reduce((sum, weight) => sum + weight, 0);
+    const totalNegativeGenreWeight = Object.values(negativeGenreWeights).reduce((sum, weight) => sum + weight, 0);
+    const genres = Object.fromEntries(Object.keys(genreWeights).map(genre => [
+        genre,
+        (totalPositiveGenreWeight ? (positiveGenreWeights[genre] || 0) / totalPositiveGenreWeight : 0) -
+        (totalNegativeGenreWeight ? (negativeGenreWeights[genre] || 0) / totalNegativeGenreWeight : 0)
+    ]));
     const positiveMovies = weightedMovies.filter(m => m.weight > 0);
     const totalMovieWeight = positiveMovies.reduce((sum, movie) => sum + movie.weight, 0);
     const averageYear = totalMovieWeight
         ? positiveMovies.reduce((sum, movie) => sum + (Number(movie.release_year) || 2000) * movie.weight, 0) / totalMovieWeight
         : 2000;
 
-    return { genres, averageYear };
+    return {
+        genres,
+        positiveGenres: Object.fromEntries(
+            Object.entries(positiveGenreWeights).map(([genre, weight]) => [
+                genre,
+                totalPositiveGenreWeight ? weight / totalPositiveGenreWeight : 0
+            ])
+        ),
+        negativeGenres: Object.fromEntries(
+            Object.entries(negativeGenreWeights).map(([genre, weight]) => [
+                genre,
+                totalNegativeGenreWeight ? weight / totalNegativeGenreWeight : 0
+            ])
+        ),
+        averageYear
+    };
 }
 
 export function getTopGenres(userData: UserData, limit = 3): string[] {
@@ -95,7 +119,7 @@ function recommend(catalog: Movie[], userData: UserData, options: RecommendOptio
     const { limit = 36, excludeWatchlist = false } = options;
     const w: RecommendWeights = { ...DEFAULT_WEIGHTS, ...options.weights };
 
-    const { genres, averageYear } = buildTasteProfile(userData);
+    const { positiveGenres, negativeGenres, averageYear } = buildTasteProfile(userData);
 
     const watchedIds = new Set((userData.watched || []).map(movie => movie.id));
     const watchlistIds = new Set((userData.watchlist || []).map(movie => movie.id));
@@ -114,20 +138,25 @@ function recommend(catalog: Movie[], userData: UserData, options: RecommendOptio
 
     const scored = candidates.map(movie => {
         const genreSet = new Set(movie.genres || []);
-        const genreScore = [...genreSet].reduce((sum, genre) => sum + (genres[genre] || 0), 0);
+        const positiveGenreScore = [...genreSet].reduce((sum, genre) => sum + (positiveGenres[genre] || 0), 0);
+        const negativeGenreScore = [...genreSet].reduce((sum, genre) => sum + (negativeGenres[genre] || 0), 0);
 
         const wr = tmdbScore(movie);
         const yearScore = Math.exp(-Math.abs((Number(movie.release_year) || 2000) - averageYear) / 20);
         const topRatedBonus = movie.is_top_rated ? 1 : 0;
-        return { movie,genreSet, genreScore, wr , yearScore, topRatedBonus };
+        return { movie,genreSet, positiveGenreScore, negativeGenreScore, wr , yearScore, topRatedBonus };
     });
 
-    const maxGenreScore = Math.max(...scored.map(item => item.genreScore), 1e-6);
+    const maxPositiveGenreScore = Math.max(...scored.map(item => item.positiveGenreScore), 1e-6);
+    const maxNegativeGenreScore = Math.max(...scored.map(item => item.negativeGenreScore), 1e-6);
 
     const ranked = scored.map(item => ({
         ...item,
         relevance:
-            w.genre * (item.genreScore / maxGenreScore) +
+            w.genre * (
+                item.positiveGenreScore / maxPositiveGenreScore -
+                item.negativeGenreScore / maxNegativeGenreScore
+            ) +
             w.tmdb * (item.wr / 10) +
             w.era * item.yearScore +
             w.topRated * item.topRatedBonus
@@ -155,7 +184,7 @@ function recommend(catalog: Movie[], userData: UserData, options: RecommendOptio
         });
         const chosen = remaining.splice(bestIndex, 1)[0]!;
         const matchingGenres = (chosen.movie.genres || []).filter(
-            genre => (genres[genre] ?? 0) > 0
+            genre => (positiveGenres[genre] ?? 0) > 0
         );
         const simToPicked = maxSim.get(chosen.movie.id) ?? 0;
         const reasons: string[] = [];

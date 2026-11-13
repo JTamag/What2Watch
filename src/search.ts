@@ -6,14 +6,22 @@ export function normalizeTitle(title: string) {
 
 export function findLocalMatch(title: string, year: string, movies: Movie[]) {
     const normalizedTitle = normalizeTitle(title);
+    const titleMatches = movies.filter(movie => normalizeTitle(movie.title) === normalizedTitle);
 
-    return movies.find((movie: Movie) => {
-        if (normalizeTitle(movie.title) !== normalizedTitle) return false;
+    if (!titleMatches.length) return undefined;
+    if (!year) return titleMatches[0];
 
-        if (year && movie.release_year) {
-            return String(movie.release_year).trim() === String(year).trim();
-        }
+    const requestedYear = Number.parseInt(year.trim(), 10);
+    const exactMatch = titleMatches.find(movie =>
+        String(movie.release_year).trim() === year.trim()
+    );
+    if (exactMatch || !Number.isFinite(requestedYear)) return exactMatch;
 
-        return true;
+    const nearbyMatches = titleMatches.filter(movie => {
+        const movieYear = Number.parseInt(String(movie.release_year), 10);
+        return Number.isFinite(movieYear) && Math.abs(movieYear - requestedYear) <= 1;
     });
+
+    
+    return nearbyMatches.length === 1 ? nearbyMatches[0] : undefined;
 }

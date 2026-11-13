@@ -68,6 +68,7 @@ export function importLetterboxdCSV(text : string, filename : string, catalog : 
 
     const matched = [];
     const ratings: Record<number, number> = {};
+    const unmatchedTitles: string[] = [];
     let importedCount = 0;
     let failedCount = 0;
     for (const columns of rows.slice(1)) {
@@ -82,7 +83,10 @@ export function importLetterboxdCSV(text : string, filename : string, catalog : 
                 if(!Number.isNaN(rating)) ratings[movie.id] = rating;
             }
         }
-        else failedCount++;
+        else {
+            failedCount++;
+            unmatchedTitles.push(title);
+        }
     }
 
     return {
@@ -91,6 +95,7 @@ export function importLetterboxdCSV(text : string, filename : string, catalog : 
         importedCount,
         matchedCount: matched.length,
         failedCount,
+        unmatchedTitles,
         ratings,
     };
 }

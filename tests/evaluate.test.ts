@@ -170,6 +170,10 @@ describe('Airtight Recommender Evaluation (Leak-Free, 50 Seeds)', () => {
         console.log("=================================================\n");
 
         expect(highlyRated.length).toBeGreaterThan(0);
+        expect(meanMetric(v2Metrics, metric => metric.hitRate50))
+            .toBeGreaterThan(meanMetric(popularMetrics, metric => metric.hitRate50));
+        expect(meanMetric(v2Metrics, metric => metric.ndcg50))
+            .toBeGreaterThan(meanMetric(popularMetrics, metric => metric.ndcg50));
     });
 
     describe('V2 weight tuning (fixed split)', () => {
@@ -283,6 +287,10 @@ function stats(values: number[]) {
     const mean = values.reduce((a, b) => a + b, 0) / values.length;
     const std = Math.sqrt(values.reduce((a, b) => a + (b - mean) ** 2, 0) / values.length);
     return { mean, std };
+}
+
+function meanMetric(metrics: EvalMetrics[], selector: (metric: EvalMetrics) => number) {
+    return stats(metrics.map(selector)).mean;
 }
 
 function printSummary(name: string, metrics: EvalMetrics[]) {

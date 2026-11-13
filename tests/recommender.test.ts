@@ -155,6 +155,34 @@ describe('getTopGenres', () => {
             expect(results[0]?.id).toBe(action.id);
         });
 
+        it('does not treat unrated watched films as positive preferences', () => {
+            const action = makeMovie({ id: 60, genres: ['Action'] });
+            const drama = makeMovie({ id: 61, genres: ['Drama'] });
+            const userData = {
+                version: 1 as const,
+                watched: [makeMovie({ id: 62, genres: ['Action'] })],
+                watchlist: [makeMovie({ id: 63, genres: ['Drama'] })],
+                ratings: {},
+            };
+
+            const results = recommendV2([action, drama], userData, { limit: 2 });
+            expect(results[0]?.id).toBe(drama.id);
+        });
+
+        it('penalizes genres associated with low personal ratings', () => {
+            const action = makeMovie({ id: 64, genres: ['Action'], rating: 10 });
+            const drama = makeMovie({ id: 65, genres: ['Drama'], rating: 7 });
+            const userData = {
+                version: 1 as const,
+                watched: [makeMovie({ id: 66, genres: ['Action'] })],
+                watchlist: [],
+                ratings: { 66: 1 },
+            };
+
+            const results = recommendV2([action, drama], userData, { limit: 2 });
+            expect(results[0]?.id).toBe(drama.id);
+        });
+
         it('excludes watchlist items when requested', () => {
             const watchlisted = makeMovie({ id: 54 });
             const available = makeMovie({ id: 55 });
@@ -174,6 +202,30 @@ describe('getTopGenres', () => {
 
         it('uses vote count in Bayesian TMDB scoring', () => {
             expect(bayesianScore(10, 1, 6, 500)).toBeLessThan(bayesianScore(10, 10000, 6, 500));
+        });
+
+        it('uses vote count when ordering otherwise equivalent recommendations', () => {
+            const lowConfidence = makeMovie({ id: 67, rating: 9, vote_count: 1 });
+            const highConfidence = makeMovie({ id: 68, rating: 9, vote_count: 10000 });
+            const catalogAverageMovie = makeMovie({ id: 69, rating: 6, vote_count: 10000 });
+            const userData = {
+                version: 1 as const,
+                watched: [],
+                watchlist: [],
+                ratings: {},
+            };
+
+            const results = recommendV2(
+                [lowConfidence, highConfidence, catalogAverageMovie],
+                userData,
+                { limit: 3 }
+            );
+            expect(results[0]?.id).toBe(highConfidence.id);
+        });
+
+        it('falls back to the catalog average when a movie has no votes', () => {
+            expect(bayesianScore(10, 0, 6, 500)).toBe(6);
+            expect(bayesianScore(10, -1, 6, 500)).toBe(6);
         });
 
         it('explains the signals used for recommendations', () => {
