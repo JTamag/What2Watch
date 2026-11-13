@@ -175,6 +175,30 @@ describe('getTopGenres', () => {
         it('uses vote count in Bayesian TMDB scoring', () => {
             expect(bayesianScore(10, 1, 6, 500)).toBeLessThan(bayesianScore(10, 10000, 6, 500));
         });
+
+        it('explains the signals used for recommendations', () => {
+            const action = makeMovie({ id: 56, genres: ['Action'], rating: 8, vote_count: 10000 });
+            const drama = makeMovie({ id: 57, genres: ['Drama'], rating: 9, vote_count: 10000 });
+            const watchlisted = makeMovie({ id: 58, genres: ['Action'], rating: 8, vote_count: 10000 });
+            const userData = {
+                version: 1 as const,
+                watched: [makeMovie({ id: 59, genres: ['Action'] })],
+                watchlist: [watchlisted],
+                ratings: { 59: 5 },
+            };
+
+            const results = recommendV2([action, drama, watchlisted], userData, { limit: 3 });
+            const actionResult = results.find(movie => movie.id === action.id);
+            const dramaResult = results.find(movie => movie.id === drama.id);
+            const watchlistResult = results.find(movie => movie.id === watchlisted.id);
+
+            expect(actionResult?.reasons).toContain('Matches your interest in Action');
+            expect(dramaResult?.reasons).toContain('Highly rated by TMDB users');
+            expect(watchlistResult?.reasons).toContain('Already on your watchlist');
+            for (const result of results) {
+                expect(result.reasons.length).toBeLessThanOrEqual(3);
+            }
+        });
     });
 
     it('respects the limit parameter', () => {
