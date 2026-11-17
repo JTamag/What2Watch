@@ -39,6 +39,7 @@ DECADE_PAGES = 3
 MAX_MOVIES = 5000           # hard cap on the final catalogue size
 MIN_CATALOGUE_SIZE = 3000   # fail rather than silently publishing a severely thin catalogue
 DETAILS_BATCH_SIZE = 500    # enrich at most this many uncached movies per run
+MAX_DETAILS_CACHE_BYTES = 50 * 1024 * 1024
 MIN_EXPECTED_RATIO = 0.5    # abort if the new catalogue is < 50% of the old one
 REQUEST_DELAY = 0.05        # ~20 req/s at most, well under TMDB's soft ceiling
 DETAILS_CAST_LIMIT = 5
@@ -209,11 +210,56 @@ def save_details_cache(cache):
     tmp = DETAILS_CACHE + ".tmp"
     with open(tmp, "w", encoding="utf-8") as f:
         json.dump(cache, f, ensure_ascii=False, separators=(",", ":"), sort_keys=True)
+    if os.path.getsize(tmp) > MAX_DETAILS_CACHE_BYTES:
+        os.remove(tmp)
+        raise ValueError(
+            f"Metadata cache exceeds {MAX_DETAILS_CACHE_BYTES // (1024 * 1024)} MB"
+        )
     os.replace(tmp, DETAILS_CACHE)
+
+
+def extract_metadata(details):
+    keywords = details.get("keywords", [])
+    if isinstance(keywords, dict):
+        keywords = keywords.get("keywords", [])
+    crew = details.get("crew", [])
+    cast = details.get("cast", [])
+    if isinstance(details.get("credits"), dict):
+        crew = details["credits"].get("crew", [])
+        cast = details["credits"].get("cast", [])
+
+    directors = [
+        person.get("name")
+        for person in crew
+        if person.get("job") == "Director" and person.get("name")
+    ]
+    return {
+        "keywords": [
+            keyword["name"]
+            for keyword in keywords
+            if isinstance(keyword, dict) and keyword.get("name")
+        ],
+        "director": directors[0] if directors else None,
+        "cast": [
+            person["name"]
+            for person in cast[:DETAILS_CAST_LIMIT]
+            if isinstance(person, dict) and person.get("name")
+        ],
+        "original_language": details.get("original_language", ""),
+    }
 
 
 def enrich_catalogue(session, movies):
     cache = load_details_cache()
+    cache_changed = False
+    for cache_key, details in list(cache.items()):
+        metadata = extract_metadata(details)
+        if metadata != details:
+            cache[cache_key] = metadata
+            cache_changed = True
+    if cache_changed:
+        save_details_cache(cache)
+
     missing = [movie for movie in movies if str(movie["id"]) not in cache]
     batch = missing[:DETAILS_BATCH_SIZE]
     print(
@@ -228,32 +274,9 @@ def enrich_catalogue(session, movies):
             f"/movie/{movie['id']}",
             append_to_response="credits,keywords",
         )
-        cache[cache_key] = details
+        cache[cache_key] = extract_metadata(details)
         save_details_cache(cache)
 
-        keywords = details.get("keywords", {}).get("keywords", [])
-        crew = details.get("credits", {}).get("crew", [])
-        cast = details.get("credits", {}).get("cast", [])
-        directors = [
-            person.get("name")
-            for person in crew
-            if person.get("job") == "Director" and person.get("name")
-        ]
-        movie["keywords"] = [
-            keyword["name"]
-            for keyword in keywords
-            if keyword.get("name")
-        ]
-        movie["director"] = directors[0] if directors else None
-        movie["cast"] = [
-            person["name"]
-            for person in cast[:DETAILS_CAST_LIMIT]
-            if person.get("name")
-        ]
-        movie["original_language"] = details.get(
-            "original_language",
-            movie.get("original_language", ""),
-        )
         if index % 100 == 0 or index == len(batch):
             print(f"Metadata enrichment progress: {index}/{len(batch)}")
 
@@ -263,27 +286,14 @@ def enrich_catalogue(session, movies):
         details = cache.get(str(movie["id"]))
         if details is None:
             continue
-        keywords = details.get("keywords", {}).get("keywords", [])
-        crew = details.get("credits", {}).get("crew", [])
-        cast = details.get("credits", {}).get("cast", [])
-        directors = [
-            person.get("name")
-            for person in crew
-            if person.get("job") == "Director" and person.get("name")
-        ]
-        movie["keywords"] = [
-            keyword["name"] for keyword in keywords if keyword.get("name")
-        ]
-        movie["director"] = directors[0] if directors else None
-        movie["cast"] = [
-            person["name"]
-            for person in cast[:DETAILS_CAST_LIMIT]
-            if person.get("name")
-        ]
-        movie["original_language"] = details.get(
-            "original_language",
-            movie.get("original_language", ""),
-        )
+        metadata = extract_metadata(details)
+        if metadata != details:
+            cache[str(movie["id"])] = metadata
+            cache_changed = True
+        movie.update(metadata)
+
+    if cache_changed:
+        save_details_cache(cache)
 
     return movies
 
