@@ -107,8 +107,10 @@ export function createViews({ getMovies, getUserData, onToggleWatchlist, onToggl
     }
 
     function refreshCurrentSection() {
+        const scrollY = window.scrollY;
         if (currentSection === "recommendations") onRecommendations();
         else renderSection(currentSection);
+        window.scrollTo(0, scrollY);
     }
 
     function showRecommendations(movies: MovieWithReasons[], topGenres: string[]) {
