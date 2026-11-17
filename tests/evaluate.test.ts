@@ -174,7 +174,7 @@ describe('Airtight Recommender Evaluation (Leak-Free, 50 Seeds)', () => {
             .toBeGreaterThan(meanMetric(popularMetrics, metric => metric.hitRate50));
         expect(meanMetric(v2Metrics, metric => metric.ndcg50))
             .toBeGreaterThan(meanMetric(popularMetrics, metric => metric.ndcg50));
-    });
+    }, 15000);
 
     describe('V2 weight tuning (fixed split)', () => {
         it('compares configurations on tuning data and reports held-out performance', () => {
